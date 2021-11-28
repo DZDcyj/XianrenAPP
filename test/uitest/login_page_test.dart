@@ -47,6 +47,9 @@ void main() {
     await tap(tester, autoLogin);
     expect(page.mProvider.autoInput, true);
     expect(page.mProvider.autoLogin, true);
+
+    await tap(tester, find.byType(ElevatedButton));
+    await tap(tester, find.byType(TextButton));
   });
 
   testWidgets('SharedPreferences', (WidgetTester tester) async {
