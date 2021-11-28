@@ -1,0 +1,46 @@
+name: Dart-Test-Coverage
+on: [push, pull_request]
+
+jobs:
+  flutter-coverage-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v1
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: "8"
+      - name: Setup Flutter Action Environment
+        uses: subosito/flutter-action@v1
+        with:
+          channel: "stable"
+          flutter-version: '2.0.4'
+      - name: Setup Flutter Coverage Environment
+        uses: stelynx/dart-full-coverage@v1.0.5
+        with:
+          package: xianren_app
+      - name: Setup Flutter Credential
+        run: flutter pub get
+      - name: Run Flutter Analyze
+        run: flutter analyze
+      - name: Flutter Code Coverage Test
+        run: flutter test --coverage .
+      - name: Post the coverage report
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
+      - name: Send CI to PR
+        uses: zgosalvez/github-actions-report-lcov@v1.3.2
+        if: ${{ github.event_name == 'pull_request' }}
+        with:
+          coverage-files: coverage/lcov.info
+          minimum-coverage: 75
+          artifact-name: code-coverage-report
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage-report
+          path: ${{ github.workspace }}/coverage
