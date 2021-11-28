@@ -29,12 +29,8 @@ class _InitPageContentState extends BasePageContentViewState<InitPageProvider> {
     super.initState();
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      Fluttertoast.showToast(
-        msg: 'Turn to home page ...',
-        gravity: ToastGravity.BOTTOM,
-      );
-      Future.delayed(Duration(seconds: 1)).then((value) {
-        RouteWrapper.popAndPushNamed(routerNameHomePage, arguments: ['HomePage']);
+      Future.delayed(Duration(seconds: 1)).then((_) {
+        RouteWrapper.popAndPushNamed(routerNameLoginPage);
       });
     });
   }
@@ -46,6 +42,9 @@ class _InitPageContentState extends BasePageContentViewState<InitPageProvider> {
       body: Center(
         child: Text(
           'Welcome to Xianren APP!',
+          style: TextStyle(
+            fontSize: 16,
+          ),
         ),
       ),
     );
