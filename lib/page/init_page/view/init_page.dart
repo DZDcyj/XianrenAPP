@@ -34,7 +34,7 @@ class _InitPageContentState extends BasePageContentViewState<InitPageProvider> {
         gravity: ToastGravity.BOTTOM,
       );
       Future.delayed(Duration(seconds: 1)).then((value) {
-        RouteWrapper.pushNamed(routerNameHomePage, arguments: ['HomePage']);
+        RouteWrapper.popAndPushNamed(routerNameHomePage, arguments: ['HomePage']);
       });
     });
   }
@@ -45,7 +45,7 @@ class _InitPageContentState extends BasePageContentViewState<InitPageProvider> {
     return Scaffold(
       body: Center(
         child: Text(
-          'Welcome',
+          'Welcome to Xianren APP!',
         ),
       ),
     );
