@@ -9,7 +9,6 @@ import 'package:xianren_app/router/router.dart';
 import 'package:xianren_app/router/router_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class InitPage extends PageNodeProvider<InitPageProvider> {
   @override
