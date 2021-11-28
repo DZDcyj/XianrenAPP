@@ -14,7 +14,7 @@ void main() {
 
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     await showWidget(tester, MyApp());
-    expect(find.text('Welcome'), findsOneWidget);
+    expect(find.text('Welcome to Xianren APP!'), findsOneWidget);
 
     // Stop the timer
     await tester.pumpAndSettle(Duration(seconds: 1));
