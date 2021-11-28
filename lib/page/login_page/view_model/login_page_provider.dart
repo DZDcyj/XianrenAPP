@@ -79,6 +79,9 @@ class LoginPageProvider extends BasePageProvider {
   /// 登录
   Future<void> login(void Function() callback) async {
     // TODO: login and call callback function
+    if (autoInput) {
+      saveInfoToPreferences();
+    }
     callback?.call();
   }
 }

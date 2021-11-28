@@ -169,13 +169,13 @@ class _LoginPageContentState extends BasePageContentViewState<LoginPageProvider>
 
   /// 处理登录
   void _loginHandler() {
-    mProvider.login(() {
-      mProvider.saveInfoToPreferences();
-    }).then(
-      (_) => Fluttertoast.showToast(
-        msg: 'Saved!',
-        gravity: ToastGravity.BOTTOM,
-      ),
+    mProvider.login(() {}).then(
+      (_) {
+        Fluttertoast.showToast(
+          msg: 'Saved!',
+          gravity: ToastGravity.BOTTOM,
+        );
+      },
     );
   }
 
