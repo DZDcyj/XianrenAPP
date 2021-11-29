@@ -10,6 +10,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:xianren_app/base/view/base_page_view.dart';
 import 'package:xianren_app/page/login_page/view_model/login_page_provider.dart';
+import 'package:xianren_app/router/router.dart';
+import 'package:xianren_app/router/router_constant.dart';
 
 class LoginPage extends PageNodeProvider<LoginPageProvider> {
   @override
@@ -44,27 +46,31 @@ class _LoginPageContentState extends BasePageContentViewState<LoginPageProvider>
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       body: Padding(
         padding: EdgeInsets.only(left: 15.0, right: 15.0),
-        child: _loginBody(),
+        child: Center(
+          child: _loginBody(),
+        ),
       ),
     );
   }
 
   /// 中部控件
   Widget _loginBody() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _logo(),
-        _title(),
-        _usernameInput(),
-        _passwordInput(),
-        _autoCheckboxes(),
-        _loginButton(),
-        _registerButton(),
-      ],
+    return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _logo(),
+          _title(),
+          _usernameInput(),
+          _passwordInput(),
+          _autoCheckboxes(),
+          _loginButton(),
+          _registerButton(),
+        ],
+      ),
     );
   }
 
@@ -189,7 +195,6 @@ class _LoginPageContentState extends BasePageContentViewState<LoginPageProvider>
 
   /// 跳转到注册界面
   void _handleRegisterJump() {
-    // TODO: 跳转注册界面
-    Fluttertoast.showToast(msg: '开发中……');
+    RouteWrapper.pushNamed(routerNameRegisterPage);
   }
 }
