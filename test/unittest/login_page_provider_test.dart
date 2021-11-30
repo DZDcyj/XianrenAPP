@@ -42,7 +42,8 @@ void main() {
   });
 
   test('clearInfoFromPreferences', () {
-    provider.clearInfoFromPreferences();
-    expect(provider.autoInput, false);
+    provider.clearInfoFromPreferences().then((_) {
+      expect(provider.autoInput, false);
+    });
   });
 }
