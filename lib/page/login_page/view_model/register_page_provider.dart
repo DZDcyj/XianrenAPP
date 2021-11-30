@@ -4,6 +4,7 @@
 /// created by DZDcyj at 2021/11/29
 ///
 import 'package:xianren_app/base/view_model/base_page_view_provider.dart';
+import 'package:xianren_app/utils/regex_util.dart';
 
 /// 性别选项
 enum Gender {
@@ -68,7 +69,27 @@ class RegisterPageProvider extends BasePageProvider {
   String password;
 
   /// 验证输入数据
-  void validateInformation() {
-    // TODO: 验证数据合法性
+  bool validateInformation({void Function(dynamic msg) callback}) {
+    if (nickName.isEmpty ||
+        (email?.isEmpty ?? false) ||
+        (password?.isEmpty ?? false) ||
+        (realName?.isEmpty ?? false) ||
+        (idNumber?.isEmpty ?? false) ||
+        (studentId?.isEmpty ?? false)) {
+      callback?.call('部分信息不完整');
+      return false;
+    }
+
+    if (!validateEmail(email)) {
+      callback?.call('邮箱不合法');
+      return false;
+    }
+
+    if (!validateIdNumber(idNumber)) {
+      callback?.call('身份证号不合法');
+      return false;
+    }
+
+    return true;
   }
 }

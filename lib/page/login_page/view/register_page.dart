@@ -5,6 +5,7 @@
 ///
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:xianren_app/base/view/base_page_view.dart';
 import 'package:xianren_app/page/login_page/view_model/register_page_provider.dart';
@@ -239,7 +240,13 @@ class _RegisterPageContentState extends BasePageContentViewState<RegisterPagePro
 
   /// 处理注册
   void _registerHandler() {
-    // TODO: 处理注册事件回调
+    if (mProvider.validateInformation(callback: (value) {
+      if (value is String) {
+        Fluttertoast.showToast(msg: value);
+      }
+    })) {
+      // TODO: 进行注册
+    }
   }
 
   /// 密码输入

@@ -15,6 +15,12 @@ bool validatePhoneNumber(String number) {
   return mobile.hasMatch(number);
 }
 
+/// 验证邮箱合法性
+bool validateEmail(String email) {
+  RegExp emailExp = RegExp(r'^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\.)+[a-z]{2,}$');
+  return emailExp.hasMatch(email);
+}
+
 /// 验证身份证号合法性
 bool validateIdNumber(String idNumber) {
   if (idNumber.length != 18) {
