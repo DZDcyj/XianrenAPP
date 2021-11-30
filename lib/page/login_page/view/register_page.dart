@@ -28,40 +28,26 @@ class _RegisterPageContentState extends BasePageContentViewState<RegisterPagePro
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.only(left: 40.0, right: 40.0),
-        child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _logo(),
-              _title(),
-              _registerHint(),
-              _nickNameInput(),
-              _genderSelector(),
-              _emailInput(),
-              _passwordInput(),
-              _realNameInput(),
-              _studentIdInput(),
-              _idNumberInput(),
-              _registerButton(),
-            ],
+        child: Center(
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _registerHint(),
+                _nickNameInput(),
+                _genderSelector(),
+                _birthDaySelector(),
+                _emailInput(),
+                _passwordInput(),
+                _realNameInput(),
+                _studentIdInput(),
+                _idNumberInput(),
+                _registerButton(),
+              ],
+            ),
           ),
         ),
-      ),
-    );
-  }
-
-  /// Xianren Logo
-  Widget _logo() {
-    return Image(image: AssetImage('assets/logo.png'));
-  }
-
-  /// Xianren 文字
-  Widget _title() {
-    return Text(
-      'Xianren',
-      style: TextStyle(
-        fontSize: 64,
       ),
     );
   }
@@ -139,6 +125,52 @@ class _RegisterPageContentState extends BasePageContentViewState<RegisterPagePro
     );
   }
 
+  /// 生日选择
+  Widget _birthDaySelector() {
+    return Row(
+      children: [
+        Expanded(
+          child: Icon(Icons.calendar_today),
+        ),
+        Expanded(
+          flex: 2,
+          child: GestureDetector(
+            onTap: _handleDatePick,
+            child: Selector<RegisterPageProvider, DateTime>(
+              selector: (_, provider) => provider.birthday,
+              builder: (context, value, child) => Text('${value.year}-${value.month}-${value.day}'),
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 3,
+          child: Selector<RegisterPageProvider, bool>(
+            selector: (_, provider) => provider.birthdayHidden,
+            builder: (context, hidden, child) => CheckboxListTile(
+              title: Text('隐藏生日'),
+              onChanged: (value) => mProvider.birthdayHidden = value,
+              value: hidden,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  /// 日期选择
+  void _handleDatePick() async {
+    var picker = await showDatePicker(
+      context: context,
+      initialDate: mProvider.birthday,
+      firstDate: DateTime(1970),
+      lastDate: DateTime.now(),
+      locale: Locale('zh'),
+    );
+    if (picker != null) {
+      mProvider.birthday = picker.toLocal();
+    }
+  }
+
   /// 邮箱输入
   Widget _emailInput() {
     return TextField(
@@ -191,9 +223,15 @@ class _RegisterPageContentState extends BasePageContentViewState<RegisterPagePro
   /// 注册按钮
   Widget _registerButton() {
     return Container(
+      padding: EdgeInsets.only(left: 40.0, right: 40.0, top: 20.0),
       width: double.infinity,
       child: ElevatedButton(
-        child: Text('注册'),
+        child: Text(
+          '注册',
+          style: TextStyle(
+            fontSize: 18.0,
+          ),
+        ),
         onPressed: _registerHandler,
       ),
     );

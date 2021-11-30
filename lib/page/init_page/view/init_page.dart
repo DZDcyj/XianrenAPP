@@ -3,12 +3,12 @@
 ///
 /// created by DZDcyj at 2021/11/28
 ///
+import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:xianren_app/base/view/base_page_view.dart';
 import 'package:xianren_app/page/init_page/view_model/init_page_provider.dart';
 import 'package:xianren_app/router/router.dart';
 import 'package:xianren_app/router/router_constant.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 
 class InitPage extends PageNodeProvider<InitPageProvider> {
   @override

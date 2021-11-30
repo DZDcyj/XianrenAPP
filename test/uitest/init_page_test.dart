@@ -3,8 +3,8 @@
 ///
 /// created by DZDcyj at 2021/11/28
 ///
-import 'package:xianren_app/main.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:xianren_app/main.dart';
 
 import '../base/app_module.dart';
 import '../base/base.dart';

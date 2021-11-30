@@ -40,7 +40,23 @@ class RegisterPageProvider extends BasePageProvider {
     notifyListeners();
   }
 
-  DateTime birthday;
+  DateTime _birthday;
+
+  DateTime get birthday => _birthday ?? DateTime.now();
+
+  set birthday(DateTime value) {
+    _birthday = value;
+    notifyListeners();
+  }
+
+  bool _birthdayHidden;
+
+  bool get birthdayHidden => _birthdayHidden ?? false;
+
+  set birthdayHidden(bool value) {
+    _birthdayHidden = value;
+    notifyListeners();
+  }
 
   /// 验证用信息：邮件、真实姓名、学号、身份证号
   String email;

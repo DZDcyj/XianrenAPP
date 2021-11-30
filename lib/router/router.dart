@@ -3,9 +3,9 @@
 ///
 /// created by DZDcyj at 2021/11/28
 ///
-import 'package:xianren_app/router/router_constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:xianren_app/router/router_constant.dart';
 
 class CustomNavigatorObserver extends NavigatorObserver {
   static CustomNavigatorObserver _instance;

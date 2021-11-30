@@ -3,8 +3,8 @@
 ///
 /// created by DZDcyj at 2021/9/14
 ///
-import 'package:xianren_app/page/homepage/view/homepage.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:xianren_app/page/homepage/view/homepage.dart';
 import 'package:xianren_app/page/login_page/view/login_page.dart';
 import 'package:xianren_app/page/login_page/view/register_page.dart';
 

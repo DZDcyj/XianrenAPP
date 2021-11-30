@@ -6,9 +6,9 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:xianren_app/bean/bean.dart';
 import 'package:xianren_app/constants/constants.dart';
-import 'package:dio/dio.dart';
 
 class NetUtil {
   NetUtil();

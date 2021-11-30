@@ -126,7 +126,12 @@ class _LoginPageContentState extends BasePageContentViewState<LoginPageProvider>
             selector: (_, provider) => provider.autoInput,
             builder: (context, autoInput, child) {
               return CheckboxListTile(
-                title: Text('记住用户名和密码'),
+                title: Text(
+                  '记住用户名和密码',
+                  style: TextStyle(
+                    fontSize: 16.0,
+                  ),
+                ),
                 value: autoInput,
                 onChanged: (_autoInput) {
                   mProvider.autoInput = _autoInput;
@@ -145,7 +150,12 @@ class _LoginPageContentState extends BasePageContentViewState<LoginPageProvider>
             selector: (_, provider) => provider.autoLogin,
             builder: (context, autoLogin, child) {
               return CheckboxListTile(
-                title: Text('自动登录'),
+                title: Text(
+                  '自动登录',
+                  style: TextStyle(
+                    fontSize: 16.0,
+                  ),
+                ),
                 value: autoLogin,
                 onChanged: (_autoLogin) {
                   mProvider.autoLogin = _autoLogin;
@@ -165,9 +175,15 @@ class _LoginPageContentState extends BasePageContentViewState<LoginPageProvider>
   /// 登录按钮
   Widget _loginButton() {
     return Container(
+      padding: EdgeInsets.only(left: 40.0, right: 40.0, top: 20.0),
       width: double.infinity,
       child: ElevatedButton(
-        child: Text('登录'),
+        child: Text(
+          '登录',
+          style: TextStyle(
+            fontSize: 18.0,
+          ),
+        ),
         onPressed: _loginHandler,
       ),
     );
