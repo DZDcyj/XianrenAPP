@@ -5,12 +5,12 @@
 ///
 import 'dart:convert';
 
-import 'package:xianren_app/bean/bean.dart';
-import 'package:xianren_app/constants/constants.dart';
-import 'package:xianren_app/utils/net_util.dart';
 import 'package:dartin/dartin.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:xianren_app/bean/bean.dart';
+import 'package:xianren_app/constants/constants.dart';
+import 'package:xianren_app/utils/net_util.dart';
 
 import '../base/app_module.dart';
 import '../base/data.dart';

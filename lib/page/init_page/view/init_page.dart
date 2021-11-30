@@ -3,13 +3,12 @@
 ///
 /// created by DZDcyj at 2021/11/28
 ///
+import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:xianren_app/base/view/base_page_view.dart';
 import 'package:xianren_app/page/init_page/view_model/init_page_provider.dart';
 import 'package:xianren_app/router/router.dart';
 import 'package:xianren_app/router/router_constant.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class InitPage extends PageNodeProvider<InitPageProvider> {
   @override
@@ -29,12 +28,8 @@ class _InitPageContentState extends BasePageContentViewState<InitPageProvider> {
     super.initState();
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      Fluttertoast.showToast(
-        msg: 'Turn to home page ...',
-        gravity: ToastGravity.BOTTOM,
-      );
-      Future.delayed(Duration(seconds: 1)).then((value) {
-        RouteWrapper.pushNamed(routerNameHomePage, arguments: ['HomePage']);
+      Future.delayed(Duration(seconds: 1)).then((_) {
+        RouteWrapper.popAndPushNamed(routerNameLoginPage);
       });
     });
   }
@@ -43,10 +38,33 @@ class _InitPageContentState extends BasePageContentViewState<InitPageProvider> {
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      body: Center(
-        child: Text(
-          'Welcome',
+      body: Padding(
+        padding: EdgeInsets.only(left: 25.0, right: 25.0),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _welcomeLogo(),
+              SizedBox(height: 20.0),
+              _welcomeText(),
+            ],
+          ),
         ),
+      ),
+    );
+  }
+
+  /// 欢迎 Logo
+  Widget _welcomeLogo() {
+    return Image(image: AssetImage('assets/logo.png'));
+  }
+
+  /// 欢迎文字
+  Widget _welcomeText() {
+    return Text(
+      'Welcome to Xianren APP!',
+      style: TextStyle(
+        fontSize: 28,
       ),
     );
   }

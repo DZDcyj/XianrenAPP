@@ -1,5 +1,11 @@
 name: iOS-Development-build
-on: push
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - master
 
 jobs:
   build-debug-ipa:
