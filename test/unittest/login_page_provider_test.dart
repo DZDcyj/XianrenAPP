@@ -40,4 +40,9 @@ void main() {
       expect(success, true);
     });
   });
+
+  test('clearInfoFromPreferences', () {
+    provider.clearInfoFromPreferences();
+    expect(provider.autoInput, false);
+  });
 }
