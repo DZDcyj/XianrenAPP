@@ -66,6 +66,15 @@ class LoginPageProvider extends BasePageProvider {
     await preferences.setString(passwordKey, autoInput ? password : '');
   }
 
+  /// 清空数据库中已有信息
+  Future<void> clearInfoFromPreferences() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    await preferences.remove(usernameKey);
+    await preferences.remove(passwordKey);
+    await preferences.remove(autoInputKey);
+    await preferences.remove(autoLoginKey);
+  }
+
   /// 初始化
   Future<void> initialize() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -81,6 +90,8 @@ class LoginPageProvider extends BasePageProvider {
     // TODO: login and call callback function
     if (autoInput) {
       saveInfoToPreferences();
+    } else {
+      clearInfoFromPreferences();
     }
     callback?.call();
   }

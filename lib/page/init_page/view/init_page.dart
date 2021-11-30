@@ -38,13 +38,33 @@ class _InitPageContentState extends BasePageContentViewState<InitPageProvider> {
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      body: Center(
-        child: Text(
-          'Welcome to Xianren APP!',
-          style: TextStyle(
-            fontSize: 16,
+      body: Padding(
+        padding: EdgeInsets.only(left: 25.0, right: 25.0),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _welcomeLogo(),
+              SizedBox(height: 20.0),
+              _welcomeText(),
+            ],
           ),
         ),
+      ),
+    );
+  }
+
+  /// 欢迎 Logo
+  Widget _welcomeLogo() {
+    return Image(image: AssetImage('assets/logo.png'));
+  }
+
+  /// 欢迎文字
+  Widget _welcomeText() {
+    return Text(
+      'Welcome to Xianren APP!',
+      style: TextStyle(
+        fontSize: 28,
       ),
     );
   }
