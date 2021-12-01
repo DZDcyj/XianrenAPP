@@ -39,7 +39,7 @@ class _RegisterPageContentState extends BasePageContentViewState<RegisterPagePro
                 _nickNameInput(),
                 _genderSelector(),
                 _birthDaySelector(),
-                _emailInput(),
+                _phoneInput(),
                 _passwordInput(),
                 _realNameInput(),
                 _studentIdInput(),
@@ -172,16 +172,16 @@ class _RegisterPageContentState extends BasePageContentViewState<RegisterPagePro
     }
   }
 
-  /// 邮箱输入
-  Widget _emailInput() {
+  /// 手机号码输入
+  Widget _phoneInput() {
     return TextField(
-      keyboardType: TextInputType.emailAddress,
+      keyboardType: TextInputType.phone,
       decoration: InputDecoration(
-        labelText: '邮箱',
-        hintText: '在此输入您的邮箱',
-        prefixIcon: Icon(Icons.mail),
+        labelText: '手机号',
+        hintText: '在此输入您的手机号',
+        prefixIcon: Icon(Icons.phone_android),
       ),
-      onChanged: (value) => mProvider.email = value,
+      onChanged: (value) => mProvider.phone = value,
     );
   }
 
@@ -254,7 +254,7 @@ class _RegisterPageContentState extends BasePageContentViewState<RegisterPagePro
     return TextField(
       decoration: InputDecoration(
         labelText: '密码',
-        hintText: '在此输入密码',
+        hintText: '8-16位，必须包含数字和大小写字母',
         prefixIcon: Icon(Icons.lock),
       ),
       obscureText: true,

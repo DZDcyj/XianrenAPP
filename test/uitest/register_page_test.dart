@@ -22,7 +22,7 @@ void main() {
     await tester.enterText(find.byType(TextField).first, 'asd');
     expect(page.mProvider.nickName, 'asd');
     await tester.enterText(find.byType(TextField).at(1), 'abc@cde.com');
-    expect(page.mProvider.email, 'abc@cde.com');
+    expect(page.mProvider.phone, 'abc@cde.com');
     await tester.enterText(find.byType(TextField).at(2), 'cdef');
     expect(page.mProvider.password, 'cdef');
     await tester.enterText(find.byType(TextField).at(3), 'ghij');

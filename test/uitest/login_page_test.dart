@@ -70,7 +70,7 @@ void main() {
     );
     expect(
       find.byWidgetPredicate(
-          (widget) => widget is CheckboxListTile && (widget.title as Text).data == '记住用户名和密码' && widget.value),
+          (widget) => widget is CheckboxListTile && (widget.title as Text).data == '记住手机号密码' && widget.value),
       findsOneWidget,
     );
     expect(

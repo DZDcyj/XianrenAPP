@@ -92,9 +92,10 @@ class _LoginPageContentState extends BasePageContentViewState<LoginPageProvider>
   Widget _usernameInput() {
     return TextField(
       controller: _usernameController,
+      keyboardType: TextInputType.phone,
       decoration: InputDecoration(
-        labelText: '用户名',
-        hintText: '输入用户名或邮箱',
+        labelText: '手机号',
+        hintText: '输入手机号进行登录',
         prefixIcon: Icon(Icons.person),
       ),
       onChanged: (value) => mProvider.username = value,
@@ -120,13 +121,13 @@ class _LoginPageContentState extends BasePageContentViewState<LoginPageProvider>
     return Row(
       children: [
         Expanded(
-          flex: 3,
+          flex: 4,
           child: Selector<LoginPageProvider, bool>(
             selector: (_, provider) => provider.autoInput,
             builder: (context, autoInput, child) {
               return CheckboxListTile(
                 title: Text(
-                  '记住用户名和密码',
+                  '记住手机号密码',
                   style: TextStyle(
                     fontSize: 16.0,
                   ),
@@ -144,7 +145,7 @@ class _LoginPageContentState extends BasePageContentViewState<LoginPageProvider>
           ),
         ),
         Expanded(
-          flex: 2,
+          flex: 3,
           child: Selector<LoginPageProvider, bool>(
             selector: (_, provider) => provider.autoLogin,
             builder: (context, autoLogin, child) {

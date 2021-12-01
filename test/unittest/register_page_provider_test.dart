@@ -22,10 +22,12 @@ void main() {
     provider.studentId = 'u123';
     provider.realName = 'asd';
     provider.password = '123456';
-    provider.email = 'abcefg.com';
+    provider.phone = '123456';
     provider.nickName = 'aaa';
-    expect(provider.validateInformation(callback: (value) => checkValue(value, '邮箱不合法')), false);
-    provider.email = 'abc@efg.com';
+    expect(provider.validateInformation(callback: (value) => checkValue(value, '密码不符合要求')), false);
+    provider.password = 'Abc123456';
+    expect(provider.validateInformation(callback: (value) => checkValue(value, '手机号不合法')), false);
+    provider.phone = '13384581839';
     expect(provider.validateInformation(callback: (value) => checkValue(value, '身份证号不合法')), false);
     provider.idNumber = '440102198001021230';
     expect(provider.validateInformation(callback: (value) => fail('Should Not Be Called')), true);
