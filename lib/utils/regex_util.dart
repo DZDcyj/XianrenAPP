@@ -58,3 +58,10 @@ bool validateIdNumber(String idNumber) {
   }
   return true;
 }
+
+/// 验证密码合法性
+/// 必须包含大小写字母和数字的组合，可以使用特殊字符，长度在8-16之间
+bool validatePassword(String password) {
+  RegExp regExp = RegExp(r'^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$');
+  return regExp.hasMatch(password);
+}

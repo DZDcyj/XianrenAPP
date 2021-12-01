@@ -60,7 +60,7 @@ class RegisterPageProvider extends BasePageProvider {
   }
 
   /// 验证用信息：邮件、真实姓名、学号、身份证号
-  String email;
+  String phone;
   String realName;
   String studentId;
   String idNumber;
@@ -71,17 +71,22 @@ class RegisterPageProvider extends BasePageProvider {
   /// 验证输入数据
   bool validateInformation({void Function(dynamic msg) callback}) {
     if (nickName.isEmpty ||
-        (email?.isEmpty ?? false) ||
-        (password?.isEmpty ?? false) ||
-        (realName?.isEmpty ?? false) ||
-        (idNumber?.isEmpty ?? false) ||
-        (studentId?.isEmpty ?? false)) {
+        (phone?.isEmpty ?? true) ||
+        (password?.isEmpty ?? true) ||
+        (realName?.isEmpty ?? true) ||
+        (idNumber?.isEmpty ?? true) ||
+        (studentId?.isEmpty ?? true)) {
       callback?.call('部分信息不完整');
       return false;
     }
 
-    if (!validateEmail(email)) {
-      callback?.call('邮箱不合法');
+    if (!validatePassword(password)) {
+      callback?.call('密码不符合要求');
+      return false;
+    }
+
+    if (!validatePhoneNumber(phone)) {
+      callback?.call('手机号不合法');
       return false;
     }
 
