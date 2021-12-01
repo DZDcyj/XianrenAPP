@@ -96,7 +96,7 @@ class _LoginPageContentState extends BasePageContentViewState<LoginPageProvider>
       decoration: InputDecoration(
         labelText: '手机号',
         hintText: '输入手机号进行登录',
-        prefixIcon: Icon(Icons.person),
+        prefixIcon: Icon(Icons.phone_android),
       ),
       onChanged: (value) => mProvider.username = value,
     );
