@@ -32,10 +32,33 @@ void main() {
     );
   }
 
+  void mockPostData(String responseData) {
+    when(netUtil.post<MapEntity>(any)).thenAnswer(
+      (realInvocation) => Stream.fromFuture(
+        Future.value(
+          HttpResponseEntity<MapEntity>.fromJson(
+            json.decode(responseData),
+          ),
+        ),
+      ),
+    );
+  }
+
   test('get', () {
     mockGetData();
 
     netUtil.get('api').listen((response) {
+      expect(response.code, responseOK);
+      expect(response.msg, 'success');
+      expect(response.rawData is Map, true);
+      expect(response.data is MapEntity, true);
+    });
+  });
+
+  test('post', () {
+    mockPostData(successResponse);
+
+    netUtil.post('asd').listen((response) {
       expect(response.code, responseOK);
       expect(response.msg, 'success');
       expect(response.rawData is Map, true);

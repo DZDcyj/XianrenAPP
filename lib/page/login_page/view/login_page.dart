@@ -191,8 +191,9 @@ class _LoginPageContentState extends BasePageContentViewState<LoginPageProvider>
 
   /// 处理登录
   void _loginHandler() {
-    mProvider.login(() {});
-    // TODO: 登录、跳转
+    mProvider.doLogin(() {
+      RouteWrapper.popAndPushNamed(routerNameHomePage);
+    });
   }
 
   /// 注册按钮

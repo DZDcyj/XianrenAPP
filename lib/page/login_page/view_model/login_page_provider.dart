@@ -3,8 +3,12 @@
 ///
 /// created by DZDcyj at 2021/11/28
 ///
+import 'package:dartin/dartin.dart';
+import 'package:dio/dio.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xianren_app/base/view_model/base_page_view_provider.dart';
+import 'package:xianren_app/utils/net_util.dart';
 
 String usernameKey = 'username';
 String passwordKey = 'password';
@@ -14,6 +18,8 @@ String autoLoginKey = 'autoLogin';
 class LoginPageProvider extends BasePageProvider {
   /// 是否启用记住用户名密码
   bool _autoInput;
+
+  NetUtil netUtil = get();
 
   bool get autoInput => _autoInput ?? false;
 
@@ -86,13 +92,29 @@ class LoginPageProvider extends BasePageProvider {
   }
 
   /// 登录
-  Future<void> login(void Function() callback) async {
-    // TODO: login and call callback function
+  Future<void> doLogin(void Function() callback) async {
     if (autoInput) {
       saveInfoToPreferences();
     } else {
       clearInfoFromPreferences();
     }
-    callback?.call();
+    asyncRequest(
+      login(username, password),
+      onData: (response) {
+        if (response.code == 0) {
+          callback?.call();
+        } else {
+          Fluttertoast.showToast(msg: '发生错误！(${response.code})');
+        }
+      },
+      handleError: errorHandler,
+      cancelOnError: true,
+    );
+  }
+
+  void errorHandler(error) {
+    if (error is DioError) {
+      Fluttertoast.showToast(msg: '网络不可用，请检查你的网络设置');
+    }
   }
 }
