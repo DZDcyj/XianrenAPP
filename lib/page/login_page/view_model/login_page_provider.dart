@@ -8,6 +8,7 @@ import 'package:dio/dio.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xianren_app/base/view_model/base_page_view_provider.dart';
+import 'package:xianren_app/constants/constants.dart';
 import 'package:xianren_app/utils/net_util.dart';
 
 String usernameKey = 'username';
@@ -101,10 +102,10 @@ class LoginPageProvider extends BasePageProvider {
     asyncRequest(
       _netUtil.login(username, password),
       onData: (response) {
-        if (response.code == 200) {
+        if (response.code == httpResponseOK) {
           callback?.call();
         } else {
-          Fluttertoast.showToast(msg: '发生错误！(${response.code})');
+          Fluttertoast.showToast(msg: '发生错误！错误信息：${response.msg} (${response.code})');
         }
       },
       handleError: errorHandler,

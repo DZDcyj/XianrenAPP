@@ -25,7 +25,7 @@ class HttpResponseEntity<T extends ToJson> implements ToJson {
 
   HttpResponseEntity.fromJson(Map<String, dynamic> json) {
     code = json['code'] ?? -1;
-    msg = json['msg'] ?? '';
+    msg = json['message'] ?? '';
     rawData = json['data'] ?? {};
     data = EntityFactory.generate<T>(json['data']);
   }
@@ -34,7 +34,7 @@ class HttpResponseEntity<T extends ToJson> implements ToJson {
   Map<String, dynamic> toJson() {
     Map<String, dynamic> result = {};
     result['code'] = code;
-    result['msg'] = msg;
+    result['message'] = msg;
     result['raw_data'] = rawData;
     result['data'] = data.toJson();
     return result;

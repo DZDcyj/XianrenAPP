@@ -5,14 +5,20 @@
 ///
 
 /// HTTP 返回码
-const int responseOK = 200;
-const int responseNotFound = 404;
-const int responseInternalError = 500;
+const int httpResponseOK = 200;
+const int httpResponseNotFound = 404;
+const int httpResponseInternalError = 500;
+
+/// 业务逻辑返回码
+const int responseOK = 20000; // 成功
+const int responseRegisterFailed = 20001; // 注册失败
+const int responseUserNotExist = 20007; // 用户不存在
+const int responseWrongPassword = 20008; // 密码错误
 
 /// 网络请求相关
 const int maxTimeout = 10000;
 const String contentType = 'application/json; charset=utf8';
-const String serverDomain = 'api.chinsan.top'; // TODO: 修改地址
+const String serverDomain = '81.70.93.231:8080';
 
 /// 请求 API
 const String registerApi = 'register';
