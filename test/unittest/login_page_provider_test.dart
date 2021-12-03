@@ -20,9 +20,9 @@ import '../base/data.dart';
 void main() {
   init();
 
-  LoginPageProvider provider = LoginPageProvider();
+  NetUtil netUtil = inject();
 
-  NetUtil netUtil = get();
+  LoginPageProvider provider = LoginPageProvider();
 
   setUp(() {
     SharedPreferences.setMockInitialValues({
@@ -44,7 +44,7 @@ void main() {
 
   test('login', () {
     bool success = false;
-    when(netUtil.post<MapEntity>(any)).thenAnswer(
+    when(netUtil.login(any, any)).thenAnswer(
       (realInvocation) => Stream.fromFuture(
         Future.value(
           HttpResponseEntity<MapEntity>.fromJson(
@@ -53,14 +53,9 @@ void main() {
         ),
       ),
     );
-    // TODO: fix the test
-    provider.doLogin(
-      () {
-        success = true;
-        debugPrint('success');
-        expect(success, true);
-      },
-    );
+    provider.doLogin(() => success = true).then((value) {
+      expect(success, true);
+    });
   });
 
   test('clearInfoFromPreferences', () {

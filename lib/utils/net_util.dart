@@ -6,7 +6,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:dartin/dartin.dart';
 import 'package:dio/dio.dart';
 import 'package:xianren_app/bean/bean.dart';
 import 'package:xianren_app/constants/constants.dart';
@@ -54,14 +53,17 @@ class NetUtil {
     var response = await dio.post(url, data: data, queryParameters: queryParameters);
     return HttpResponseEntity<T>.fromJson(json.decode(response.data));
   }
+
+  Stream<HttpResponseEntity<MapEntity>> login(String phoneNumber, String password) {
+    return post(
+      loginApi,
+      data: {
+        'phonenumber': phoneNumber,
+        'password': password,
+      },
+    );
+  }
 }
-
-NetUtil netUtil = inject();
-
-Stream<HttpResponseEntity<MapEntity>> login(String phoneNumber, String password) => netUtil.post(loginApi, data: {
-      'phonenumber': phoneNumber,
-      'password': password,
-    });
 
 String constructUrl(
   String api, {

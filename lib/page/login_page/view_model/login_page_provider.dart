@@ -19,7 +19,7 @@ class LoginPageProvider extends BasePageProvider {
   /// 是否启用记住用户名密码
   bool _autoInput;
 
-  NetUtil netUtil = get();
+  NetUtil _netUtil = inject();
 
   bool get autoInput => _autoInput ?? false;
 
@@ -99,9 +99,9 @@ class LoginPageProvider extends BasePageProvider {
       clearInfoFromPreferences();
     }
     asyncRequest(
-      login(username, password),
+      _netUtil.login(username, password),
       onData: (response) {
-        if (response.code == 0) {
+        if (response.code == 200) {
           callback?.call();
         } else {
           Fluttertoast.showToast(msg: '发生错误！(${response.code})');
