@@ -102,7 +102,7 @@ class LoginPageProvider extends BasePageProvider {
     asyncRequest(
       _netUtil.login(username, password),
       onData: (response) {
-        if (response.code == httpResponseOK) {
+        if (response.code == responseOK) {
           callback?.call();
         } else {
           Fluttertoast.showToast(msg: '发生错误！错误信息：${response.msg} (${response.code})');

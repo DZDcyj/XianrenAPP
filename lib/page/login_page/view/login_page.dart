@@ -36,6 +36,9 @@ class _LoginPageContentState extends BasePageContentViewState<LoginPageProvider>
         mProvider.initialize().then((_) {
           _usernameController.text = mProvider.username;
           _passwordController.text = mProvider.password;
+          if (mProvider.autoLogin) {
+            _loginHandler();
+          }
         });
       });
     });
@@ -192,7 +195,10 @@ class _LoginPageContentState extends BasePageContentViewState<LoginPageProvider>
   /// 处理登录
   void _loginHandler() {
     mProvider.doLogin(() {
-      RouteWrapper.popAndPushNamed(routerNameHomePage);
+      RouteWrapper.popAndPushNamed(
+        routerNameHomePage,
+        arguments: ['HomePage'],
+      );
     });
   }
 

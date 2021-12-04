@@ -245,7 +245,7 @@ class _RegisterPageContentState extends BasePageContentViewState<RegisterPagePro
     if (mProvider.validateInformation(onError: _messageShowHandler)) {
       mProvider.doRegister(
         onData: (response) {
-          _messageShowHandler(response.message);
+          _messageShowHandler(response.msg);
           if (response.code == responseOK) {
             RouteWrapper.popSafety();
           }
