@@ -41,7 +41,8 @@ void main() {
     });
   });
 
-  test('login', () {
+  test('doLogin', () {
+    // 登录成功
     bool success = false;
     when(netUtil.login(any, any)).thenAnswer(
       (realInvocation) => Stream.fromFuture(
@@ -52,8 +53,25 @@ void main() {
         ),
       ),
     );
-    provider.doLogin(() => success = true).then((value) {
+    provider.doLogin(onSuccess: () => success = true).then((value) {
       expect(success, true);
+    });
+  });
+
+  test('doLogin', () {
+    // 登录失败
+    bool success = true;
+    when(netUtil.login(any, any)).thenAnswer(
+      (realInvocation) => Stream.fromFuture(
+        Future.value(
+          HttpResponseEntity<MapEntity>.fromJson(
+            json.decode(failedResponse),
+          ),
+        ),
+      ),
+    );
+    provider.doLogin(onFailed: (response) => success = false).then((value) {
+      expect(success, false);
     });
   });
 

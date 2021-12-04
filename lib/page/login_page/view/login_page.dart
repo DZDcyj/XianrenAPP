@@ -6,6 +6,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:xianren_app/base/view/base_page_view.dart';
 import 'package:xianren_app/page/login_page/view_model/login_page_provider.dart';
@@ -194,12 +195,23 @@ class _LoginPageContentState extends BasePageContentViewState<LoginPageProvider>
 
   /// 处理登录
   void _loginHandler() {
-    mProvider.doLogin(() {
-      RouteWrapper.popAndPushNamed(
-        routerNameHomePage,
-        arguments: ['HomePage'],
-      );
-    });
+    mProvider.doLogin(
+      onSuccess: _loginSuccessHandler,
+      onFailed: _loginFailedHandler,
+    );
+  }
+
+  /// 登录成功
+  void _loginSuccessHandler() {
+    RouteWrapper.popAndPushNamed(
+      routerNameHomePage,
+      arguments: ['HomePage'],
+    );
+  }
+
+  /// 登陆失败
+  void _loginFailedHandler(dynamic response) {
+    Fluttertoast.showToast(msg: '发生错误！错误信息：${response.message} (${response.code})');
   }
 
   /// 注册按钮

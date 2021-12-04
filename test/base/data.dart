@@ -10,3 +10,11 @@ const String successResponse = '''
     "data": {}
 }
 ''';
+
+const String failedResponse = '''
+{
+    "code": 20007,
+    "message": "用户不存在",
+    "data": {}
+}
+''';
