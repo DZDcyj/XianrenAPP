@@ -33,6 +33,7 @@ void main() {
     provider.password = '123456';
     provider.phone = '123456';
     provider.nickName = 'aaa';
+    provider.birthday = DateTime(2000);
     expect(provider.validateInformation(onError: (value) => checkValue(value, '密码不符合要求')), false);
     provider.password = 'Abc123456';
     expect(provider.validateInformation(onError: (value) => checkValue(value, '手机号不合法')), false);
@@ -55,8 +56,10 @@ void main() {
         ),
       ),
     );
-    provider.doRegister(onData: (response) => success = true).then((value) {
+    bool started = false;
+    provider.doRegister(onData: (response) => success = true, onStart: () => started = true).then((value) {
       expect(success, true);
+      expect(started, true);
     });
   });
 }

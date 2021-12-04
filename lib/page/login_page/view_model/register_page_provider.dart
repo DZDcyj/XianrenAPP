@@ -104,7 +104,7 @@ class RegisterPageProvider extends BasePageProvider {
     return true;
   }
 
-  String _transferDate(DateTime dateTime) {
+  String transferDate(DateTime dateTime) {
     return '${dateTime.year}-${dateTime.month}-${dateTime.day}';
   }
 
@@ -113,7 +113,7 @@ class RegisterPageProvider extends BasePageProvider {
       'phonenumber': phone,
       'gender': genderTranslation[gender],
       'password': password,
-      'birthday': _transferDate(birthday),
+      'birthday': transferDate(birthday),
       'nickname': nickName,
       'realname': realName,
       'idnumber': idNumber,
