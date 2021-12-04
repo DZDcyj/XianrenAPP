@@ -11,6 +11,7 @@ import 'package:xianren_app/base/view/base_page_view.dart';
 import 'package:xianren_app/constants/constants.dart';
 import 'package:xianren_app/page/login_page/view_model/register_page_provider.dart';
 import 'package:xianren_app/router/router.dart';
+import 'package:xianren_app/utils/string_util.dart';
 
 class RegisterPage extends PageNodeProvider<RegisterPageProvider> {
   @override
@@ -141,7 +142,7 @@ class _RegisterPageContentState extends BasePageContentViewState<RegisterPagePro
             onTap: _handleDatePick,
             child: Selector<RegisterPageProvider, DateTime>(
               selector: (_, provider) => provider.birthday,
-              builder: (context, value, child) => Text('${value.year}-${value.month}-${value.day}'),
+              builder: (context, value, child) => Text(transferDate(value)),
             ),
           ),
         ),
