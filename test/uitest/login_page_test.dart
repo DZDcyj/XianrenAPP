@@ -23,8 +23,6 @@ void main() {
 
   NetUtil netUtil = inject();
 
-  final observer = inject<NavigatorObserver>();
-
   testWidgets('LoginPage', (WidgetTester tester) async {
     LoginPage page = LoginPage();
     await showWidget(tester, page, duration: Duration(seconds: 1));
