@@ -5,8 +5,16 @@
 ///
 const String successResponse = '''
 {
-    "code": 200,
-    "msg": "success",
+    "code": 20000,
+    "message": "success",
+    "data": {}
+}
+''';
+
+const String failedResponse = '''
+{
+    "code": 20007,
+    "message": "用户不存在",
     "data": {}
 }
 ''';

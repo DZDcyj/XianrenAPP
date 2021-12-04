@@ -30,10 +30,19 @@ abstract class BasePageProvider extends ChangeNotifier {
     super.notifyListeners();
   }
 
-  void asyncRequest(Stream<dynamic> request, {bool cancelOnError}) {
+  void asyncRequest(
+    Stream<dynamic> request, {
+    bool cancelOnError,
+    void Function(dynamic) onData,
+    void Function(Error) handleError,
+    void Function() onDone,
+  }) {
     if (request == null || _compositeSubscription.isDisposed) {
       return;
     }
-    _compositeSubscription.add(request.listen(null, cancelOnError: cancelOnError));
+    _compositeSubscription.add(request.listen(null, cancelOnError: cancelOnError))
+      ..onData(onData)
+      ..onError(handleError)
+      ..onDone(onDone);
   }
 }

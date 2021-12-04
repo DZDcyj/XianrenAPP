@@ -3,7 +3,9 @@
 ///
 /// created by DZDcyj at 2021/11/29
 ///
+import 'package:dartin/dartin.dart';
 import 'package:xianren_app/base/view_model/base_page_view_provider.dart';
+import 'package:xianren_app/utils/net_util.dart';
 import 'package:xianren_app/utils/regex_util.dart';
 
 /// 性别选项
@@ -22,6 +24,8 @@ Map<Gender, String> genderTranslation = {
 };
 
 class RegisterPageProvider extends BasePageProvider {
+  NetUtil _netUtil = inject();
+
   /// 个人信息：昵称、性别、生日
   String _nickName;
 
@@ -69,32 +73,65 @@ class RegisterPageProvider extends BasePageProvider {
   String password;
 
   /// 验证输入数据
-  bool validateInformation({void Function(dynamic msg) callback}) {
+  bool validateInformation({
+    void Function(dynamic msg) onError,
+  }) {
     if (nickName.isEmpty ||
         (phone?.isEmpty ?? true) ||
         (password?.isEmpty ?? true) ||
         (realName?.isEmpty ?? true) ||
         (idNumber?.isEmpty ?? true) ||
         (studentId?.isEmpty ?? true)) {
-      callback?.call('部分信息不完整');
+      onError?.call('部分信息不完整');
       return false;
     }
 
     if (!validatePassword(password)) {
-      callback?.call('密码不符合要求');
+      onError?.call('密码不符合要求');
       return false;
     }
 
     if (!validatePhoneNumber(phone)) {
-      callback?.call('手机号不合法');
+      onError?.call('手机号不合法');
       return false;
     }
 
     if (!validateIdNumber(idNumber)) {
-      callback?.call('身份证号不合法');
+      onError?.call('身份证号不合法');
       return false;
     }
 
     return true;
+  }
+
+  String transferDate(DateTime dateTime) {
+    return '${dateTime.year}-${dateTime.month}-${dateTime.day}';
+  }
+
+  Map<String, dynamic> constructPostData() {
+    return {
+      'phonenumber': phone,
+      'gender': genderTranslation[gender],
+      'password': password,
+      'birthday': transferDate(birthday),
+      'nickname': nickName,
+      'realname': realName,
+      'idnumber': idNumber,
+      'studentnumber': studentId,
+      'boolhidebirthday': birthdayHidden ? 1 : 0,
+    };
+  }
+
+  Future<void> doRegister({
+    void Function(dynamic data) onData,
+    void Function() onStart,
+    void Function() onDone,
+  }) async {
+    onStart?.call();
+    asyncRequest(
+      _netUtil.register(constructPostData()),
+      onData: onData,
+      onDone: onDone,
+    );
   }
 }

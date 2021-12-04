@@ -3,8 +3,11 @@
 ///
 /// created by DZDcyj at 2021/11/28
 ///
+import 'package:dartin/dartin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xianren_app/base/view_model/base_page_view_provider.dart';
+import 'package:xianren_app/constants/constants.dart';
+import 'package:xianren_app/utils/net_util.dart';
 
 String usernameKey = 'username';
 String passwordKey = 'password';
@@ -14,6 +17,8 @@ String autoLoginKey = 'autoLogin';
 class LoginPageProvider extends BasePageProvider {
   /// 是否启用记住用户名密码
   bool _autoInput;
+
+  NetUtil _netUtil = inject();
 
   bool get autoInput => _autoInput ?? false;
 
@@ -86,13 +91,27 @@ class LoginPageProvider extends BasePageProvider {
   }
 
   /// 登录
-  Future<void> login(void Function() callback) async {
-    // TODO: login and call callback function
+  Future<void> doLogin({
+    void Function() onSuccess,
+    void Function(dynamic response) onFailed,
+    void Function(Error) onError,
+  }) async {
     if (autoInput) {
       saveInfoToPreferences();
     } else {
       clearInfoFromPreferences();
     }
-    callback?.call();
+    asyncRequest(
+      _netUtil.login(username, password),
+      onData: (response) {
+        if (response.code == responseOK) {
+          onSuccess?.call();
+        } else {
+          onFailed?.call(response);
+        }
+      },
+      handleError: onError,
+      cancelOnError: true,
+    );
   }
 }

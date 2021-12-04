@@ -8,7 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:xianren_app/base/view/base_page_view.dart';
+import 'package:xianren_app/constants/constants.dart';
 import 'package:xianren_app/page/login_page/view_model/register_page_provider.dart';
+import 'package:xianren_app/router/router.dart';
 
 class RegisterPage extends PageNodeProvider<RegisterPageProvider> {
   @override
@@ -240,12 +242,21 @@ class _RegisterPageContentState extends BasePageContentViewState<RegisterPagePro
 
   /// 处理注册
   void _registerHandler() {
-    if (mProvider.validateInformation(callback: (value) {
-      if (value is String) {
-        Fluttertoast.showToast(msg: value);
-      }
-    })) {
-      // TODO: 进行注册
+    if (mProvider.validateInformation(onError: _messageShowHandler)) {
+      mProvider.doRegister(
+        onData: (response) {
+          _messageShowHandler(response.message);
+          if (response.code == responseOK) {
+            RouteWrapper.popSafety();
+          }
+        },
+      );
+    }
+  }
+
+  void _messageShowHandler(value) {
+    if (value is String) {
+      Fluttertoast.showToast(msg: value);
     }
   }
 

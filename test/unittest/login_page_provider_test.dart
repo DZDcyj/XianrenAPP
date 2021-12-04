@@ -3,14 +3,23 @@
 ///
 /// created by DZDcyj at 2021/11/28
 ///
+import 'dart:convert';
+
+import 'package:dartin/dartin.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:xianren_app/bean/bean.dart';
 import 'package:xianren_app/page/login_page/view_model/login_page_provider.dart';
+import 'package:xianren_app/utils/net_util.dart';
 
 import '../base/app_module.dart';
+import '../base/data.dart';
 
 void main() {
   init();
+
+  NetUtil netUtil = inject();
 
   LoginPageProvider provider = LoginPageProvider();
 
@@ -32,12 +41,37 @@ void main() {
     });
   });
 
-  test('login', () {
+  test('doLogin', () {
+    // 登录成功
     bool success = false;
-    provider.login(() {
-      success = true;
-    }).then((_) {
+    when(netUtil.login(any, any)).thenAnswer(
+      (realInvocation) => Stream.fromFuture(
+        Future.value(
+          HttpResponseEntity<MapEntity>.fromJson(
+            json.decode(successResponse),
+          ),
+        ),
+      ),
+    );
+    provider.doLogin(onSuccess: () => success = true).then((value) {
       expect(success, true);
+    });
+  });
+
+  test('doLogin', () {
+    // 登录失败
+    bool success = true;
+    when(netUtil.login(any, any)).thenAnswer(
+      (realInvocation) => Stream.fromFuture(
+        Future.value(
+          HttpResponseEntity<MapEntity>.fromJson(
+            json.decode(failedResponse),
+          ),
+        ),
+      ),
+    );
+    provider.doLogin(onFailed: (response) => success = false).then((value) {
+      expect(success, false);
     });
   });
 

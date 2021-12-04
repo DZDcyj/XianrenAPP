@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:xianren_app/app_module.dart';
 import 'package:xianren_app/page/init_page/view/init_page.dart';
-import 'package:xianren_app/router/router.dart';
 
 void main() {
   startDartIn(appModule);
@@ -20,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      navigatorObservers: [CustomNavigatorObserver.getInstance()],
+      navigatorObservers: [inject<NavigatorObserver>()],
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
