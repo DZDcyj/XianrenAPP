@@ -14,6 +14,7 @@ import 'package:xianren_app/bean/bean.dart';
 import 'package:xianren_app/page/login_page/view/register_page.dart';
 import 'package:xianren_app/page/login_page/view_model/register_page_provider.dart';
 import 'package:xianren_app/utils/net_util.dart';
+import 'package:xianren_app/utils/string_util.dart';
 
 import '../base/app_module.dart';
 import '../base/base.dart';
@@ -46,9 +47,9 @@ void main() {
     // 隐藏生日
     await tap(tester, find.byType(CheckboxListTile));
     expect(page.mProvider.birthdayHidden, true);
-    await tap(tester, find.text(page.mProvider.transferDate(page.mProvider.birthday)));
+    await tap(tester, find.text(transferDate(page.mProvider.birthday)));
     await tap(tester, find.text('确定'));
-    expect(page.mProvider.transferDate(page.mProvider.birthday), page.mProvider.transferDate(DateTime.now()));
+    expect(transferDate(page.mProvider.birthday), transferDate(DateTime.now()));
 
     // 选择性别
     await tap(tester, find.byType(DropdownButton));

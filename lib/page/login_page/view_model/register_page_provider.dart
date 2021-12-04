@@ -7,6 +7,7 @@ import 'package:dartin/dartin.dart';
 import 'package:xianren_app/base/view_model/base_page_view_provider.dart';
 import 'package:xianren_app/utils/net_util.dart';
 import 'package:xianren_app/utils/regex_util.dart';
+import 'package:xianren_app/utils/string_util.dart';
 
 /// 性别选项
 enum Gender {
@@ -102,10 +103,6 @@ class RegisterPageProvider extends BasePageProvider {
     }
 
     return true;
-  }
-
-  String transferDate(DateTime dateTime) {
-    return '${dateTime.year}-${dateTime.month}-${dateTime.day}';
   }
 
   Map<String, dynamic> constructPostData() {

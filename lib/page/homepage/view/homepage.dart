@@ -4,22 +4,21 @@
 /// created by DZDcyj at 2021/11/28
 ///
 import 'package:xianren_app/base/view/base_page_view.dart';
+import 'package:xianren_app/page/homepage/view/personal_information_page.dart';
 import 'package:xianren_app/page/homepage/view_model/homepage_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends PageNodeProvider<HomePageProvider> {
-  HomePage(this.title) : super(params: [title]);
-
-  final String title;
+  HomePage() : super();
 
   @override
-  Widget buildContent(BuildContext context) => HomePageContent(mProvider);
+  Widget buildContent(BuildContext context) => _HomePageContent(mProvider);
 }
 
-class HomePageContent extends BasePageContentView<HomePageProvider> {
-  HomePageContent(
+class _HomePageContent extends BasePageContentView<HomePageProvider> {
+  _HomePageContent(
     HomePageProvider provider, {
     Key key,
     this.title,
@@ -36,33 +35,57 @@ class _MyHomePageContentState extends BasePageContentViewState<HomePageProvider>
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(mProvider.title),
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
             Selector<HomePageProvider, int>(
-              selector: (context, provider) => provider.counter,
-              builder: (_, count, child) {
-                return Text(
-                  '$count',
-                  style: Theme.of(context).textTheme.headline4,
-                );
+              selector: (_, provider) => provider.currIndex,
+              builder: (context, index, child) {
+                if (index != 2) {
+                  return Text(
+                    'You are now at page $index',
+                  );
+                }
+                return PersonalInformationPage();
               },
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: mProvider.increment,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
+      bottomNavigationBar: Selector<HomePageProvider, int>(
+        selector: (_, provider) => provider.currIndex,
+        builder: (context, index, child) => BottomNavigationBar(
+          items: [
+            BottomNavigationBarItem(
+              icon: _icon('label', index == 0),
+              label: '小纸条',
+            ),
+            BottomNavigationBarItem(
+              icon: _icon('forum', index == 1),
+              label: '树洞',
+            ),
+            BottomNavigationBarItem(
+              icon: _icon('self', index == 2),
+              label: '我的',
+            ),
+          ],
+          currentIndex: index,
+          onTap: (newIndex) => mProvider.currIndex = newIndex,
+        ),
       ),
+    );
+  }
+
+  /// 导航栏图标
+  /// [name] 图片名称，不接 assets 前缀
+  /// [selected] 是否选中当前栏位
+  Widget _icon(String name, bool selected) {
+    String suffix = selected ? '-selected' : '';
+    String fullName = 'assets/$name$suffix.png';
+    return Container(
+      width: selected ? 48 : 36,
+      child: Image(image: AssetImage(fullName)),
     );
   }
 }

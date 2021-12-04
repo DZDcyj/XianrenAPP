@@ -6,18 +6,12 @@
 import 'package:xianren_app/base/view_model/base_page_view_provider.dart';
 
 class HomePageProvider extends BasePageProvider {
-  HomePageProvider(this.title);
+  int _currIndex;
 
-  final String title;
+  int get currIndex => _currIndex ?? 2;
 
-  int _counter;
-
-  int get counter => _counter ?? 0;
-
-  set counter(int value) {
-    _counter = value;
+  set currIndex(int value) {
+    _currIndex = value;
     notifyListeners();
   }
-
-  void increment() => counter++;
 }

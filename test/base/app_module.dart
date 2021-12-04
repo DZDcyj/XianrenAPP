@@ -14,9 +14,7 @@ import 'package:xianren_app/utils/net_util.dart';
 
 final viewModelModule = Module([
   factory<HomePageProvider>(
-    ({params}) => HomePageProvider(
-      params.get(0),
-    ),
+    ({params}) => HomePageProvider(),
   ),
   factory<InitPageProvider>(
     ({params}) => InitPageProvider(),
