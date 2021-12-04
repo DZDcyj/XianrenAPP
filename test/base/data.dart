@@ -5,7 +5,7 @@
 ///
 const String successResponse = '''
 {
-    "code": 200,
+    "code": 20000,
     "message": "success",
     "data": {}
 }

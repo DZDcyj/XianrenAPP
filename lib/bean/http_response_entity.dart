@@ -12,20 +12,20 @@ abstract class ToJson {
 /// 网络返回信息实体类
 class HttpResponseEntity<T extends ToJson> implements ToJson {
   int code; // 状态码
-  String msg; // 信息
+  String message; // 信息
   Map<String, dynamic> rawData; // 原始数据
   T data; // 转换后数据
 
   HttpResponseEntity({
     this.code,
-    this.msg,
+    this.message,
     this.rawData,
     this.data,
   });
 
   HttpResponseEntity.fromJson(Map<String, dynamic> json) {
     code = json['code'] ?? -1;
-    msg = json['message'] ?? '';
+    message = json['message'] ?? '';
     rawData = json['data'] ?? {};
     data = EntityFactory.generate<T>(json['data']);
   }
@@ -34,7 +34,7 @@ class HttpResponseEntity<T extends ToJson> implements ToJson {
   Map<String, dynamic> toJson() {
     Map<String, dynamic> result = {};
     result['code'] = code;
-    result['message'] = msg;
+    result['message'] = message;
     result['raw_data'] = rawData;
     result['data'] = data.toJson();
     return result;

@@ -48,8 +48,8 @@ void main() {
     mockGetData();
 
     netUtil.get('api').listen((response) {
-      expect(response.code, httpResponseOK);
-      expect(response.msg, 'success');
+      expect(response.code, responseOK);
+      expect(response.message, 'success');
       expect(response.rawData is Map, true);
       expect(response.data is MapEntity, true);
     });
@@ -59,8 +59,8 @@ void main() {
     mockPostData(successResponse);
 
     netUtil.post('asd').listen((response) {
-      expect(response.code, httpResponseOK);
-      expect(response.msg, 'success');
+      expect(response.code, responseOK);
+      expect(response.message, 'success');
       expect(response.rawData is Map, true);
       expect(response.data is MapEntity, true);
     });

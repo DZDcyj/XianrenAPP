@@ -4,6 +4,7 @@
 /// created by DZDcyj at 2021/11/28
 ///
 import 'package:dartin/dartin.dart';
+import 'package:flutter/cupertino.dart' as flutter;
 import 'package:mockito/mockito.dart';
 import 'package:xianren_app/page/homepage/view_model/homepage_provider.dart';
 import 'package:xianren_app/page/init_page/view_model/init_page_provider.dart';
@@ -30,8 +31,11 @@ final viewModelModule = Module([
 
 class NetUtilMock extends Mock implements NetUtil {}
 
+class NavigatorMock extends Mock implements flutter.NavigatorObserver {}
+
 final utilModule = Module([
   single<NetUtil>(({params}) => NetUtilMock()),
+  single<flutter.NavigatorObserver>(({params}) => NavigatorMock()),
 ]);
 
 final appModule = [viewModelModule, utilModule];

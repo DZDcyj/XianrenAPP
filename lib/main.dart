@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      navigatorObservers: [CustomNavigatorObserver.getInstance()],
+      navigatorObservers: [inject<NavigatorObserver>()],
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

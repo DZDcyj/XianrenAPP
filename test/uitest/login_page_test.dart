@@ -3,16 +3,27 @@
 ///
 /// created by DZDcyj at 2021/11/28
 ///
+import 'dart:convert';
+
+import 'package:dartin/dartin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:xianren_app/bean/bean.dart';
 import 'package:xianren_app/page/login_page/view/login_page.dart';
+import 'package:xianren_app/utils/net_util.dart';
 
 import '../base/app_module.dart';
 import '../base/base.dart';
+import '../base/data.dart';
 
 void main() {
   init();
+
+  NetUtil netUtil = inject();
+
+  final observer = inject<NavigatorObserver>();
 
   testWidgets('LoginPage', (WidgetTester tester) async {
     LoginPage page = LoginPage();
@@ -47,6 +58,18 @@ void main() {
     await tap(tester, autoLogin);
     expect(page.mProvider.autoInput, true);
     expect(page.mProvider.autoLogin, true);
+
+    when(netUtil.login(any, any)).thenAnswer(
+      (realInvocation) => Stream.fromFuture(
+        Future.value(
+          HttpResponseEntity<MapEntity>.fromJson(
+            json.decode(successResponse),
+          ),
+        ),
+      ),
+    );
+
+    await tap(tester, find.byType(ElevatedButton));
   });
 
   testWidgets('SharedPreferences', (WidgetTester tester) async {
