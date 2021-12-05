@@ -3,6 +3,7 @@
 ///
 /// created by DZDcyj at 2021/11/28
 ///
+import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dartin/dartin.dart';
 import 'package:flutter/cupertino.dart' as flutter;
 import 'package:xianren_app/page/homepage/view_model/homepage_provider.dart';
@@ -33,6 +34,7 @@ final viewModelModule = Module([
 final utilModule = Module([
   single<NetUtil>(({params}) => NetUtil()),
   single<flutter.NavigatorObserver>(({params}) => flutter.NavigatorObserver()),
+  single<CookieJar>(({params}) => CookieJar()),
 ]);
 
 final appModule = [viewModelModule, utilModule];

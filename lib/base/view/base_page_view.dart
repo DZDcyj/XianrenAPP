@@ -5,6 +5,7 @@
 ///
 import 'package:dartin/dartin.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 abstract class PageNodeProvider<T extends ChangeNotifier> extends StatelessWidget {
@@ -49,5 +50,23 @@ abstract class BasePageContentViewState<T extends ChangeNotifier> extends State<
     return ChangeNotifierProvider<T>.value(
       value: mProvider,
     );
+  }
+
+  /// 开始载入
+  void startLoading() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+  }
+
+  /// 移除载入弹窗
+  void finishLoading() {
+    Navigator.of(context, rootNavigator: true).pop();
   }
 }
