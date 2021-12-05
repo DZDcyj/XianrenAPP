@@ -18,3 +18,27 @@ const String failedResponse = '''
     "data": {}
 }
 ''';
+
+const String successInfoResponse = '''
+{
+    "success": true,
+    "code": 20000,
+    "message": "成功",
+    "data": {
+        "ua": {
+            "anonymName": "匿名者597126",
+            "phoneNumber": "13666279971"
+        },
+        "ubi": {
+            "birthday": 1638288000000,
+            "boolHideBirthday": 1,
+            "gender": "男",
+            "idNumber": "440102198001021230",
+            "nickName": "Zhangsan",
+            "phoneNumber": "13666279971",
+            "realName": "Zhangsan",
+            "studentNumber": "U123456"
+        }
+    }
+}
+''';

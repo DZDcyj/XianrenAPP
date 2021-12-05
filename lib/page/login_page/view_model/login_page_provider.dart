@@ -70,9 +70,13 @@ class LoginPageProvider extends BasePageProvider {
   Future<void> clearInfoFromPreferences() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     await preferences.remove(usernameKey);
+    username = '';
     await preferences.remove(passwordKey);
+    password = '';
     await preferences.remove(autoInputKey);
+    autoInput = false;
     await preferences.remove(autoLoginKey);
+    autoLogin = false;
   }
 
   /// 初始化

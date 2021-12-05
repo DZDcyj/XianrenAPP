@@ -18,13 +18,7 @@ class HomePage extends PageNodeProvider<HomePageProvider> {
 }
 
 class _HomePageContent extends BasePageContentView<HomePageProvider> {
-  _HomePageContent(
-    HomePageProvider provider, {
-    Key key,
-    this.title,
-  }) : super(provider, key: key);
-
-  final String title;
+  _HomePageContent(HomePageProvider provider) : super(provider);
 
   @override
   _MyHomePageContentState createState() => _MyHomePageContentState();
