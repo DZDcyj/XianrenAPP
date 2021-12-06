@@ -47,3 +47,4 @@ app.*.map.json
 
 # Coverage Files
 /coverage
+genhtml.perl
