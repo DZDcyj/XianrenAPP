@@ -3,8 +3,7 @@
 ///
 /// created by DZDcyj at 2021/12/5
 ///
-import 'dart:convert';
-
+import 'package:intl/intl.dart';
 import 'package:xianren_app/page/login_page/view_model/register_page_provider.dart';
 import 'package:xianren_app/utils/string_util.dart';
 
@@ -41,7 +40,7 @@ class UserBasicInformationEntity implements ToJson {
   String studentNumber;
 
   UserBasicInformationEntity.fromJson(Map<String, dynamic> json) {
-    birthday = DateTime.fromMillisecondsSinceEpoch(json['birthday']);
+    birthday = DateFormat('yyyy-MM-dd').parse(json['birthday'] ?? '1970-01-01');
     hideBirthday = (json['boolHideBirthday'] ?? 0) == 1;
     gender = _transferStringToGender(json['gender']);
     idNumber = json['idNumber'];
@@ -83,14 +82,12 @@ class UserInformationEntity implements ToJson {
   UserBasicInformationEntity ubi;
   UserAnonymousEntity ua;
 
-  UserInformationEntity.fromJson(Map<String, dynamic> jsonData) {
-    Map<String, dynamic> jsonUbi = (jsonData['ubi'] is String ? json.decode(jsonData['ubi']) : jsonData['ubi']);
-    Map<String, dynamic> jsonUa = (jsonData['ua'] is String ? json.decode(jsonData['ua']) : jsonData['ua']);
-    if (jsonUbi != null) {
-      ubi = UserBasicInformationEntity.fromJson(jsonUbi);
+  UserInformationEntity.fromJson(Map<String, dynamic> json) {
+    if (json['ubi'] != null) {
+      ubi = UserBasicInformationEntity.fromJson(json['ubi']);
     }
-    if (jsonUa != null) {
-      ua = UserAnonymousEntity.fromJson(jsonUa);
+    if (json['ua'] != null) {
+      ua = UserAnonymousEntity.fromJson(json['ua']);
     }
   }
 

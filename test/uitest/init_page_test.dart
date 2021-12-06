@@ -16,7 +16,7 @@ void main() {
   init();
   final observer = inject<NavigatorObserver>();
 
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('InitPage', (WidgetTester tester) async {
     await showWidget(tester, MyApp());
     expect(find.text('Welcome to Xianren APP!'), findsOneWidget);
 

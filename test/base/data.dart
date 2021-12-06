@@ -30,7 +30,7 @@ const String successInfoResponse = '''
             "phoneNumber": "13666279971"
         },
         "ubi": {
-            "birthday": 1638288000000,
+            "birthday": "2005-11-14",
             "boolHideBirthday": 1,
             "gender": "男",
             "idNumber": "440102198001021230",

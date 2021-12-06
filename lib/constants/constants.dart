@@ -24,7 +24,7 @@ const String serverDomain = '81.70.93.231:8080';
 /// 请求 API
 const String registerApi = 'register';
 const String loginApi = 'login';
-const String getAllInfoApi = 'getallinfor';
+const String getAllInfoApi = 'getallinfo';
 
 /// SharedPreferences Key
 String usernameKey = 'username';
