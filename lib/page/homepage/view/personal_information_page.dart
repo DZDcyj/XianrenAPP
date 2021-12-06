@@ -6,6 +6,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 import 'package:xianren_app/base/view/base_page_view.dart';
@@ -119,7 +120,7 @@ class _PersonalInformationPageContentState extends BasePageContentViewState<Pers
           selector: (_, provider) => provider.anonymous,
           builder: (context, value, child) => _anonymousDisplay(value),
         ),
-        _buildButton(label: '修改匿名'),
+        _buildButton(label: '修改匿名', onTap: _jump2modifyAnonymous),
         SizedBox(height: 30.0),
         _buildButton(
           label: '退出登录',
@@ -135,6 +136,12 @@ class _PersonalInformationPageContentState extends BasePageContentViewState<Pers
         ),
       ],
     );
+  }
+
+  /// 跳转到修改匿名
+  void _jump2modifyAnonymous() {
+    // TODO: 跳转到修改匿名界面
+    Fluttertoast.showToast(msg: '开发中！');
   }
 
   /// 退出登录
@@ -153,7 +160,7 @@ class _PersonalInformationPageContentState extends BasePageContentViewState<Pers
     return Container(
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: onTap ?? () {},
+        onPressed: onTap,
         style: style ??
             ButtonStyle(
               backgroundColor: MaterialStateProperty.resolveWith(

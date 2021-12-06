@@ -42,3 +42,12 @@ const String successInfoResponse = '''
     }
 }
 ''';
+
+const String sessionInvalidResponse = '''
+{
+    "success": false,
+    "code": 21009,
+    "message": "Session无效",
+    "data": {}
+}
+''';

@@ -86,8 +86,12 @@ class UserInformationEntity implements ToJson {
   UserInformationEntity.fromJson(Map<String, dynamic> jsonData) {
     Map<String, dynamic> jsonUbi = (jsonData['ubi'] is String ? json.decode(jsonData['ubi']) : jsonData['ubi']);
     Map<String, dynamic> jsonUa = (jsonData['ua'] is String ? json.decode(jsonData['ua']) : jsonData['ua']);
-    ubi = UserBasicInformationEntity.fromJson(jsonUbi);
-    ua = UserAnonymousEntity.fromJson(jsonUa);
+    if (jsonUbi != null) {
+      ubi = UserBasicInformationEntity.fromJson(jsonUbi);
+    }
+    if (jsonUa != null) {
+      ua = UserAnonymousEntity.fromJson(jsonUa);
+    }
   }
 
   @override
