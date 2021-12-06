@@ -11,17 +11,11 @@ import '../base/app_module.dart';
 void main() {
   init();
 
-  test('increment', () {
-    HomePageProvider provider = HomePageProvider('title');
-    expect(provider.counter, 0);
-    provider.increment();
-    expect(provider.counter, 1);
-  });
+  test('currIndex', () {
+    HomePageProvider provider = HomePageProvider();
+    expect(provider.currIndex, 0);
 
-  test('dispose', () {
-    HomePageProvider provider = HomePageProvider('title');
-    expect(provider.isDisposed, false);
-    provider.dispose();
-    expect(provider.isDisposed, true);
+    provider.currIndex = 2;
+    expect(provider.currIndex, 2);
   });
 }

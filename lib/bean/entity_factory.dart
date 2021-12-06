@@ -34,6 +34,15 @@ class EntityFactory {
       _Generator<HttpResponseEntity>(
         (json) => HttpResponseEntity.fromJson(json),
       ),
+      _Generator<UserAnonymousEntity>(
+        (json) => UserAnonymousEntity.fromJson(json),
+      ),
+      _Generator<UserBasicInformationEntity>(
+        (json) => UserBasicInformationEntity.fromJson(json),
+      ),
+      _Generator<UserInformationEntity>(
+        (json) => UserInformationEntity.fromJson(json),
+      ),
     ],
     key: (g) => g.keyName,
     value: (g) => g.generator,

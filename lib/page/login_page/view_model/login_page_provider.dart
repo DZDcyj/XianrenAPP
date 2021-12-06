@@ -9,11 +9,6 @@ import 'package:xianren_app/base/view_model/base_page_view_provider.dart';
 import 'package:xianren_app/constants/constants.dart';
 import 'package:xianren_app/utils/net_util.dart';
 
-String usernameKey = 'username';
-String passwordKey = 'password';
-String autoInputKey = 'autoInput';
-String autoLoginKey = 'autoLogin';
-
 class LoginPageProvider extends BasePageProvider {
   /// 是否启用记住用户名密码
   bool _autoInput;
@@ -75,9 +70,13 @@ class LoginPageProvider extends BasePageProvider {
   Future<void> clearInfoFromPreferences() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     await preferences.remove(usernameKey);
+    username = '';
     await preferences.remove(passwordKey);
+    password = '';
     await preferences.remove(autoInputKey);
+    autoInput = false;
     await preferences.remove(autoLoginKey);
+    autoLogin = false;
   }
 
   /// 初始化
@@ -95,12 +94,14 @@ class LoginPageProvider extends BasePageProvider {
     void Function() onSuccess,
     void Function(dynamic response) onFailed,
     void Function(Error) onError,
+    void Function() onStart,
   }) async {
     if (autoInput) {
       saveInfoToPreferences();
     } else {
       clearInfoFromPreferences();
     }
+    onStart?.call();
     asyncRequest(
       _netUtil.login(username, password),
       onData: (response) {

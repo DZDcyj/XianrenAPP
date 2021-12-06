@@ -5,7 +5,9 @@
 ///
 import 'dart:async';
 
+import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:xianren_app/bean/bean.dart';
 import 'package:xianren_app/constants/constants.dart';
@@ -20,7 +22,7 @@ class NetUtil {
     responseType: ResponseType.json,
   );
 
-  Dio dio = Dio(baseOptions);
+  Dio dio = Dio(baseOptions)..interceptors.add(CookieManager(CookieJar()));
 
   Stream<HttpResponseEntity<T>> get<T extends ToJson>(
     String api, {
@@ -71,6 +73,10 @@ class NetUtil {
       registerApi,
       data: data,
     );
+  }
+
+  Stream<HttpResponseEntity<UserInformationEntity>> getAllInfo() {
+    return get(getAllInfoApi);
   }
 }
 

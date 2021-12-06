@@ -3,28 +3,42 @@
 ///
 /// created by DZDcyj at 2021/11/28
 ///
-import 'package:flutter/material.dart';
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:dartin/dartin.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
+import 'package:xianren_app/bean/bean.dart';
 import 'package:xianren_app/page/homepage/view/homepage.dart';
+import 'package:xianren_app/page/homepage/view/personal_information_page.dart';
+import 'package:xianren_app/utils/net_util.dart';
 
 import '../base/app_module.dart';
 import '../base/base.dart';
+import '../base/data.dart';
 
 void main() {
   init();
 
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    await showWidget(tester, HomePage('title'));
+  NetUtil netUtil = inject();
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  testWidgets('HomePage', (WidgetTester tester) async {
+    // 进入时需要令载入环节结束
+    when(netUtil.getAllInfo()).thenAnswer(
+      (realInvocation) => Stream.fromFuture(
+        Future.value(
+          HttpResponseEntity<UserInformationEntity>.fromJson(
+            json.decode(successInfoResponse),
+          ),
+        ),
+      ),
+    );
+    await showWidget(tester, HomePage());
+    expect(find.text('You are now at page 0'), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tap(tester, find.byIcon(Icons.add));
+    await tap(tester, find.text('我的'));
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.byType(PersonalInformationPage), findsOneWidget);
   });
 }

@@ -198,11 +198,13 @@ class _LoginPageContentState extends BasePageContentViewState<LoginPageProvider>
     mProvider.doLogin(
       onSuccess: _loginSuccessHandler,
       onFailed: _loginFailedHandler,
+      onStart: startLoading,
     );
   }
 
   /// 登录成功
   void _loginSuccessHandler() {
+    finishLoading();
     RouteWrapper.popAndPushNamed(
       routerNameHomePage,
       arguments: ['HomePage'],
@@ -211,6 +213,7 @@ class _LoginPageContentState extends BasePageContentViewState<LoginPageProvider>
 
   /// 登陆失败
   void _loginFailedHandler(dynamic response) {
+    finishLoading();
     Fluttertoast.showToast(msg: '发生错误！错误信息：${response.message} (${response.code})');
   }
 
