@@ -11,6 +11,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:xianren_app/bean/bean.dart';
 import 'package:xianren_app/page/homepage/view/homepage.dart';
+import 'package:xianren_app/page/homepage/view/personal_information_page.dart';
 import 'package:xianren_app/utils/net_util.dart';
 
 import '../base/app_module.dart';
@@ -34,8 +35,10 @@ void main() {
       ),
     );
     await showWidget(tester, HomePage());
-
-    await tap(tester, find.text('小纸条'));
     expect(find.text('You are now at page 0'), findsOneWidget);
+
+    await tap(tester, find.text('我的'));
+
+    expect(find.byType(PersonalInformationPage), findsOneWidget);
   });
 }

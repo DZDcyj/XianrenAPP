@@ -42,25 +42,12 @@ class UserBasicInformationEntity implements ToJson {
   UserBasicInformationEntity.fromJson(Map<String, dynamic> json) {
     birthday = DateFormat('yyyy-MM-dd').parse(json['birthday'] ?? '1970-01-01');
     hideBirthday = (json['boolHideBirthday'] ?? 0) == 1;
-    gender = _transferStringToGender(json['gender']);
+    gender = transferStringToGender(json['gender']);
     idNumber = json['idNumber'];
     nickName = json['nickName'];
     phoneNumber = json['phoneNumber'];
     realName = json['realName'];
     studentNumber = json['studentNumber'];
-  }
-
-  Gender _transferStringToGender(String value) {
-    switch (value) {
-      case '男':
-        return Gender.male;
-      case '女':
-        return Gender.female;
-      case '不便透露':
-        return Gender.secret;
-      default:
-        return Gender.unknown;
-    }
   }
 
   @override

@@ -78,7 +78,7 @@ class _MyHomePageContentState extends BasePageContentViewState<HomePageProvider>
     String suffix = selected ? '-selected' : '';
     String fullName = 'assets/$name$suffix.png';
     return Container(
-      width: selected ? 48 : 36,
+      width: selected ? 48.0 : 36.0,
       child: Image(image: AssetImage(fullName)),
     );
   }

@@ -52,7 +52,7 @@ class PersonalInformationPageProvider extends BasePageProvider {
 
   String _anonymous;
 
-  String get anonymous => _anonymous ?? '无';
+  String get anonymous => _anonymous ?? '匿名者';
 
   set anonymous(String value) {
     _anonymous = value;

@@ -13,9 +13,9 @@ void main() {
 
   test('currIndex', () {
     HomePageProvider provider = HomePageProvider();
-    expect(provider.currIndex, 2);
-
-    provider.currIndex = 0;
     expect(provider.currIndex, 0);
+
+    provider.currIndex = 2;
+    expect(provider.currIndex, 2);
   });
 }

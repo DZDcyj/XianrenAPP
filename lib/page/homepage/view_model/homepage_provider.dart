@@ -8,7 +8,7 @@ import 'package:xianren_app/base/view_model/base_page_view_provider.dart';
 class HomePageProvider extends BasePageProvider {
   int _currIndex;
 
-  int get currIndex => _currIndex ?? 2;
+  int get currIndex => _currIndex ?? 0;
 
   set currIndex(int value) {
     _currIndex = value;
