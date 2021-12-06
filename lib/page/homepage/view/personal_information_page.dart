@@ -10,6 +10,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 import 'package:xianren_app/base/view/base_page_view.dart';
+import 'package:xianren_app/constants/constants.dart';
 import 'package:xianren_app/page/homepage/view_model/personal_information_page_provider.dart';
 import 'package:xianren_app/router/router.dart';
 import 'package:xianren_app/router/router_constant.dart';
@@ -104,7 +105,7 @@ class _PersonalInformationPageContentState extends BasePageContentViewState<Pers
   Widget _anonymousDisplay(String anonymous) {
     return Text(
       '我的匿名：$anonymous',
-      style: TextStyle(fontSize: 24.0),
+      style: TextStyle(fontSize: 18.0),
     );
   }
 
@@ -120,7 +121,7 @@ class _PersonalInformationPageContentState extends BasePageContentViewState<Pers
           selector: (_, provider) => provider.anonymous,
           builder: (context, value, child) => _anonymousDisplay(value),
         ),
-        _buildButton(label: '修改匿名', onTap: _jump2modifyAnonymous),
+        _buildButton(label: '修改匿名', onTap: _modifyAnonymous),
         SizedBox(height: 30.0),
         _buildButton(
           label: '退出登录',
@@ -138,10 +139,65 @@ class _PersonalInformationPageContentState extends BasePageContentViewState<Pers
     );
   }
 
+  /// 修改匿名
+  void _modifyAnonymous() {
+    String origin = mProvider.anonymous;
+    _jump2modifyAnonymous(origin).then((value) {
+      if (value.item1) {
+        if (origin != value.item2) {
+          mProvider.modifyAnonymousName(
+            value.item2,
+            onStart: startLoading,
+            onSuccess: (value) {
+              mProvider.anonymous = value;
+            },
+            onFailed: (data) {
+              if (data.code == responseSessionInvalid || data.code == responseSessionMismatch) {
+                Fluttertoast.showToast(msg: '会话过期，请重新登陆！');
+                _logout();
+              } else {
+                Fluttertoast.showToast(msg: '发生错误！(${data.code})');
+              }
+            },
+            onDone: finishLoading,
+          );
+        }
+      }
+    });
+  }
+
   /// 跳转到修改匿名
-  void _jump2modifyAnonymous() {
-    // TODO: 跳转到修改匿名界面
-    Fluttertoast.showToast(msg: '开发中！');
+  Future<Tuple2<bool, String>> _jump2modifyAnonymous(String origin) async {
+    // result 代表 是否更改匿名、更改后匿名为啥
+    return await showDialog(
+      context: context,
+      builder: (context) {
+        String newAnonymousName;
+        return AlertDialog(
+          title: Text('修改匿名'),
+          content: TextField(
+            maxLength: 12,
+            controller: TextEditingController()..text = origin,
+            decoration: InputDecoration(
+              labelText: '新的匿名',
+              hintText: '在此输入您想要的新匿名',
+              prefixIcon: Icon(Icons.person),
+            ),
+            onChanged: (value) => newAnonymousName = value,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(Tuple2(false, '')),
+              child: Text('取消'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(Tuple2(true, newAnonymousName ?? origin)),
+              child: Text('确认'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   /// 退出登录

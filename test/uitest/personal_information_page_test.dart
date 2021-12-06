@@ -7,6 +7,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:dartin/dartin.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,7 +24,8 @@ void main() {
 
   NetUtil netUtil = inject();
 
-  testWidgets('PersonalInformationPage', (WidgetTester tester) async {
+  /// 初始化获取信息 Mock
+  void mockInitSuccessResponse() {
     when(netUtil.getAllInfo()).thenAnswer(
       (realInvocation) => Stream.fromFuture(
         Future.value(
@@ -33,6 +35,52 @@ void main() {
         ),
       ),
     );
+  }
+
+  /// 修改匿名 Mock
+  void mockModifyAnonymousResponse() {
+    when(netUtil.modifyAnonymous({
+      'phonenumber': '13666279971',
+      'anonymname': 'asd',
+    })).thenAnswer(
+      (realInvocation) => Stream.fromFuture(
+        Future.value(
+          HttpResponseEntity<MapEntity>.fromJson(
+            json.decode(successInfoResponse),
+          ),
+        ),
+      ),
+    );
+
+    when(netUtil.modifyAnonymous({
+      'phonenumber': '13666279971',
+      'anonymname': 'cde',
+    })).thenAnswer(
+      (realInvocation) => Stream.fromFuture(
+        Future.value(
+          HttpResponseEntity<MapEntity>.fromJson(
+            json.decode(failedResponse),
+          ),
+        ),
+      ),
+    );
+
+    when(netUtil.modifyAnonymous({
+      'phonenumber': '13666279971',
+      'anonymname': 'ghi',
+    })).thenAnswer(
+      (realInvocation) => Stream.fromFuture(
+        Future.value(
+          HttpResponseEntity<MapEntity>.fromJson(
+            json.decode(sessionInvalidResponse),
+          ),
+        ),
+      ),
+    );
+  }
+
+  testWidgets('PersonalInformationPage', (WidgetTester tester) async {
+    mockInitSuccessResponse();
 
     await showWidget(tester, PersonalInformationPage());
 
@@ -72,5 +120,32 @@ void main() {
     );
 
     await showWidget(tester, PersonalInformationPage());
+  });
+
+  testWidgets('modifyAnonymous', (WidgetTester tester) async {
+    // 修改成功
+    mockInitSuccessResponse();
+
+    await showWidget(tester, PersonalInformationPage());
+
+    mockModifyAnonymousResponse();
+
+    await tap(tester, find.text('修改匿名'));
+    await tester.enterText(find.byType(TextField), 'asd');
+    await tap(tester, find.text('确认'));
+
+    expect(find.text('我的匿名：asd'), findsOneWidget);
+
+    await tap(tester, find.text('修改匿名'));
+    await tester.enterText(find.byType(TextField), 'cde');
+    await tap(tester, find.text('确认'));
+
+    expect(find.text('我的匿名：cde'), findsNothing);
+
+    await tap(tester, find.text('修改匿名'));
+    await tester.enterText(find.byType(TextField), 'ghi');
+    await tap(tester, find.text('确认'));
+
+    expect(find.text('我的匿名：ghi'), findsNothing);
   });
 }

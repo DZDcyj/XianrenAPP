@@ -15,6 +15,7 @@ const int responseRegisterFailed = 20001; // 注册失败
 const int responseUserNotExist = 20007; // 用户不存在
 const int responseWrongPassword = 20008; // 密码错误
 const int responseSessionInvalid = 21009; // Session 无效
+const int responseSessionMismatch = 21010; // Session 不匹配
 
 /// 网络请求相关
 const int maxTimeout = 10000;
@@ -22,9 +23,10 @@ const String contentType = 'application/json; charset=utf8';
 const String serverDomain = '81.70.93.231:8080';
 
 /// 请求 API
-const String registerApi = 'register';
-const String loginApi = 'login';
-const String getAllInfoApi = 'getallinfo';
+const String registerApi = 'register'; // 注册
+const String loginApi = 'login'; // 登录
+const String getAllInfoApi = 'getallinfo'; // 获取所有信息
+const String modifyAnonymousApi = 'changeua'; // 更改匿名
 
 /// SharedPreferences Key
 String usernameKey = 'username';

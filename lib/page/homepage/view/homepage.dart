@@ -29,6 +29,7 @@ class _MyHomePageContentState extends BasePageContentViewState<HomePageProvider>
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
