@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 import 'package:xianren_app/base/view/base_page_view.dart';
 import 'package:xianren_app/constants/constants.dart';
-import 'package:xianren_app/page/homepage/view_model/personal_information_page_provider.dart';
+import 'package:xianren_app/page/homepage/view_model/personal_information/personal_information_page_provider.dart';
 import 'package:xianren_app/router/router.dart';
 import 'package:xianren_app/router/router_constant.dart';
 import 'package:xianren_app/utils/string_util.dart';
@@ -41,31 +41,52 @@ class _PersonalInformationPageContentState extends BasePageContentViewState<Pers
     });
   }
 
+  Future<void> _refresh() async {
+    int timeStamp = DateTime.now().millisecondsSinceEpoch;
+    if (timeStamp - (mProvider.refreshTimestamp ?? 0) > 3000) {
+      mProvider.getAllInformation(
+        onSessionInvalid: _logout,
+        onStart: startLoading,
+        onFinished: finishLoading,
+        refresh: true,
+      );
+      mProvider.refreshTimestamp = timeStamp;
+    } else {
+      Fluttertoast.showToast(msg: '操作太频繁，请稍后再试');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
-      child: Padding(
-        padding: EdgeInsets.only(left: 40.0, right: 40.0),
-        child: Column(
-          children: [
-            _avatar(),
-            Selector<PersonalInformationPageProvider, String>(
-              selector: (_, provider) => provider.nickname,
-              builder: (context, value, child) => _nicknameDisplay(value),
+    return RefreshIndicator(
+      onRefresh: _refresh,
+      child: SingleChildScrollView(
+        physics: AlwaysScrollableScrollPhysics(),
+        child: Padding(
+          padding: EdgeInsets.only(left: 40.0, right: 40.0),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _avatar(),
+                Selector<PersonalInformationPageProvider, String>(
+                  selector: (_, provider) => provider.nickname,
+                  builder: (context, value, child) => _nicknameDisplay(value),
+                ),
+                Selector<PersonalInformationPageProvider, String>(
+                  selector: (_, provider) => provider.phoneNumber,
+                  builder: (context, value, child) => _phoneNumberDisplay(value),
+                ),
+                Selector<PersonalInformationPageProvider, Tuple2<DateTime, bool>>(
+                  selector: (_, provider) => Tuple2(provider.birthday, provider.hideBirthday),
+                  builder: (context, tuple, child) => _birthdayDisplay(tuple.item1, tuple.item2),
+                ),
+                SizedBox(height: 20.0),
+                _buildButtons(),
+              ],
             ),
-            Selector<PersonalInformationPageProvider, String>(
-              selector: (_, provider) => provider.phoneNumber,
-              builder: (context, value, child) => _phoneNumberDisplay(value),
-            ),
-            Selector<PersonalInformationPageProvider, Tuple2<DateTime, bool>>(
-              selector: (_, provider) => Tuple2(provider.birthday, provider.hideBirthday),
-              builder: (context, tuple, child) => _birthdayDisplay(tuple.item1, tuple.item2),
-            ),
-            SizedBox(height: 20.0),
-            _buildButtons(),
-          ],
+          ),
         ),
       ),
     );
@@ -115,7 +136,7 @@ class _PersonalInformationPageContentState extends BasePageContentViewState<Pers
       children: [
         _buildButton(label: '我的小纸条'),
         _buildButton(label: '我的树洞'),
-        _buildButton(label: '修改个人信息'),
+        _buildButton(label: '修改个人信息', onTap: _jump2ModifyPersonalInformation),
         SizedBox(height: 30.0),
         Selector<PersonalInformationPageProvider, String>(
           selector: (_, provider) => provider.anonymous,
@@ -137,6 +158,27 @@ class _PersonalInformationPageContentState extends BasePageContentViewState<Pers
         ),
       ],
     );
+  }
+
+  /// 跳转到修改个人信息
+  void _jump2ModifyPersonalInformation() {
+    RouteWrapper.pushNamed(routerNamePersonalInformationModifyPage, arguments: [
+      mProvider.phoneNumber,
+      mProvider.birthday,
+      mProvider.gender,
+      mProvider.hideBirthday,
+      _modifyResultHandler,
+    ]);
+  }
+
+  /// 处理修改内容回调
+  void _modifyResultHandler(bool result) {
+    if (result) {
+      mProvider.getAllInformation(
+        onSessionInvalid: _logout,
+        refresh: true,
+      );
+    }
   }
 
   /// 修改匿名

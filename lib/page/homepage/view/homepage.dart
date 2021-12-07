@@ -4,7 +4,7 @@
 /// created by DZDcyj at 2021/11/28
 ///
 import 'package:xianren_app/base/view/base_page_view.dart';
-import 'package:xianren_app/page/homepage/view/personal_information_page.dart';
+import 'package:xianren_app/page/homepage/view/personal_information/personal_information_page.dart';
 import 'package:xianren_app/page/homepage/view_model/homepage_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

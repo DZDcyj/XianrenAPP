@@ -85,6 +85,13 @@ class NetUtil {
       data: data,
     );
   }
+
+  Stream<HttpResponseEntity<MapEntity>> modifyPersonalInformation(Map<String, dynamic> data) {
+    return post(
+      modifyPersonalBasicInformationApi,
+      data: data,
+    );
+  }
 }
 
 String constructUrl(

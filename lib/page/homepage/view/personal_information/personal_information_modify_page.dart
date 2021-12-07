@@ -1,32 +1,44 @@
 ///
-/// register_page
+/// personal_information_modify_page_provider
 ///
-/// created by DZDcyj at 2021/11/29
+/// created by DZDcyj at 2021/12/7
 ///
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:xianren_app/base/view/base_page_view.dart';
-import 'package:xianren_app/constants/constants.dart';
-import 'package:xianren_app/page/login_page/view_model/register_page_provider.dart';
+import 'package:xianren_app/page/homepage/view_model/personal_information/personal_information_modify_page_provider.dart';
 import 'package:xianren_app/router/router.dart';
 import 'package:xianren_app/utils/global_util.dart';
 import 'package:xianren_app/utils/string_util.dart';
 
-class RegisterPage extends PageNodeProvider<RegisterPageProvider> {
+class PersonalInformationModifyPage extends PageNodeProvider<PersonalInformationModifyPageProvider> {
+  PersonalInformationModifyPage(
+    this.phoneNumber,
+    this.birthday,
+    this.gender,
+    this.hideBirthday,
+    this.callback,
+  ) : super(params: [phoneNumber, birthday, gender, hideBirthday, callback]);
+
+  final String phoneNumber;
+  final DateTime birthday;
+  final Gender gender;
+  final bool hideBirthday;
+  final void Function(bool result) callback;
+
   @override
-  Widget buildContent(BuildContext context) => _RegisterPageContent(mProvider);
+  Widget buildContent(BuildContext context) => _PersonalInformationModifyPageContent(mProvider);
 }
 
-class _RegisterPageContent extends BasePageContentView<RegisterPageProvider> {
-  _RegisterPageContent(RegisterPageProvider provider) : super(provider);
+class _PersonalInformationModifyPageContent extends BasePageContentView<PersonalInformationModifyPageProvider> {
+  _PersonalInformationModifyPageContent(PersonalInformationModifyPageProvider provider) : super(provider);
 
   @override
-  _RegisterPageContentState createState() => _RegisterPageContentState();
+  _PersonalInformationModifyPageContentState createState() => _PersonalInformationModifyPageContentState();
 }
 
-class _RegisterPageContentState extends BasePageContentViewState<RegisterPageProvider> {
+class _PersonalInformationModifyPageContentState
+    extends BasePageContentViewState<PersonalInformationModifyPageProvider> {
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -39,16 +51,12 @@ class _RegisterPageContentState extends BasePageContentViewState<RegisterPagePro
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _registerHint(),
+                _modifyTitle(),
+                _modifyHint(),
                 _nickNameInput(),
                 _genderSelector(),
                 _birthDaySelector(),
-                _phoneInput(),
-                _passwordInput(),
-                _realNameInput(),
-                _studentIdInput(),
-                _idNumberInput(),
-                _registerButton(),
+                _modifyButton(),
               ],
             ),
           ),
@@ -57,25 +65,35 @@ class _RegisterPageContentState extends BasePageContentViewState<RegisterPagePro
     );
   }
 
-  /// 注册文字
-  Widget _registerHint() {
+  /// 标题文字
+  Widget _modifyTitle() {
     return Text(
-      '注册',
+      '修改个人信息',
       style: TextStyle(
-        fontSize: 48.0,
+        fontSize: 36.0,
       ),
     );
   }
 
-  /// 昵称输入
+  /// 提示文字
+  Widget _modifyHint() {
+    return Text(
+      '请在下方填写想要修改的内容，不修改的请留空',
+      style: TextStyle(
+        fontSize: 15.0,
+      ),
+    );
+  }
+
+  /// 昵称修改
   Widget _nickNameInput() {
     return TextField(
       decoration: InputDecoration(
-        labelText: '昵称',
-        hintText: '在此输入您的昵称',
+        labelText: '昵称（不修改请留空）',
+        hintText: '在此输入新的昵称',
         prefixIcon: Icon(Icons.person),
       ),
-      onChanged: (value) => mProvider.nickName = value,
+      onChanged: (value) => mProvider.newNickname = value,
     );
   }
 
@@ -94,7 +112,7 @@ class _RegisterPageContentState extends BasePageContentViewState<RegisterPagePro
         ),
         Expanded(
           flex: 2,
-          child: Selector<RegisterPageProvider, Gender>(
+          child: Selector<PersonalInformationModifyPageProvider, Gender>(
             selector: (_, provider) => mProvider.gender,
             builder: (context, gender, child) {
               return DropdownButton(
@@ -141,7 +159,7 @@ class _RegisterPageContentState extends BasePageContentViewState<RegisterPagePro
           flex: 2,
           child: GestureDetector(
             onTap: _handleDatePick,
-            child: Selector<RegisterPageProvider, DateTime>(
+            child: Selector<PersonalInformationModifyPageProvider, DateTime>(
               selector: (_, provider) => provider.birthday,
               builder: (context, value, child) => Text(transferDate(value)),
             ),
@@ -149,7 +167,7 @@ class _RegisterPageContentState extends BasePageContentViewState<RegisterPagePro
         ),
         Expanded(
           flex: 3,
-          child: Selector<RegisterPageProvider, bool>(
+          child: Selector<PersonalInformationModifyPageProvider, bool>(
             selector: (_, provider) => provider.birthdayHidden,
             builder: (context, hidden, child) => CheckboxListTile(
               title: Text('隐藏生日'),
@@ -176,102 +194,42 @@ class _RegisterPageContentState extends BasePageContentViewState<RegisterPagePro
     }
   }
 
-  /// 手机号码输入
-  Widget _phoneInput() {
-    return TextField(
-      keyboardType: TextInputType.phone,
-      decoration: InputDecoration(
-        labelText: '手机号',
-        hintText: '在此输入您的手机号',
-        prefixIcon: Icon(Icons.phone_android),
-      ),
-      onChanged: (value) => mProvider.phone = value,
-    );
-  }
-
-  /// 实名认证
-  Widget _realNameInput() {
-    return TextField(
-      decoration: InputDecoration(
-        labelText: '姓名',
-        hintText: '在此输入您的真实姓名',
-        prefixIcon: Icon(Icons.person_outline),
-      ),
-      onChanged: (value) => mProvider.realName = value,
-    );
-  }
-
-  /// 学号输入
-  Widget _studentIdInput() {
-    return TextField(
-      decoration: InputDecoration(
-        labelText: '学号',
-        hintText: '在此输入您的学号',
-        prefixIcon: Icon(Icons.school),
-      ),
-      onChanged: (value) => mProvider.studentId = value,
-    );
-  }
-
-  /// 身份证号输入
-  Widget _idNumberInput() {
-    return TextField(
-      decoration: InputDecoration(
-        labelText: '身份证号',
-        hintText: '在此输入您的身份证号码',
-        prefixIcon: Icon(Icons.perm_identity),
-      ),
-      onChanged: (value) => mProvider.idNumber = value,
-    );
-  }
-
-  /// 注册按钮
-  Widget _registerButton() {
+  /// 修改按钮
+  Widget _modifyButton() {
     return Container(
       padding: EdgeInsets.only(left: 40.0, right: 40.0, top: 20.0),
       width: double.infinity,
       child: ElevatedButton(
         child: Text(
-          '注册',
+          '确认修改',
           style: TextStyle(
             fontSize: 18.0,
           ),
         ),
-        onPressed: _registerHandler,
+        onPressed: _modifyHandler,
       ),
     );
   }
 
-  /// 处理注册
-  void _registerHandler() {
-    if (mProvider.validateInformation(onError: _messageShowHandler)) {
-      mProvider.doRegister(
-        onData: (response) {
-          _messageShowHandler(response.message);
-          if (response.code == responseOK) {
-            RouteWrapper.popSafety();
-          }
-        },
-      );
-    }
-  }
-
-  void _messageShowHandler(value) {
-    if (value is String) {
-      Fluttertoast.showToast(msg: value);
-    }
-  }
-
-  /// 密码输入
-  Widget _passwordInput() {
-    return TextField(
-      decoration: InputDecoration(
-        labelText: '密码',
-        hintText: '8-16位，必须包含数字和大小写字母',
-        prefixIcon: Icon(Icons.lock),
-      ),
-      obscureText: true,
-      onChanged: (value) => mProvider.password = value,
+  /// 修改信息
+  void _modifyHandler() {
+    mProvider.modifyPersonalBasicInformation(
+      onStart: startLoading,
+      onSuccess: _successHandler,
+      onFailed: _failureHandler,
     );
+  }
+
+  /// 修改成功
+  void _successHandler(dynamic data) {
+    finishLoading();
+    mProvider.callback?.call(true);
+    RouteWrapper.popSafety();
+  }
+
+  void _failureHandler(dynamic data) {
+    finishLoading();
+    mProvider.callback?.call(false);
+    RouteWrapper.popSafety();
   }
 }

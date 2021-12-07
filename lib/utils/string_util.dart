@@ -4,7 +4,8 @@
 /// created by DZDcyj at 2021/12/4
 ///
 import 'package:intl/intl.dart';
-import 'package:xianren_app/page/login_page/view_model/register_page_provider.dart';
+
+import 'global_util.dart';
 
 /// 转换日期为 yyyy-mm-dd 格式
 String transferDate(DateTime dateTime) {

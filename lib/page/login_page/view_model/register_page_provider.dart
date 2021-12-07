@@ -5,24 +5,10 @@
 ///
 import 'package:dartin/dartin.dart';
 import 'package:xianren_app/base/view_model/base_page_view_provider.dart';
+import 'package:xianren_app/utils/global_util.dart';
 import 'package:xianren_app/utils/net_util.dart';
 import 'package:xianren_app/utils/regex_util.dart';
 import 'package:xianren_app/utils/string_util.dart';
-
-/// 性别选项
-enum Gender {
-  unknown, // 未设置
-  male, // 男
-  female, // 女
-  secret, // 保密
-}
-
-Map<Gender, String> genderTranslation = {
-  Gender.unknown: '未知',
-  Gender.male: '男',
-  Gender.female: '女',
-  Gender.secret: '不便透露',
-};
 
 class RegisterPageProvider extends BasePageProvider {
   NetUtil _netUtil = inject();
