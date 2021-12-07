@@ -78,6 +78,13 @@ class NetUtil {
   Stream<HttpResponseEntity<UserInformationEntity>> getAllInfo() {
     return get(getAllInfoApi);
   }
+
+  Stream<HttpResponseEntity<MapEntity>> modifyAnonymous(Map<String, dynamic> data) {
+    return post(
+      modifyAnonymousApi,
+      data: data,
+    );
+  }
 }
 
 String constructUrl(

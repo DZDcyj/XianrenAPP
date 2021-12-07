@@ -80,6 +80,18 @@ void main() {
     );
 
     await tap(tester, find.byType(ElevatedButton));
+
+    when(netUtil.login(any, any)).thenAnswer(
+      (realInvocation) => Stream.fromFuture(
+        Future.value(
+          HttpResponseEntity<MapEntity>.fromJson(
+            json.decode(wrongPasswordResponse),
+          ),
+        ),
+      ),
+    );
+
+    await tap(tester, find.byType(ElevatedButton));
   });
 
   testWidgets('LoginPage', (WidgetTester tester) async {

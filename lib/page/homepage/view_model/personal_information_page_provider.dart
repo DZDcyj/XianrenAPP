@@ -59,11 +59,13 @@ class PersonalInformationPageProvider extends BasePageProvider {
     notifyListeners();
   }
 
+  /// 注销
   Future<void> logout() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     await preferences.setBool(autoLoginKey, false);
   }
 
+  /// 获取信息
   void getAllInformation({
     void Function() onSessionInvalid,
     void Function() onStart,
@@ -87,11 +89,37 @@ class PersonalInformationPageProvider extends BasePageProvider {
     );
   }
 
+  /// 更新显示信息
   void updateUserInfo(UserInformationEntity entity) {
     nickname = entity.ubi.nickName;
     anonymous = entity.ua.anonymousName;
     phoneNumber = entity.ubi.phoneNumber;
     birthday = entity.ubi.birthday;
     hideBirthday = entity.ubi.hideBirthday;
+  }
+
+  /// 修改匿名信息
+  void modifyAnonymousName(
+    String newValue, {
+    void Function() onStart,
+    void Function(String newValue) onSuccess,
+    void Function(dynamic data) onFailed,
+    void Function() onDone,
+  }) {
+    onStart?.call();
+    asyncRequest(
+      netUtil.modifyAnonymous({
+        'phonenumber': phoneNumber,
+        'anonymname': newValue,
+      }),
+      onData: (response) {
+        if (response.code == responseOK) {
+          onSuccess?.call(newValue);
+        } else {
+          onFailed?.call(response);
+        }
+        onDone?.call();
+      },
+    );
   }
 }

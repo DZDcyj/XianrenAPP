@@ -9,6 +9,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:xianren_app/base/view/base_page_view.dart';
+import 'package:xianren_app/constants/constants.dart';
 import 'package:xianren_app/page/login_page/view_model/login_page_provider.dart';
 import 'package:xianren_app/router/router.dart';
 import 'package:xianren_app/router/router_constant.dart';
@@ -214,7 +215,11 @@ class _LoginPageContentState extends BasePageContentViewState<LoginPageProvider>
   /// 登陆失败
   void _loginFailedHandler(dynamic response) {
     finishLoading();
-    Fluttertoast.showToast(msg: '发生错误！错误信息：${response.message} (${response.code})');
+    if (response.code != responseWrongPassword) {
+      Fluttertoast.showToast(msg: '发生错误！错误信息：${response.message} (${response.code})');
+    } else {
+      Fluttertoast.showToast(msg: '手机号或密码不正确！');
+    }
   }
 
   /// 注册按钮
