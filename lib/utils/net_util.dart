@@ -4,6 +4,7 @@
 /// created by DZDcyj at 2021/11/28
 ///
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
@@ -11,6 +12,14 @@ import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:xianren_app/bean/bean.dart';
 import 'package:xianren_app/constants/constants.dart';
+
+var networkFailedResponse = '''
+{
+    "code": -1,
+    "message": "网络连接出错，请检查网络设置",
+    "data": {}
+}
+''';
 
 class NetUtil {
   NetUtil();
@@ -35,9 +44,14 @@ class NetUtil {
     String url, {
     Map<String, dynamic> queryParameters,
   }) async {
-    var response = await dio.get(url, queryParameters: queryParameters);
-    debugPrint('Get response from $url: ${response.data}');
-    return HttpResponseEntity<T>.fromJson(response.data);
+    try {
+      var response = await dio.get(url, queryParameters: queryParameters);
+      debugPrint('Get response from $url: ${response.data}');
+      return HttpResponseEntity<T>.fromJson(response.data);
+    } catch (error) {
+      debugPrint('Error Caught:${error.error}');
+      return HttpResponseEntity<T>.fromJson(json.decode(networkFailedResponse));
+    }
   }
 
   Stream<HttpResponseEntity<T>> post<T extends ToJson>(
@@ -53,9 +67,14 @@ class NetUtil {
     Map<String, dynamic> queryParameters,
     Map<String, dynamic> data,
   }) async {
-    var response = await dio.post(url, data: data, queryParameters: queryParameters);
-    debugPrint('Post to $url, get response ${response.data}');
-    return HttpResponseEntity<T>.fromJson(response.data);
+    try {
+      var response = await dio.post(url, data: data, queryParameters: queryParameters);
+      debugPrint('Post to $url, get response ${response.data}');
+      return HttpResponseEntity<T>.fromJson(response.data);
+    } catch (error) {
+      debugPrint('Error Caught:${error.error}');
+      return HttpResponseEntity<T>.fromJson(json.decode(networkFailedResponse));
+    }
   }
 
   Stream<HttpResponseEntity<MapEntity>> login(String phoneNumber, String password) {

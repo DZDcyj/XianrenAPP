@@ -15,18 +15,21 @@ class HttpResponseEntity<T extends ToJson> implements ToJson {
   String message; // 信息
   Map<String, dynamic> rawData; // 原始数据
   T data; // 转换后数据
+  bool status;
 
   HttpResponseEntity({
     this.code,
     this.message,
     this.rawData,
     this.data,
+    this.status,
   });
 
   HttpResponseEntity.fromJson(Map<String, dynamic> json) {
     code = json['code'] ?? -1;
     message = json['message'] ?? '';
     rawData = json['data'] ?? {};
+    status = json['status'] ?? false;
     data = EntityFactory.generate<T>(json['data']);
   }
 
@@ -37,6 +40,7 @@ class HttpResponseEntity<T extends ToJson> implements ToJson {
     result['message'] = message;
     result['raw_data'] = rawData;
     result['data'] = data.toJson();
+    result['status'] = status;
     return result;
   }
 }

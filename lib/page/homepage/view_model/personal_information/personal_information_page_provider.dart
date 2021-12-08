@@ -62,7 +62,7 @@ class PersonalInformationPageProvider extends BasePageProvider {
     notifyListeners();
   }
 
-  Gender gender;
+  Gender gender = Gender.unknown;
 
   /// 注销
   Future<void> logout() async {
@@ -89,7 +89,7 @@ class PersonalInformationPageProvider extends BasePageProvider {
             Fluttertoast.showToast(msg: '会话过期，请重新登陆！');
             onSessionInvalid?.call();
           } else {
-            Fluttertoast.showToast(msg: '发生错误！(${response.code}');
+            Fluttertoast.showToast(msg: '发生错误！(${response.code})');
           }
           onFinished?.call();
         },

@@ -172,12 +172,21 @@ class _PersonalInformationPageContentState extends BasePageContentViewState<Pers
   }
 
   /// 处理修改内容回调
-  void _modifyResultHandler(bool result) {
-    if (result) {
+  void _modifyResultHandler(dynamic response) {
+    if (response.status) {
+      // 成功
       mProvider.getAllInformation(
         onSessionInvalid: _logout,
         refresh: true,
       );
+    } else {
+      // 失败
+      if (response.code == responseSessionMismatch || response.code == responseSessionInvalid) {
+        Fluttertoast.showToast(msg: '会话过期，请重新登陆！');
+        _logout();
+      } else {
+        Fluttertoast.showToast(msg: '发生错误！(${response.code})');
+      }
     }
   }
 

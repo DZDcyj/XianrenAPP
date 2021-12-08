@@ -24,7 +24,7 @@ class PersonalInformationModifyPageProvider extends BasePageProvider {
   final String phoneNumber;
   String newNickname;
   DateTime _birthday;
-  final void Function(bool result) callback;
+  final void Function(dynamic response) callback;
 
   DateTime get birthday => _birthday;
 

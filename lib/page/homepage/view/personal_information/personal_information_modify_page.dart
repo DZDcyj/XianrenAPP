@@ -24,7 +24,7 @@ class PersonalInformationModifyPage extends PageNodeProvider<PersonalInformation
   final DateTime birthday;
   final Gender gender;
   final bool hideBirthday;
-  final void Function(bool result) callback;
+  final void Function(dynamic response) callback;
 
   @override
   Widget buildContent(BuildContext context) => _PersonalInformationModifyPageContent(mProvider);
@@ -223,13 +223,13 @@ class _PersonalInformationModifyPageContentState
   /// 修改成功
   void _successHandler(dynamic data) {
     finishLoading();
-    mProvider.callback?.call(true);
+    mProvider.callback?.call(data);
     RouteWrapper.popSafety();
   }
 
   void _failureHandler(dynamic data) {
     finishLoading();
-    mProvider.callback?.call(false);
+    mProvider.callback?.call(data);
     RouteWrapper.popSafety();
   }
 }
