@@ -58,8 +58,12 @@ abstract class BasePageContentViewState<T extends ChangeNotifier> extends State<
       context: context,
       barrierDismissible: false,
       builder: (context) {
-        return Center(
-          child: CircularProgressIndicator(),
+        // 禁止手动退出加载界面
+        return WillPopScope(
+          onWillPop: () async => false,
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
         );
       },
     );

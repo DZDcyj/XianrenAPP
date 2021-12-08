@@ -29,7 +29,7 @@ class _InitPageContentState extends BasePageContentViewState<InitPageProvider> {
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
       Future.delayed(Duration(seconds: 1)).then((_) {
-        RouteWrapper.popAndPushNamed(routerNameLoginPage);
+        RouteWrapper.popAndPushNamed(context, routerNameLoginPage);
       });
     });
   }

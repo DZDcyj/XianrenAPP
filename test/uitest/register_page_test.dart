@@ -12,7 +12,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:xianren_app/bean/bean.dart';
 import 'package:xianren_app/page/login_page/view/register_page.dart';
-import 'package:xianren_app/page/login_page/view_model/register_page_provider.dart';
+import 'package:xianren_app/utils/global_util.dart';
 import 'package:xianren_app/utils/net_util.dart';
 import 'package:xianren_app/utils/string_util.dart';
 

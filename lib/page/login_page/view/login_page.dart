@@ -207,6 +207,7 @@ class _LoginPageContentState extends BasePageContentViewState<LoginPageProvider>
   void _loginSuccessHandler() {
     finishLoading();
     RouteWrapper.popAndPushNamed(
+      context,
       routerNameHomePage,
       arguments: ['HomePage'],
     );
@@ -216,7 +217,7 @@ class _LoginPageContentState extends BasePageContentViewState<LoginPageProvider>
   void _loginFailedHandler(dynamic response) {
     finishLoading();
     if (response.code != responseWrongPassword) {
-      Fluttertoast.showToast(msg: '发生错误！错误信息：${response.message} (${response.code})');
+      Fluttertoast.showToast(msg: '${response.message} (${response.code})');
     } else {
       Fluttertoast.showToast(msg: '手机号或密码不正确！');
     }
@@ -232,6 +233,6 @@ class _LoginPageContentState extends BasePageContentViewState<LoginPageProvider>
 
   /// 跳转到注册界面
   void _handleRegisterJump() {
-    RouteWrapper.pushNamed(routerNameRegisterPage);
+    RouteWrapper.pushNamed(context, routerNameRegisterPage);
   }
 }

@@ -12,7 +12,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xianren_app/bean/bean.dart';
-import 'package:xianren_app/page/homepage/view/personal_information_page.dart';
+import 'package:xianren_app/page/homepage/view/personal_information/personal_information_page.dart';
+import 'package:xianren_app/utils/global_util.dart';
 import 'package:xianren_app/utils/net_util.dart';
 
 import '../base/app_module.dart';
@@ -23,6 +24,11 @@ void main() {
   init();
 
   NetUtil netUtil = inject();
+
+  void _resetUser() {
+    reset(netUtil);
+    Global.userInformationEntity = null;
+  }
 
   /// 初始化获取信息 Mock
   void mockInitSuccessResponse() {
@@ -80,19 +86,6 @@ void main() {
   }
 
   testWidgets('PersonalInformationPage', (WidgetTester tester) async {
-    mockInitSuccessResponse();
-
-    await showWidget(tester, PersonalInformationPage());
-
-    await tap(tester, find.text('修改匿名'));
-
-    SharedPreferences.setMockInitialValues({
-      'autoLogin': true,
-    });
-    await tap(tester, find.text('退出登录'));
-  });
-
-  testWidgets('PersonalInformationPage', (WidgetTester tester) async {
     // 其他错误
     when(netUtil.getAllInfo()).thenAnswer(
       (realInvocation) => Stream.fromFuture(
@@ -105,6 +98,7 @@ void main() {
     );
 
     await showWidget(tester, PersonalInformationPage());
+    _resetUser();
   });
 
   testWidgets('PersonalInformationPage', (WidgetTester tester) async {
@@ -118,6 +112,28 @@ void main() {
         ),
       ),
     );
+
+    await showWidget(tester, PersonalInformationPage());
+    _resetUser();
+  });
+
+  testWidgets('PersonalInformationPage', (WidgetTester tester) async {
+    // 成功
+    mockInitSuccessResponse();
+
+    await showWidget(tester, PersonalInformationPage());
+
+    SharedPreferences.setMockInitialValues({
+      'autoLogin': true,
+    });
+
+    await tap(tester, find.text('退出登录'));
+    await tester.pumpAndSettle();
+  });
+
+  testWidgets('PersonalInformationPage', (WidgetTester tester) async {
+    // 缓存路径测试
+    mockInitSuccessResponse();
 
     await showWidget(tester, PersonalInformationPage());
   });
@@ -143,9 +159,102 @@ void main() {
     expect(find.text('我的匿名：cde'), findsNothing);
 
     await tap(tester, find.text('修改匿名'));
+    await tap(tester, find.text('取消'));
+
+    await tester.drag(find.byType(Image), Offset(0.0, 500.0));
+    await tester.pump();
+    await tester.pump(Duration(seconds: 3));
+
+    // 请注意，执行下面的代码后，程序将退出到登录界面
+    await tap(tester, find.text('修改匿名'));
     await tester.enterText(find.byType(TextField), 'ghi');
     await tap(tester, find.text('确认'));
 
     expect(find.text('我的匿名：ghi'), findsNothing);
+    await tester.pumpAndSettle();
+  });
+
+  testWidgets('modifyUserInformation', (WidgetTester tester) async {
+    mockInitSuccessResponse();
+    PersonalInformationPage page = PersonalInformationPage();
+    await showWidget(tester, page);
+
+    page.mProvider.refreshTimestamp = DateTime.now().add(Duration(seconds: 100)).millisecondsSinceEpoch;
+    await tester.drag(find.byType(Image), Offset(0.0, 500.0));
+    await tester.pump();
+    await tester.pump(Duration(seconds: 3));
+  });
+
+  /// 模拟修改后请求数据
+  void mockModifiedResponse() {
+    when(netUtil.modifyPersonalInformation({
+      'phonenumber': '13666279971',
+      'gender': '男',
+      'birthday': '2005-11-14',
+      'boolhidebirthday': 1,
+    })).thenAnswer(
+      (realInvocation) => Stream.fromFuture(
+        Future.value(
+          HttpResponseEntity<MapEntity>.fromJson(
+            json.decode(successResponse),
+          ),
+        ),
+      ),
+    );
+
+    when(netUtil.modifyPersonalInformation({
+      'phonenumber': '13666279971',
+      'gender': '男',
+      'birthday': '2005-11-14',
+      'boolhidebirthday': 0,
+    })).thenAnswer(
+      (realInvocation) => Stream.fromFuture(
+        Future.value(
+          HttpResponseEntity<MapEntity>.fromJson(
+            json.decode(failedResponse),
+          ),
+        ),
+      ),
+    );
+
+    when(netUtil.modifyPersonalInformation({
+      'phonenumber': '13666279971',
+      'gender': '男',
+      'nickname': 'asd',
+      'birthday': '2005-11-14',
+      'boolhidebirthday': 1,
+    })).thenAnswer(
+      (realInvocation) => Stream.fromFuture(
+        Future.value(
+          HttpResponseEntity<MapEntity>.fromJson(
+            json.decode(sessionInvalidResponse),
+          ),
+        ),
+      ),
+    );
+  }
+
+  testWidgets('PersonalInformationModifyPage', (WidgetTester tester) async {
+    reset(netUtil);
+    mockInitSuccessResponse();
+    PersonalInformationPage page = PersonalInformationPage();
+    mockModifiedResponse();
+    await showWidget(tester, page);
+    await tap(tester, find.text('修改个人信息'));
+    await tester.pumpAndSettle();
+    await tap(tester, find.text('确认修改'));
+    await tester.pumpAndSettle();
+
+    await tap(tester, find.text('修改个人信息'));
+    await tester.pumpAndSettle();
+    await tap(tester, find.text('隐藏生日'));
+    await tap(tester, find.text('确认修改'));
+    await tester.pumpAndSettle();
+
+    await tap(tester, find.text('修改个人信息'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField), 'asd');
+    await tap(tester, find.text('确认修改'));
+    await tester.pumpAndSettle();
   });
 }

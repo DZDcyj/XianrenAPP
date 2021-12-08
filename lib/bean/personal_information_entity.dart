@@ -4,7 +4,7 @@
 /// created by DZDcyj at 2021/12/5
 ///
 import 'package:intl/intl.dart';
-import 'package:xianren_app/page/login_page/view_model/register_page_provider.dart';
+import 'package:xianren_app/utils/global_util.dart';
 import 'package:xianren_app/utils/string_util.dart';
 
 import 'bean.dart';
