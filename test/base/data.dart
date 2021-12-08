@@ -6,6 +6,7 @@
 const String successResponse = '''
 {
     "code": 20000,
+    "status":true,
     "message": "success",
     "data": {}
 }
@@ -14,6 +15,7 @@ const String successResponse = '''
 const String failedResponse = '''
 {
     "code": 20007,
+    "status": false,
     "message": "用户不存在",
     "data": {}
 }
@@ -22,15 +24,15 @@ const String failedResponse = '''
 const String wrongPasswordResponse = '''
 {
     "code": 21008,
+    "status": false,
     "message": "密码错误,请重新输入!",
     "data": {}
 }
 ''';
 
-
 const String successInfoResponse = '''
 {
-    "success": true,
+    "status": true,
     "code": 20000,
     "message": "成功",
     "data": {
@@ -54,7 +56,7 @@ const String successInfoResponse = '''
 
 const String sessionInvalidResponse = '''
 {
-    "success": false,
+    "status": false,
     "code": 21009,
     "message": "Session无效",
     "data": {}

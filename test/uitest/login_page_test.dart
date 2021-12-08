@@ -23,9 +23,43 @@ void main() {
 
   NetUtil netUtil = inject();
 
+  /// 模拟登录返回数据
+  void mockResponses() {
+    when(netUtil.login('asd', 'any')).thenAnswer(
+      (realInvocation) => Stream.fromFuture(
+        Future.value(
+          HttpResponseEntity<MapEntity>.fromJson(
+            json.decode(wrongPasswordResponse),
+          ),
+        ),
+      ),
+    );
+
+    when(netUtil.login('asd', 'efg')).thenAnswer(
+      (realInvocation) => Stream.fromFuture(
+        Future.value(
+          HttpResponseEntity<MapEntity>.fromJson(
+            json.decode(successResponse),
+          ),
+        ),
+      ),
+    );
+
+    when(netUtil.login('asd', 'asd')).thenAnswer(
+      (realInvocation) => Stream.fromFuture(
+        Future.value(
+          HttpResponseEntity<MapEntity>.fromJson(
+            json.decode(failedResponse),
+          ),
+        ),
+      ),
+    );
+  }
+
   testWidgets('LoginPage', (WidgetTester tester) async {
     LoginPage page = LoginPage();
     await showWidget(tester, page, duration: Duration(seconds: 1));
+    mockResponses();
 
     // 检查元素数量
     expect(find.text('Xianren'), findsOneWidget);
@@ -38,8 +72,8 @@ void main() {
     // 检查输入
     await tester.enterText(find.byType(TextField).first, 'asd');
     expect(page.mProvider.username, 'asd');
-    await tester.enterText(find.byType(TextField).last, 'efg');
-    expect(page.mProvider.password, 'efg');
+    await tester.enterText(find.byType(TextField).last, 'asd');
+    expect(page.mProvider.password, 'asd');
 
     // 检查复选框
     var autoInput = find.byType(CheckboxListTile).first;
@@ -57,42 +91,10 @@ void main() {
     expect(page.mProvider.autoInput, true);
     expect(page.mProvider.autoLogin, true);
 
-    when(netUtil.login('asd', 'efg')).thenAnswer(
-      (realInvocation) => Stream.fromFuture(
-        Future.value(
-          HttpResponseEntity<MapEntity>.fromJson(
-            json.decode(successResponse),
-          ),
-        ),
-      ),
-    );
-
     await tap(tester, find.byType(ElevatedButton));
-
-    await tester.enterText(find.byType(TextField).last, 'asd');
-    when(netUtil.login('asd', 'asd')).thenAnswer(
-      (realInvocation) => Stream.fromFuture(
-        Future.value(
-          HttpResponseEntity<MapEntity>.fromJson(
-            json.decode(failedResponse),
-          ),
-        ),
-      ),
-    );
-
-    await tap(tester, find.byType(ElevatedButton));
-
     await tester.enterText(find.byType(TextField).last, 'any');
-    when(netUtil.login('asd', 'any')).thenAnswer(
-      (realInvocation) => Stream.fromFuture(
-        Future.value(
-          HttpResponseEntity<MapEntity>.fromJson(
-            json.decode(wrongPasswordResponse),
-          ),
-        ),
-      ),
-    );
-
+    await tap(tester, find.byType(ElevatedButton));
+    await tester.enterText(find.byType(TextField).last, 'efg');
     await tap(tester, find.byType(ElevatedButton));
   });
 
