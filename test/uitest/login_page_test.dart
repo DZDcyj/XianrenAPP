@@ -57,7 +57,7 @@ void main() {
     expect(page.mProvider.autoInput, true);
     expect(page.mProvider.autoLogin, true);
 
-    when(netUtil.login(any, any)).thenAnswer(
+    when(netUtil.login('asd', 'efg')).thenAnswer(
       (realInvocation) => Stream.fromFuture(
         Future.value(
           HttpResponseEntity<MapEntity>.fromJson(
@@ -69,7 +69,8 @@ void main() {
 
     await tap(tester, find.byType(ElevatedButton));
 
-    when(netUtil.login(any, any)).thenAnswer(
+    await tester.enterText(find.byType(TextField).last, 'asd');
+    when(netUtil.login('asd', 'asd')).thenAnswer(
       (realInvocation) => Stream.fromFuture(
         Future.value(
           HttpResponseEntity<MapEntity>.fromJson(
@@ -81,7 +82,8 @@ void main() {
 
     await tap(tester, find.byType(ElevatedButton));
 
-    when(netUtil.login(any, any)).thenAnswer(
+    await tester.enterText(find.byType(TextField).last, 'any');
+    when(netUtil.login('asd', 'any')).thenAnswer(
       (realInvocation) => Stream.fromFuture(
         Future.value(
           HttpResponseEntity<MapEntity>.fromJson(

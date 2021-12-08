@@ -13,6 +13,7 @@ import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xianren_app/bean/bean.dart';
 import 'package:xianren_app/page/homepage/view/personal_information/personal_information_page.dart';
+import 'package:xianren_app/utils/global_util.dart';
 import 'package:xianren_app/utils/net_util.dart';
 
 import '../base/app_module.dart';
@@ -23,6 +24,11 @@ void main() {
   init();
 
   NetUtil netUtil = inject();
+
+  void _resetUser() {
+    reset(netUtil);
+    Global.userInformationEntity = null;
+  }
 
   /// 初始化获取信息 Mock
   void mockInitSuccessResponse() {
@@ -80,19 +86,6 @@ void main() {
   }
 
   testWidgets('PersonalInformationPage', (WidgetTester tester) async {
-    mockInitSuccessResponse();
-
-    await showWidget(tester, PersonalInformationPage());
-
-    await tap(tester, find.text('修改匿名'));
-
-    SharedPreferences.setMockInitialValues({
-      'autoLogin': true,
-    });
-    await tap(tester, find.text('退出登录'));
-  });
-
-  testWidgets('PersonalInformationPage', (WidgetTester tester) async {
     // 其他错误
     when(netUtil.getAllInfo()).thenAnswer(
       (realInvocation) => Stream.fromFuture(
@@ -105,6 +98,7 @@ void main() {
     );
 
     await showWidget(tester, PersonalInformationPage());
+    _resetUser();
   });
 
   testWidgets('PersonalInformationPage', (WidgetTester tester) async {
@@ -118,6 +112,27 @@ void main() {
         ),
       ),
     );
+
+    await showWidget(tester, PersonalInformationPage());
+    _resetUser();
+  });
+
+  testWidgets('PersonalInformationPage', (WidgetTester tester) async {
+    // 成功
+    mockInitSuccessResponse();
+
+    await showWidget(tester, PersonalInformationPage());
+
+    SharedPreferences.setMockInitialValues({
+      'autoLogin': true,
+    });
+
+    await tap(tester, find.text('退出登录'));
+  });
+
+  testWidgets('PersonalInformationPage', (WidgetTester tester) async {
+    // 缓存路径测试
+    mockInitSuccessResponse();
 
     await showWidget(tester, PersonalInformationPage());
   });
@@ -147,5 +162,25 @@ void main() {
     await tap(tester, find.text('确认'));
 
     expect(find.text('我的匿名：ghi'), findsNothing);
+
+    await tap(tester, find.text('修改匿名'));
+    await tap(tester, find.text('取消'));
+
+    await tester.drag(find.byType(Image), Offset(0.0, 500.0));
+    await tester.pump();
+    await tester.pump(Duration(seconds: 3));
+  });
+
+  testWidgets('modifyUserInformation', (WidgetTester tester) async {
+    mockInitSuccessResponse();
+    PersonalInformationPage page = PersonalInformationPage();
+    await showWidget(tester, page);
+
+    await tap(tester, find.text('修改个人信息'));
+
+    page.mProvider.refreshTimestamp = DateTime.now().add(Duration(seconds: 100)).millisecondsSinceEpoch;
+    await tester.drag(find.byType(Image), Offset(0.0, 500.0));
+    await tester.pump();
+    await tester.pump(Duration(seconds: 3));
   });
 }

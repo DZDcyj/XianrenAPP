@@ -21,7 +21,7 @@ const String failedResponse = '''
 
 const String wrongPasswordResponse = '''
 {
-    "code": 20008,
+    "code": 21008,
     "message": "密码错误,请重新输入!",
     "data": {}
 }
