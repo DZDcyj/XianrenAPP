@@ -162,13 +162,17 @@ class _PersonalInformationPageContentState extends BasePageContentViewState<Pers
 
   /// 跳转到修改个人信息
   void _jump2ModifyPersonalInformation() {
-    RouteWrapper.pushNamed(routerNamePersonalInformationModifyPage, arguments: [
-      mProvider.phoneNumber,
-      mProvider.birthday,
-      mProvider.gender,
-      mProvider.hideBirthday,
-      _modifyResultHandler,
-    ]);
+    RouteWrapper.pushNamed(
+      context,
+      routerNamePersonalInformationModifyPage,
+      arguments: [
+        mProvider.phoneNumber,
+        mProvider.birthday,
+        mProvider.gender,
+        mProvider.hideBirthday,
+        _modifyResultHandler,
+      ],
+    );
   }
 
   /// 处理修改内容回调
@@ -254,7 +258,7 @@ class _PersonalInformationPageContentState extends BasePageContentViewState<Pers
   /// 退出登录
   void _logout() {
     mProvider.logout().then((value) {
-      RouteWrapper.popAndPushNamed(routerNameLoginPage);
+      RouteWrapper.popAndPushNamed(context, routerNameLoginPage);
     });
   }
 

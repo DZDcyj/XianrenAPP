@@ -15,11 +15,13 @@ class RouteWrapper {
   /// [routeName] 为对应页面
   /// [arguments] 为传递的参数
   static Future<void> pushNamed(
+    BuildContext context,
     String routeName, {
     List<dynamic> arguments,
   }) async {
     var navigator = observer.navigator;
-    await navigator?.push(
+    navigator ??= Navigator.of(context);
+    await navigator.push(
       MaterialPageRoute(
         builder: (context) => routerMap[routeName].call(params: arguments),
       ),
@@ -28,18 +30,24 @@ class RouteWrapper {
 
   /// 安全弹出当前界面
   /// 若当前页面为栈顶则不弹出
-  static Future<bool> popSafety() async {
+  static Future<bool> popSafety(
+    BuildContext context, {
+    dynamic result,
+  }) async {
     var navigator = observer.navigator;
-    return navigator?.maybePop();
+    navigator ??= Navigator.of(context);
+    return navigator?.maybePop(result);
   }
 
   /// 弹出当前页面并进入新页面
   static Future<void> popAndPushNamed(
+    BuildContext context,
     String routerName, {
     List<dynamic> arguments,
   }) async {
     var navigator = observer.navigator;
+    navigator ??= Navigator.of(context);
     navigator?.pop();
-    await pushNamed(routerName, arguments: arguments);
+    await pushNamed(context, routerName, arguments: arguments);
   }
 }

@@ -207,6 +207,7 @@ class _LoginPageContentState extends BasePageContentViewState<LoginPageProvider>
   void _loginSuccessHandler() {
     finishLoading();
     RouteWrapper.popAndPushNamed(
+      context,
       routerNameHomePage,
       arguments: ['HomePage'],
     );
@@ -232,6 +233,6 @@ class _LoginPageContentState extends BasePageContentViewState<LoginPageProvider>
 
   /// 跳转到注册界面
   void _handleRegisterJump() {
-    RouteWrapper.pushNamed(routerNameRegisterPage);
+    RouteWrapper.pushNamed(context, routerNameRegisterPage);
   }
 }

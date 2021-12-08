@@ -224,13 +224,13 @@ class _PersonalInformationModifyPageContentState
   void _successHandler(dynamic data) {
     finishLoading();
     mProvider.callback?.call(data);
-    RouteWrapper.popSafety();
+    RouteWrapper.popSafety(context);
   }
 
   /// 修改失败
   void _failureHandler(dynamic data) {
     finishLoading();
     mProvider.callback?.call(data);
-    RouteWrapper.popSafety();
+    RouteWrapper.popSafety(context);
   }
 }

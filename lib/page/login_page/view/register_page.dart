@@ -249,7 +249,7 @@ class _RegisterPageContentState extends BasePageContentViewState<RegisterPagePro
         onData: (response) {
           _messageShowHandler(response.message);
           if (response.code == responseOK) {
-            RouteWrapper.popSafety();
+            RouteWrapper.popSafety(context);
           }
         },
       );
