@@ -28,6 +28,7 @@ const String loginApi = 'login'; // 登录
 const String getAllInfoApi = 'getallinfo'; // 获取所有信息
 const String modifyAnonymousApi = 'changeua'; // 更改匿名
 const String modifyPersonalBasicInformationApi = 'changeubi'; // 修改基本信息
+const String publishNewPostApi = 'newarticle'; // 发表新的帖子
 
 /// SharedPreferences Key
 String usernameKey = 'username';

@@ -5,7 +5,6 @@
 ///
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:xianren_app/base/view/base_page_view.dart';
 import 'package:xianren_app/constants/constants.dart';
@@ -258,7 +257,7 @@ class _RegisterPageContentState extends BasePageContentViewState<RegisterPagePro
 
   void _messageShowHandler(value) {
     if (value is String) {
-      Fluttertoast.showToast(msg: value);
+      showToast(msg: value);
     }
   }
 

@@ -6,7 +6,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 import 'package:xianren_app/base/view/base_page_view.dart';
@@ -34,7 +33,8 @@ class _PersonalInformationPageContentState extends BasePageContentViewState<Pers
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       mProvider.getAllInformation(
-        onSessionInvalid: _logout,
+        onSessionInvalid: _sessionInvalidHandler,
+        onError: _errorCodeCommonHandler,
         onStart: startLoading,
         onFinished: finishLoading,
       );
@@ -46,15 +46,27 @@ class _PersonalInformationPageContentState extends BasePageContentViewState<Pers
     int timeStamp = DateTime.now().millisecondsSinceEpoch;
     if (timeStamp - (mProvider.refreshTimestamp ?? 0) > maxRefreshCoolDownMilliseconds) {
       mProvider.getAllInformation(
-        onSessionInvalid: _logout,
+        onSessionInvalid: _sessionInvalidHandler,
         onStart: startLoading,
         onFinished: finishLoading,
+        onError: _errorCodeCommonHandler,
         refresh: true,
       );
       mProvider.refreshTimestamp = timeStamp;
     } else {
-      Fluttertoast.showToast(msg: '操作太频繁，请稍后再试');
+      showToast(msg: '操作太频繁，请稍后再试');
     }
+  }
+
+  /// 错误码处理
+  void _errorCodeCommonHandler(dynamic response) {
+    showToast(msg: '发生错误！(${response.code})');
+  }
+
+  /// 会话过期
+  void _sessionInvalidHandler() {
+    showToast(msg: '会话过期，请重新登陆！');
+    _logout();
   }
 
   @override
@@ -181,16 +193,17 @@ class _PersonalInformationPageContentState extends BasePageContentViewState<Pers
     if (response.status) {
       // 成功
       mProvider.getAllInformation(
-        onSessionInvalid: _logout,
+        onSessionInvalid: _sessionInvalidHandler,
+        onError: _errorCodeCommonHandler,
         refresh: true,
       );
     } else {
       // 失败
       if (response.code == responseSessionMismatch || response.code == responseSessionInvalid) {
-        Fluttertoast.showToast(msg: '会话过期，请重新登陆！');
+        showToast(msg: '会话过期，请重新登陆！');
         _logout();
       } else {
-        Fluttertoast.showToast(msg: '发生错误！(${response.code})');
+        showToast(msg: '发生错误！(${response.code})');
       }
     }
   }
@@ -209,10 +222,10 @@ class _PersonalInformationPageContentState extends BasePageContentViewState<Pers
             },
             onFailed: (data) {
               if (data.code == responseSessionInvalid || data.code == responseSessionMismatch) {
-                Fluttertoast.showToast(msg: '会话过期，请重新登陆！');
+                showToast(msg: '会话过期，请重新登陆！');
                 _logout();
               } else {
-                Fluttertoast.showToast(msg: '发生错误！(${data.code})');
+                showToast(msg: '发生错误！(${data.code})');
               }
             },
             onDone: finishLoading,

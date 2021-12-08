@@ -3,12 +3,15 @@
 ///
 /// created by DZDcyj at 2021/11/28
 ///
-import 'package:xianren_app/base/view/base_page_view.dart';
-import 'package:xianren_app/page/homepage/view/personal_information/personal_information_page.dart';
-import 'package:xianren_app/page/homepage/view_model/homepage_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:xianren_app/base/view/base_page_view.dart';
+import 'package:xianren_app/page/homepage/view/personal_information/personal_information_page.dart';
+import 'package:xianren_app/page/homepage/view_model/homepage_provider.dart';
+import 'package:xianren_app/router/router.dart';
+import 'package:xianren_app/router/router_constant.dart';
+import 'package:xianren_app/utils/global_util.dart';
 
 class HomePage extends PageNodeProvider<HomePageProvider> {
   HomePage() : super();
@@ -69,7 +72,24 @@ class _MyHomePageContentState extends BasePageContentViewState<HomePageProvider>
           onTap: (newIndex) => mProvider.currIndex = newIndex,
         ),
       ),
+      floatingActionButton: Selector<HomePageProvider, int>(
+        selector: (_, provider) => provider.currIndex,
+        builder: (context, index, child) {
+          if (index == 1) {
+            return FloatingActionButton(
+              onPressed: _postNewPost,
+              child: Icon(Icons.forum),
+            );
+          }
+          return Container();
+        },
+      ),
     );
+  }
+
+  /// 发新的树洞帖子
+  void _postNewPost() {
+    RouteWrapper.pushNamed(context, routerNameNewPostPage, arguments: [Global.phoneNumber]);
   }
 
   /// 导航栏图标

@@ -4,7 +4,6 @@
 /// created by DZDcyj at 2021/12/4
 ///
 import 'package:dartin/dartin.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xianren_app/base/view_model/base_page_view_provider.dart';
 import 'package:xianren_app/bean/bean.dart';
@@ -75,6 +74,7 @@ class PersonalInformationPageProvider extends BasePageProvider {
     void Function() onSessionInvalid,
     void Function() onStart,
     void Function() onFinished,
+    void Function(dynamic data) onError,
     bool refresh = false,
   }) {
     if (refresh || Global.userInformationEntity == null) {
@@ -86,10 +86,9 @@ class PersonalInformationPageProvider extends BasePageProvider {
           if (response.code == responseOK) {
             updateUserInfo(response.data);
           } else if (response.code == responseSessionInvalid) {
-            Fluttertoast.showToast(msg: '会话过期，请重新登陆！');
             onSessionInvalid?.call();
           } else {
-            Fluttertoast.showToast(msg: '发生错误！(${response.code})');
+            onError?.call(response);
           }
           onFinished?.call();
         },

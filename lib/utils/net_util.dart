@@ -111,6 +111,13 @@ class NetUtil {
       data: data,
     );
   }
+
+  Stream<HttpResponseEntity<MapEntity>> publishNewPost(Map<String, dynamic> data) {
+    return post(
+      publishNewPostApi,
+      data: data,
+    );
+  }
 }
 
 String constructUrl(

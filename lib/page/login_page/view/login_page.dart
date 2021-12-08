@@ -6,13 +6,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:xianren_app/base/view/base_page_view.dart';
 import 'package:xianren_app/constants/constants.dart';
 import 'package:xianren_app/page/login_page/view_model/login_page_provider.dart';
 import 'package:xianren_app/router/router.dart';
 import 'package:xianren_app/router/router_constant.dart';
+import 'package:xianren_app/utils/global_util.dart';
 
 class LoginPage extends PageNodeProvider<LoginPageProvider> {
   @override
@@ -206,10 +206,10 @@ class _LoginPageContentState extends BasePageContentViewState<LoginPageProvider>
   /// 登录成功
   void _loginSuccessHandler() {
     finishLoading();
+    Global.phoneNumber = mProvider.username;
     RouteWrapper.popAndPushNamed(
       context,
       routerNameHomePage,
-      arguments: ['HomePage'],
     );
   }
 
@@ -217,9 +217,9 @@ class _LoginPageContentState extends BasePageContentViewState<LoginPageProvider>
   void _loginFailedHandler(dynamic response) {
     finishLoading();
     if (response.code != responseWrongPassword) {
-      Fluttertoast.showToast(msg: '${response.message} (${response.code})');
+      showToast(msg: '${response.message} (${response.code})');
     } else {
-      Fluttertoast.showToast(msg: '手机号或密码不正确！');
+      showToast(msg: '手机号或密码不正确！');
     }
   }
 

@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart' as flutter;
 import 'package:xianren_app/page/homepage/view_model/homepage_provider.dart';
 import 'package:xianren_app/page/homepage/view_model/personal_information/personal_information_modify_page_provider.dart';
 import 'package:xianren_app/page/homepage/view_model/personal_information/personal_information_page_provider.dart';
+import 'package:xianren_app/page/homepage/view_model/tree_hole/new_post_page_provider.dart';
 import 'package:xianren_app/page/init_page/view_model/init_page_provider.dart';
 import 'package:xianren_app/page/login_page/view_model/login_page_provider.dart';
 import 'package:xianren_app/page/login_page/view_model/register_page_provider.dart';
@@ -38,6 +39,9 @@ final viewModelModule = Module([
       params.get(3),
       params.get(4),
     ),
+  ),
+  factory<NewPostPageProvider>(
+    ({params}) => NewPostPageProvider(params.get(0)),
   ),
 ]);
 

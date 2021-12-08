@@ -12,6 +12,10 @@ String transferDate(DateTime dateTime) {
   return DateFormat('yyyy-MM-dd').format(dateTime);
 }
 
+String transferDateWithTime(DateTime dateTime) {
+  return DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTime);
+}
+
 Gender transferStringToGender(String value) {
   switch (value) {
     case '男':
