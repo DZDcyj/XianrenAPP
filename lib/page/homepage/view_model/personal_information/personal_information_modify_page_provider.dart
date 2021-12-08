@@ -65,6 +65,7 @@ class PersonalInformationModifyPageProvider extends BasePageProvider {
     return result;
   }
 
+  /// 更新基础信息
   Future<void> modifyPersonalBasicInformation({
     void Function() onStart,
     void Function(dynamic data) onSuccess,

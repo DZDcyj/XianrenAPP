@@ -34,3 +34,6 @@ String usernameKey = 'username';
 String passwordKey = 'password';
 String autoInputKey = 'autoInput';
 String autoLoginKey = 'autoLogin';
+
+/// 一些常量
+const int maxRefreshCoolDownMilliseconds = 3000; // 刷新间隔（毫秒）

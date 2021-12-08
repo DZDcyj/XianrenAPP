@@ -41,9 +41,10 @@ class _PersonalInformationPageContentState extends BasePageContentViewState<Pers
     });
   }
 
+  /// 下拉刷新
   Future<void> _refresh() async {
     int timeStamp = DateTime.now().millisecondsSinceEpoch;
-    if (timeStamp - (mProvider.refreshTimestamp ?? 0) > 3000) {
+    if (timeStamp - (mProvider.refreshTimestamp ?? 0) > maxRefreshCoolDownMilliseconds) {
       mProvider.getAllInformation(
         onSessionInvalid: _logout,
         onStart: startLoading,
