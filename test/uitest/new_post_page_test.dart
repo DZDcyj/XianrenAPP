@@ -40,4 +40,22 @@ void main() {
 
     await tap(tester, find.byType(FloatingActionButton));
   });
+
+  testWidgets('NewPostPage', (WidgetTester tester) async {
+    await showWidget(tester, NewPostPage('1234'));
+
+    await tester.enterText(find.byType(TextField).first, 'asd');
+
+    await tap(tester, find.byType(Icon).first);
+    await tap(tester, find.text('取消'));
+    await tap(tester, find.byType(Icon).first);
+    await tap(tester, find.text('确认'));
+    await tester.pumpAndSettle();
+  });
+
+  testWidgets('NewPostPage', (WidgetTester tester) async {
+    await showWidget(tester, NewPostPage('1234'));
+
+    await tap(tester, find.byType(FloatingActionButton));
+  });
 }

@@ -62,3 +62,57 @@ const String sessionInvalidResponse = '''
     "data": {}
 }
 ''';
+
+const String postsResponse = '''
+{
+    "code": 20000,
+    "message": "成功",
+    "data": {
+        "list": [
+            {
+                "mid": 1,
+                "mtitle": "Test",
+                "mdate": "2021-12-08 00:00:00",
+                "phonenumber": "13666279971",
+                "anonymname": "匿名者12138"
+            },
+            {
+                "mid": 2,
+                "mtitle": "asdasd",
+                "mdate": "2021-12-08 00:00:00",
+                "phonenumber": "13666279971",
+                "anonymname": "匿名者12138"
+            },
+            {
+                "mid": 3,
+                "mtitle": "asdasd",
+                "mdate": "2021-12-08 00:00:00",
+                "phonenumber": "13666279971",
+                "anonymname": "匿名者12138"
+            },
+            {
+                "mid": 4,
+                "mtitle": "dasdsad",
+                "mdate": "2021-12-08 00:00:00",
+                "phonenumber": "13666279971",
+                "anonymname": "匿名者12138"
+            },
+            {
+                "mid": 5,
+                "mtitle": "sdasdsad",
+                "mdate": "2021-12-08 00:00:00",
+                "phonenumber": "13666279971",
+                "anonymname": "匿名者12138"
+            },
+            {
+                "mid": 6,
+                "mtitle": "sdasdsad",
+                "mdate": "2021-12-08 00:00:00",
+                "phonenumber": "13666279971",
+                "anonymname": "匿名者12138"
+            }
+        ]
+    },
+    "status": true
+}
+''';
