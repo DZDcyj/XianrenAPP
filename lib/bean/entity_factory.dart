@@ -43,6 +43,9 @@ class EntityFactory {
       _Generator<UserInformationEntity>(
         (json) => UserInformationEntity.fromJson(json),
       ),
+      _Generator<PostListEntity>(
+        (json) => PostListEntity.fromJson(json),
+      ),
     ],
     key: (g) => g.keyName,
     value: (g) => g.generator,

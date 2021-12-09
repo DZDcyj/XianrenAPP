@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:xianren_app/base/view/base_page_view.dart';
 import 'package:xianren_app/page/homepage/view/personal_information/personal_information_page.dart';
+import 'package:xianren_app/page/homepage/view/tree_hole/tree_hole_page.dart';
 import 'package:xianren_app/page/homepage/view_model/homepage_provider.dart';
 import 'package:xianren_app/router/router.dart';
 import 'package:xianren_app/router/router_constant.dart';
@@ -33,22 +34,23 @@ class _MyHomePageContentState extends BasePageContentViewState<HomePageProvider>
     super.build(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Selector<HomePageProvider, int>(
-              selector: (_, provider) => provider.currIndex,
-              builder: (context, index, child) {
-                if (index != 2) {
+      body: SafeArea(
+        child: Center(
+          child: Selector<HomePageProvider, int>(
+            selector: (_, provider) => provider.currIndex,
+            builder: (context, index, child) {
+              switch (index) {
+                case 0:
                   return Text(
                     'You are now at page $index',
                   );
-                }
-                return PersonalInformationPage();
-              },
-            ),
-          ],
+                case 1:
+                  return TreeHolePage();
+                default:
+                  return PersonalInformationPage();
+              }
+            },
+          ),
         ),
       ),
       bottomNavigationBar: Selector<HomePageProvider, int>(

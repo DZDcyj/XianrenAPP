@@ -9,3 +9,4 @@ export 'entity_factory.dart';
 export 'http_response_entity.dart';
 export 'map_entity.dart';
 export 'personal_information_entity.dart';
+export 'post_entity.dart';

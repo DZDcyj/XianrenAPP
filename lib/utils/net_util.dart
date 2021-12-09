@@ -118,6 +118,25 @@ class NetUtil {
       data: data,
     );
   }
+
+  Stream<HttpResponseEntity<PostListEntity>> getPosts(int pageIndex) {
+    return get(
+      getTreeHoleArticlesApi,
+      queryParameters: {
+        'pageindex': pageIndex,
+      },
+    );
+  }
+
+  Stream<HttpResponseEntity<PostListEntity>> getPostDetail(int postId) {
+    // TODO: 将 data 换为 queryParameters，同时修改方法为 GET
+    return post(
+      getPostDetailApi,
+      data: {
+        'mid': postId,
+      },
+    );
+  }
 }
 
 String constructUrl(
