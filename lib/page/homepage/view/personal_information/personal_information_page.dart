@@ -13,6 +13,7 @@ import 'package:xianren_app/constants/constants.dart';
 import 'package:xianren_app/page/homepage/view_model/personal_information/personal_information_page_provider.dart';
 import 'package:xianren_app/router/router.dart';
 import 'package:xianren_app/router/router_constant.dart';
+import 'package:xianren_app/utils/global_util.dart';
 import 'package:xianren_app/utils/string_util.dart';
 
 class PersonalInformationPage extends PageNodeProvider<PersonalInformationPageProvider> {
@@ -219,6 +220,7 @@ class _PersonalInformationPageContentState extends BasePageContentViewState<Pers
             onStart: startLoading,
             onSuccess: (value) {
               mProvider.anonymous = value;
+              Global.userInformationEntity.ua.anonymousName = value;
             },
             onFailed: (data) {
               if (data.code == responseSessionInvalid || data.code == responseSessionMismatch) {
