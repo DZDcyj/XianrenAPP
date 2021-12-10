@@ -26,6 +26,8 @@ class _TreeHolePageContent extends BasePageContentView<TreeHolePageProvider> {
 }
 
 class _TreeHolePageContentState extends BasePageContentViewState<TreeHolePageProvider> {
+  ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
@@ -34,7 +36,30 @@ class _TreeHolePageContentState extends BasePageContentViewState<TreeHolePagePro
         onStart: () => mProvider.isLoading = true,
         onFinished: () => mProvider.isLoading = false,
       );
+      _scrollController.addListener(_handleLoadMore);
     });
+  }
+
+  /// 处理上滑加载更多
+  void _handleLoadMore() {
+    if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+      mProvider.getPostsFromServer(
+        onStart: () => mProvider.loadingMore = true,
+        refresh: false,
+        onData: (response) => mProvider.hasMore = response.data.posts.isNotEmpty,
+        onFinished: _handleLoadMoreFinished,
+      );
+    }
+  }
+
+  /// 上滑加载完毕后
+  void _handleLoadMoreFinished() {
+    mProvider.loadingMore = false;
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent - 24.0,
+      duration: Duration(milliseconds: 300),
+      curve: Curves.ease,
+    );
   }
 
   @override
@@ -43,29 +68,53 @@ class _TreeHolePageContentState extends BasePageContentViewState<TreeHolePagePro
     return Padding(
       padding: EdgeInsets.only(left: 40.0, right: 40.0),
       child: RefreshIndicator(
-        // TODO: 添加下划加载更多
         onRefresh: _reloadingPosts,
-        child: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
-          child: Selector<TreeHolePageProvider, Tuple2<bool, List<PostEntity>>>(
-            selector: (_, provider) => Tuple2(provider.isLoading, provider.posts),
-            builder: (context, tuple, child) {
-              if (tuple.item1) {
-                return CircularProgressIndicator();
-              }
-              var posts = tuple.item2;
-              return Column(
-                children: List.generate(
-                  posts.length ?? 0,
-                  (index) => PostItem(
-                    anonymousName: posts[index].anonymousName,
-                    title: posts[index].title,
-                    date: posts[index].date,
-                  ),
-                ),
-              );
-            },
-          ),
+        child: Selector<TreeHolePageProvider, Tuple2<bool, List<PostEntity>>>(
+          selector: (_, provider) => Tuple2(provider.isLoading, provider.posts),
+          builder: (context, tuple, child) {
+            if (tuple.item1) {
+              return CircularProgressIndicator();
+            }
+            var posts = tuple.item2;
+            return ListView.builder(
+              physics: AlwaysScrollableScrollPhysics(),
+              controller: _scrollController,
+              itemCount: posts.length + 1,
+              itemBuilder: (context, index) {
+                if (index == posts.length) {
+                  return Selector<TreeHolePageProvider, Tuple2<bool, bool>>(
+                    selector: (_, provider) => Tuple2(provider.hasMore, provider.loadingMore),
+                    builder: (context, tuple, child) {
+                      var hasMore = tuple.item1;
+                      var loadingMore = tuple.item2;
+                      if (loadingMore) {
+                        return Center(
+                          child: SizedBox(
+                            width: 30.0,
+                            height: 30.0,
+                            child: CircularProgressIndicator(),
+                          ),
+                        );
+                      }
+                      var hint = hasMore ? '下拉加载更多' : '没有更多啦';
+                      return Container(
+                        child: Text(
+                          hint,
+                          style: TextStyle(fontSize: 18.0),
+                        ),
+                        alignment: Alignment.center,
+                      );
+                    },
+                  );
+                }
+                return PostItem(
+                  anonymousName: posts[index].anonymousName,
+                  title: posts[index].title,
+                  date: posts[index].date,
+                );
+              },
+            );
+          },
         ),
       ),
     );
