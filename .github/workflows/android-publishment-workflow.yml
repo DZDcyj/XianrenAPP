@@ -1,12 +1,16 @@
 name: Android-Publishment-build
 on:
   push:
+    branches:
+      - '*'
     tags:
       - '*'
+  pull_request:
+    branches:
+      - master
 
 jobs:
   build-release-apk:
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Branch
