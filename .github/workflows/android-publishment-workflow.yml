@@ -38,7 +38,7 @@ jobs:
           name: release-artifacts
           path:
             build/app/outputs/flutter-apk/app-release.apk
-      - name: "Send Email with artifacts"
+      - name: "Send Email Notification"
         if: ${{ steps.build.outcome == 'success' }}
         uses: dawidd6/action-send-mail@v3
         with:
@@ -62,9 +62,7 @@ jobs:
           # body: ${{github.actor}} 发起 Pull Request，请尽快进行 Code Review。
           # Using Markdown
           html_body: |
-            ## ${{github.actor}} 触发流水线 APK 构建完毕
-            构建 APK 已置于附件，请注意查收
-
+            ## ${{github.actor}} 触发流水线 APK 构建完毕，请及时查看测试验证
           # Optional unsigned/invalid certificates allowance:
           ignore_cert: true
           # Optional converting Markdown to HTML (set content_type to text/html too):
