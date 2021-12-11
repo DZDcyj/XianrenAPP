@@ -69,4 +69,3 @@ jobs:
           convert_markdown: true
           # Optional priority: 'high', 'normal' (default) or 'low'
           priority: normal
-          attachments: build/app/outputs/flutter-apk/app-release.apk
