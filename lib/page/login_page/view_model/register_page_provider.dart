@@ -4,7 +4,9 @@
 /// created by DZDcyj at 2021/11/29
 ///
 import 'package:dartin/dartin.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:xianren_app/base/view_model/base_page_view_provider.dart';
+import 'package:xianren_app/constants/constants.dart';
 import 'package:xianren_app/utils/global_util.dart';
 import 'package:xianren_app/utils/net_util.dart';
 import 'package:xianren_app/utils/regex_util.dart';
@@ -106,9 +108,9 @@ class RegisterPageProvider extends BasePageProvider {
   }
 
   Future<void> doRegister({
-    void Function(dynamic data) onData,
-    void Function() onStart,
-    void Function() onDone,
+    DataCallback onData,
+    VoidCallback onStart,
+    VoidCallback onDone,
   }) async {
     onStart?.call();
     asyncRequest(

@@ -4,6 +4,7 @@
 /// created by DZDcyj at 2021/11/28
 ///
 import 'package:dartin/dartin.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xianren_app/base/view_model/base_page_view_provider.dart';
 import 'package:xianren_app/constants/constants.dart';
@@ -91,10 +92,10 @@ class LoginPageProvider extends BasePageProvider {
 
   /// 登录
   Future<void> doLogin({
-    void Function() onSuccess,
-    void Function(dynamic response) onFailed,
+    VoidCallback onSuccess,
+    DataCallback onFailed,
     void Function(Error) onError,
-    void Function() onStart,
+    VoidCallback onStart,
   }) async {
     if (autoInput) {
       saveInfoToPreferences();

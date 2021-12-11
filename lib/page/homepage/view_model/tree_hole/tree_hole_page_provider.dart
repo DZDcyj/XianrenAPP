@@ -4,6 +4,7 @@
 /// created by DZDcyj at 2021/12/9
 ///
 import 'package:dartin/dartin.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:xianren_app/base/view_model/base_page_view_provider.dart';
 import 'package:xianren_app/bean/bean.dart';
 import 'package:xianren_app/constants/constants.dart';
@@ -62,9 +63,9 @@ class TreeHolePageProvider extends BasePageProvider {
 
   /// 从服务器获取帖子数据
   void getPostsFromServer({
-    void Function() onStart,
-    void Function(dynamic data) onData,
-    void Function() onFinished,
+    VoidCallback onStart,
+    DataCallback onData,
+    VoidCallback onFinished,
     bool refresh = true,
   }) {
     onStart?.call();
