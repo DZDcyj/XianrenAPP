@@ -8,6 +8,7 @@ import 'package:xianren_app/page/homepage/view/homepage.dart';
 import 'package:xianren_app/page/homepage/view/personal_information/personal_information_modify_page.dart';
 import 'package:xianren_app/page/homepage/view/personal_information/personal_information_page.dart';
 import 'package:xianren_app/page/homepage/view/tree_hole/new_post_page.dart';
+import 'package:xianren_app/page/homepage/view/tree_hole/post_detail.dart';
 import 'package:xianren_app/page/login_page/view/login_page.dart';
 import 'package:xianren_app/page/login_page/view/register_page.dart';
 
@@ -17,6 +18,7 @@ const String routerNameRegisterPage = 'registerpage';
 const String routerNamePersonalInformationPage = 'personalinformationpage';
 const String routerNamePersonalInformationModifyPage = 'personalinformationmodifypage';
 const String routerNameNewPostPage = 'newpostpage';
+const String routerNamePostDetail = 'postdetail';
 
 final Map<String, Widget Function({List<dynamic> params})> routerMap = {
   routerNameHomePage: ({params}) => HomePage(),
@@ -33,4 +35,5 @@ final Map<String, Widget Function({List<dynamic> params})> routerMap = {
     );
   },
   routerNameNewPostPage: ({params}) => NewPostPage(params[0]),
+  routerNamePostDetail: ({params}) => PostDetail(params[0]),
 };

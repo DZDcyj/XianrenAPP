@@ -129,11 +129,27 @@ class NetUtil {
   }
 
   Stream<HttpResponseEntity<PostListEntity>> getPostDetail(int postId) {
-    // TODO: 将 data 换为 queryParameters，同时修改方法为 GET
-    return post(
+    return get(
       getPostDetailApi,
-      data: {
+      queryParameters: {
         'mid': postId,
+      },
+    );
+  }
+
+  Stream<HttpResponseEntity<MapEntity>> postNewComment(Map<String, dynamic> data) {
+    return post(
+      postNewCommentApi,
+      data: data,
+    );
+  }
+
+  Stream<HttpResponseEntity<CommentListEntity>> getComments(int postId, int commentPageIndex) {
+    return get(
+      getPostDetailApi,
+      queryParameters: {
+        'mid': postId,
+        'cpageindex': commentPageIndex,
       },
     );
   }

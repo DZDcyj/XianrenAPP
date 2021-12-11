@@ -36,9 +36,7 @@ class _NewPostPageContentState extends BasePageContentViewState<NewPostPageProvi
           title: Text('发表新帖'),
           leading: IconButton(
             icon: Icon(Icons.arrow_back_outlined),
-            onPressed: () {
-              RouteWrapper.popSafety(context);
-            },
+            onPressed: () => RouteWrapper.popSafety(context),
           ),
         ),
         body: SingleChildScrollView(

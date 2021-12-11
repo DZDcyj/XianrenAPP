@@ -5,15 +5,18 @@
 ///
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:xianren_app/router/router.dart';
+import 'package:xianren_app/router/router_constant.dart';
 
 class PostItem extends StatelessWidget {
   PostItem({
+    @required this.id,
     @required this.anonymousName,
     @required this.title,
     @required this.date,
   });
 
+  final int id;
   final String anonymousName;
   final String title;
   final String date;
@@ -27,7 +30,7 @@ class PostItem extends StatelessWidget {
         border: Border.all(color: Colors.grey),
       ),
       child: ElevatedButton(
-        onPressed: _onPressed,
+        onPressed: () => RouteWrapper.pushNamed(context, routerNamePostDetail, arguments: [id]),
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.resolveWith(
             (states) => states.contains(MaterialState.pressed) ? Colors.grey : Colors.white,
@@ -48,11 +51,6 @@ class PostItem extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void _onPressed() {
-    // TODO: 跳转到详细页面
-    Fluttertoast.showToast(msg: '你在点击帖子$title');
   }
 
   /// 标题部分

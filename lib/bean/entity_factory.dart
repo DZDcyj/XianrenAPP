@@ -1,3 +1,5 @@
+import 'package:xianren_app/bean/post_entity.dart';
+
 ///
 /// entity_factory
 ///
@@ -45,6 +47,12 @@ class EntityFactory {
       ),
       _Generator<PostListEntity>(
         (json) => PostListEntity.fromJson(json),
+      ),
+      _Generator<PostDetailEntity>(
+        (json) => PostDetailEntity.fromJson(json),
+      ),
+      _Generator<CommentListEntity>(
+        (json) => CommentListEntity.fromJson(json),
       ),
     ],
     key: (g) => g.keyName,

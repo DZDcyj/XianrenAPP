@@ -108,6 +108,7 @@ class _TreeHolePageContentState extends BasePageContentViewState<TreeHolePagePro
                   );
                 }
                 return PostItem(
+                  id: posts[index].id,
                   anonymousName: posts[index].anonymousName,
                   title: posts[index].title,
                   date: posts[index].date,
