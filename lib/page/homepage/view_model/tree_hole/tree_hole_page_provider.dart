@@ -86,6 +86,7 @@ class TreeHolePageProvider extends BasePageProvider {
     if (refresh) {
       posts = list.posts;
       pageIndex = 1;
+      hasMore = true;
       return;
     }
     var newList = posts;

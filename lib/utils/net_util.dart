@@ -128,7 +128,7 @@ class NetUtil {
     );
   }
 
-  Stream<HttpResponseEntity<PostListEntity>> getPostDetail(int postId) {
+  Stream<HttpResponseEntity<PostDetailEntity>> getPostDetail(int postId) {
     return get(
       getPostDetailApi,
       queryParameters: {
@@ -146,7 +146,7 @@ class NetUtil {
 
   Stream<HttpResponseEntity<CommentListEntity>> getComments(int postId, int commentPageIndex) {
     return get(
-      getPostDetailApi,
+      getCommentsApi,
       queryParameters: {
         'mid': postId,
         'cpageindex': commentPageIndex,

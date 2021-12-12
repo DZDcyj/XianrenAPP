@@ -30,7 +30,8 @@ const String modifyAnonymousApi = 'changeua'; // 更改匿名
 const String modifyPersonalBasicInformationApi = 'changeubi'; // 修改基本信息
 const String publishNewPostApi = 'newarticle'; // 发表新的帖子
 const String getTreeHoleArticlesApi = 'simplearticles'; // 获取所有帖子
-const String postNewCommentApi = 'newcomments';
+const String postNewCommentApi = 'newcomments'; // 发表评论
+const String getCommentsApi = 'getcomments';
 const String getPostDetailApi = 'articledetails'; // 获取单个帖子详细信息
 
 /// SharedPreferences Key

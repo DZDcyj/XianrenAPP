@@ -36,20 +36,25 @@ class _TreeHolePageContentState extends BasePageContentViewState<TreeHolePagePro
         onStart: () => mProvider.isLoading = true,
         onFinished: () => mProvider.isLoading = false,
       );
-      _scrollController.addListener(_handleLoadMore);
+      _scrollController.addListener(_controllerHandler);
     });
+  }
+
+  /// 滑动监测
+  void _controllerHandler() {
+    if (mProvider.hasMore && _scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+      _handleLoadMore();
+    }
   }
 
   /// 处理上滑加载更多
   void _handleLoadMore() {
-    if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
-      mProvider.getPostsFromServer(
-        onStart: () => mProvider.loadingMore = true,
-        refresh: false,
-        onData: (response) => mProvider.hasMore = response.data.posts.isNotEmpty,
-        onFinished: _handleLoadMoreFinished,
-      );
-    }
+    mProvider.getPostsFromServer(
+      onStart: () => mProvider.loadingMore = true,
+      refresh: false,
+      onData: (response) => mProvider.hasMore = response.data.posts.isNotEmpty,
+      onFinished: _handleLoadMoreFinished,
+    );
   }
 
   /// 上滑加载完毕后
@@ -96,11 +101,17 @@ class _TreeHolePageContentState extends BasePageContentViewState<TreeHolePagePro
                           ),
                         );
                       }
-                      var hint = hasMore ? '下拉加载更多' : '没有更多啦';
+                      var hint = hasMore ? '加载更多' : '没有更多啦';
                       return Container(
-                        child: Text(
-                          hint,
-                          style: TextStyle(fontSize: 18.0),
+                        child: TextButton(
+                          child: Text(
+                            hint,
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          onPressed: hasMore ? _handleLoadMore : null,
                         ),
                         alignment: Alignment.center,
                       );

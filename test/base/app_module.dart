@@ -10,6 +10,7 @@ import 'package:xianren_app/page/homepage/view_model/homepage_provider.dart';
 import 'package:xianren_app/page/homepage/view_model/personal_information/personal_information_modify_page_provider.dart';
 import 'package:xianren_app/page/homepage/view_model/personal_information/personal_information_page_provider.dart';
 import 'package:xianren_app/page/homepage/view_model/tree_hole/new_post_page_provider.dart';
+import 'package:xianren_app/page/homepage/view_model/tree_hole/post_detail_provider.dart';
 import 'package:xianren_app/page/homepage/view_model/tree_hole/tree_hole_page_provider.dart';
 import 'package:xianren_app/page/init_page/view_model/init_page_provider.dart';
 import 'package:xianren_app/page/login_page/view_model/login_page_provider.dart';
@@ -46,6 +47,9 @@ final viewModelModule = Module([
   ),
   factory<TreeHolePageProvider>(
     ({params}) => TreeHolePageProvider(),
+  ),
+  factory<PostDetailProvider>(
+    ({params}) => PostDetailProvider(params.get(0)),
   ),
 ]);
 

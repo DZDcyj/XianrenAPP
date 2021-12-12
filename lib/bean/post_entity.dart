@@ -53,7 +53,8 @@ class PostDetailEntity implements ToJson {
     };
   }
 
-  PostDetailEntity.fromJson(Map<String, dynamic> json) {
+  PostDetailEntity.fromJson(Map<String, dynamic> jsonData) {
+    var json = jsonData['articledetails'];
     id = json['mid'];
     phoneNumber = json['phonenumber'];
     date = json['mdate'];

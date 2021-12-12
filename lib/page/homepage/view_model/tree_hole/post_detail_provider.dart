@@ -42,7 +42,7 @@ class PostDetailProvider extends BasePageProvider {
   /// 载入更多回复
   bool _loadingMoreComments;
 
-  bool get loadingMoreComments => _loadingMoreComments ?? true;
+  bool get loadingMoreComments => _loadingMoreComments ?? false;
 
   set loadingMoreComments(bool value) {
     _loadingMoreComments = value;
@@ -60,12 +60,12 @@ class PostDetailProvider extends BasePageProvider {
   }
 
   /// 请求页码
-  int _pageIndex;
+  int _commentPageIndex;
 
-  int get pageIndex => _pageIndex ?? 1;
+  int get commentPageIndex => _commentPageIndex ?? 1;
 
-  set pageIndex(int value) {
-    _pageIndex = value;
+  set commentPageIndex(int value) {
+    _commentPageIndex = value;
     notifyListeners();
   }
 
@@ -78,8 +78,7 @@ class PostDetailProvider extends BasePageProvider {
   List<CommentEntity> comments = [];
 
   /// 获取主题
-  void getPostContent(
-    int id, {
+  void getPostContent({
     VoidCallback onStart,
     VoidCallback onFinished,
     DataCallback onData,
@@ -89,27 +88,42 @@ class PostDetailProvider extends BasePageProvider {
       netUtil.getPostDetail(id),
       onData: (response) {
         onData?.call(response);
+        postDetailEntity = response.data;
         onFinished?.call();
       },
     );
   }
 
   /// 获取评论
-  void getComments(
-    int id,
-    int commentPageIndex, {
+  void getComments({
     VoidCallback onStart,
     VoidCallback onFinished,
     DataCallback onData,
+    @required bool refresh,
   }) {
     onStart?.call();
     asyncRequest(
-      netUtil.getComments(id, commentPageIndex),
+      netUtil.getComments(id, refresh ? 1 : commentPageIndex + 1),
       onData: (response) {
         onData?.call(response);
+        _updateComments(response.data, refresh);
         onFinished?.call();
       },
     );
+  }
+
+  /// 更新评论
+  void _updateComments(CommentListEntity entity, bool refresh) {
+    if (refresh) {
+      comments = entity.comments;
+      commentPageIndex = 1;
+      hasMore = true;
+      return;
+    }
+    commentPageIndex++;
+    var newList = comments;
+    newList.addAll(entity.comments);
+    comments = newList;
   }
 
   /// 构造评论数据体
@@ -120,6 +134,17 @@ class PostDetailProvider extends BasePageProvider {
       'cdate': transferDateWithTime(DateTime.now().toLocal()),
       'cbody': comment,
     };
+  }
+
+  /// 验证评论是否为空
+  bool validateComment({
+    DataCallback callback,
+  }) {
+    if (comment?.isEmpty ?? true) {
+      callback?.call('评论不能为空');
+      return false;
+    }
+    return true;
   }
 
   /// 发表评论

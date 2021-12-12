@@ -34,6 +34,16 @@ void main() {
         ),
       ),
     );
+
+    when(netUtil.getPosts(2)).thenAnswer(
+      (realInvocation) => Stream.fromFuture(
+        Future.value(
+          HttpResponseEntity<PostListEntity>.fromJson(
+            json.decode(emptyPostsResponse),
+          ),
+        ),
+      ),
+    );
   }
 
   setUp(() {
@@ -52,5 +62,7 @@ void main() {
     await tester.pump(Duration(seconds: 3));
 
     await tap(tester, find.byType(PostItem).first);
+
+    await tap(tester, find.text('加载更多'));
   });
 }
