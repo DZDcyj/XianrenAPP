@@ -75,18 +75,19 @@ void main() {
       ),
     );
 
-    when(netUtil.getComments(8, 2)).thenAnswer(
-          (realInvocation) => Stream.fromFuture(
+    when(netUtil.postNewComment(any)).thenAnswer(
+      (realInvocation) => Stream.fromFuture(
         Future.value(
-          HttpResponseEntity<CommentListEntity>.fromJson(
-            json.decode(commentsResponse),
+          HttpResponseEntity<MapEntity>.fromJson(
+            json.decode(successResponse),
           ),
-        ),
+        ), 
       ),
     );
 
     await showWidget(tester, PostDetail(8));
 
-    await tap(tester, find.text('加载更多'));
+    await tester.enterText(find.byType(TextField), 'asd');
+    await tap(tester, find.text('发布'));
   });
 }
