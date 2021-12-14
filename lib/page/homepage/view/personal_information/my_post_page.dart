@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 import 'package:xianren_app/base/view/base_page_view.dart';
 import 'package:xianren_app/bean/bean.dart';
+import 'package:xianren_app/constants/constants.dart';
 import 'package:xianren_app/page/homepage/view_model/personal_information/my_post_page_provider.dart';
 import 'package:xianren_app/router/router.dart';
 
@@ -147,9 +148,44 @@ class _MyPostPageContentView extends BasePageContentViewState<MyPostPageProvider
     );
   }
 
-  void _handleDeletePost(dynamic postId) {
-    // TODO: 删除帖子
-    showToast(msg: '你在长按帖子： $postId');
+  Future<void> _handleDeletePost(dynamic postId) async {
+    var result = await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('删除确认'),
+          content: Text('您确定要删除这条帖子吗？'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: Text('取消'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: Text('确认'),
+            ),
+          ],
+        );
+      },
+    );
+    if (result) {
+      mProvider.deletePost(
+        postId,
+        onStart: startLoading,
+        onData: (response) {
+          if (response.code == responseOK) {
+            showToast(msg: '删除成功！');
+          }
+        },
+        onFinished: () => _handleDeleteFinished(postId),
+      );
+    }
+  }
+
+  /// 处理删除完毕
+  void _handleDeleteFinished(int postId) {
+    finishLoading();
+    _reloadingPosts();
   }
 
   /// 刷新帖子

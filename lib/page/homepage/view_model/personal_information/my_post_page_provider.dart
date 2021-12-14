@@ -94,4 +94,21 @@ class MyPostPageProvider extends BasePageProvider {
     newList.addAll(list.posts);
     posts = newList;
   }
+
+  /// 删除某条帖子
+  void deletePost(
+    int id, {
+    VoidCallback onStart,
+    VoidCallback onFinished,
+    DataCallback onData,
+  }) {
+    onStart?.call();
+    asyncRequest(
+      netUtil.deletePost(id),
+      onData: (response) {
+        onData?.call(response);
+        onFinished?.call();
+      },
+    );
+  }
 }
