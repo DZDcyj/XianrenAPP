@@ -257,4 +257,9 @@ void main() {
     await tap(tester, find.text('确认修改'));
     await tester.pumpAndSettle();
   });
+
+  testWidgets('MyPostPage', (WidgetTester tester) async {
+    await showWidget(tester, PersonalInformationPage());
+    await tap(tester, find.text('我的树洞'));
+  });
 }
