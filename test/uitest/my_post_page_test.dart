@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:xianren_app/bean/bean.dart';
+import 'package:xianren_app/page/homepage/view/personal_information/my_post_item.dart';
 import 'package:xianren_app/page/homepage/view/personal_information/my_post_page.dart';
 import 'package:xianren_app/utils/net_util.dart';
 
@@ -43,6 +44,16 @@ void main() {
         ),
       ),
     );
+
+    when(netUtil.deletePost(any)).thenAnswer(
+      (realInvocation) => Stream.fromFuture(
+        Future.value(
+          HttpResponseEntity<MapEntity>.fromJson(
+            json.decode(emptyPostsResponse),
+          ),
+        ),
+      ),
+    );
   }
 
   setUp(() {
@@ -63,5 +74,12 @@ void main() {
     await tester.drag(find.byType(ElevatedButton).last, Offset(0.0, -1500.0));
     await tester.pump();
     await tester.pump(Duration(seconds: 3));
+  });
+
+  testWidgets('MyPostPage', (WidgetTester tester) async {
+    await showWidget(tester, MyPostPage());
+
+    await tester.longPress(find.byType(MyPostItem).first);
+    await tap(tester, find.text('确认'));
   });
 }
