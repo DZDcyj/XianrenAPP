@@ -27,6 +27,9 @@ jobs:
         run: flutter pub get
       - name: Run Flutter test
         run: flutter test
+      - name: Decode KeyStore
+        run: |
+          echo ${{ secrets.SIGN_KEYSTORE }} | base64 -di > android/app/key.jks
       - name: Build Release apk
         run: flutter build apk
         id: build

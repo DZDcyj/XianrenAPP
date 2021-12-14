@@ -2,9 +2,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="top.chinsan.xianren_app">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:icon="@mipmap/ic_launcher"
-        android:label="xianren_app"
+        android:label="Xianren App"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
