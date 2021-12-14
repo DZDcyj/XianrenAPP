@@ -11,6 +11,7 @@ import 'package:tuple/tuple.dart';
 import 'package:xianren_app/base/view/base_page_view.dart';
 import 'package:xianren_app/bean/bean.dart';
 import 'package:xianren_app/page/homepage/view/tree_hole/comment_item.dart';
+import 'package:xianren_app/page/homepage/view/tree_hole/poster_item.dart';
 import 'package:xianren_app/page/homepage/view_model/tree_hole/post_detail_provider.dart';
 import 'package:xianren_app/router/router.dart';
 
@@ -68,10 +69,12 @@ class _PostDetailContentState extends BasePageContentViewState<PostDetailProvide
           onPressed: () => RouteWrapper.popSafety(context),
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.only(left: 30.0, right: 30.0),
-        child: Center(
-          child: _content(),
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.only(left: 30.0, right: 30.0),
+          child: Center(
+            child: _content(),
+          ),
         ),
       ),
     );
@@ -116,10 +119,8 @@ class _PostDetailContentState extends BasePageContentViewState<PostDetailProvide
 
   /// 楼主
   Widget _poster() {
-    return CommentItem(
-      anonymousName: mProvider.postDetailEntity.anonymousName,
-      date: mProvider.postDetailEntity.date,
-      body: mProvider.postDetailEntity.body,
+    return PostItem(
+      entity: mProvider.postDetailEntity,
     );
   }
 
@@ -207,27 +208,35 @@ class _PostDetailContentState extends BasePageContentViewState<PostDetailProvide
 
   /// 发表回复框
   Widget _commentInput() {
-    return Row(
-      children: [
-        Expanded(
-          child: Container(
-            child: TextField(
-              controller: _textEditingController,
-              onChanged: (value) => mProvider.comment = value,
-              decoration: InputDecoration(
-                hintText: '请发表您的高见',
-                border: InputBorder.none,
+    return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                border: Border.all(color: Colors.grey),
               ),
-              keyboardType: TextInputType.multiline,
-              maxLines: null,
+              child: TextField(
+                minLines: 1,
+                maxLines: 5,
+                controller: _textEditingController,
+                onChanged: (value) => mProvider.comment = value,
+                decoration: InputDecoration(
+                  hintText: '请发表您的高见',
+                  border: InputBorder.none,
+                ),
+                keyboardType: TextInputType.multiline,
+              ),
             ),
           ),
-        ),
-        ElevatedButton(
-          onPressed: () => _publishComment(),
-          child: Text('发布'),
-        ),
-      ],
+          ElevatedButton(
+            onPressed: () => _publishComment(),
+            child: Text('发布'),
+          ),
+        ],
+      ),
     );
   }
 
@@ -243,6 +252,7 @@ class _PostDetailContentState extends BasePageContentViewState<PostDetailProvide
             _textEditingController.clear();
             mProvider.comment = '';
             showToast(msg: '回复成功！');
+            _refreshHandler();
           }
         },
         onFinished: finishLoading,

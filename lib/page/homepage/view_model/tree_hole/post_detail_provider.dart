@@ -7,6 +7,7 @@ import 'package:dartin/dartin.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:xianren_app/base/view_model/base_page_view_provider.dart';
 import 'package:xianren_app/bean/bean.dart';
+import 'package:xianren_app/bean/post_entity.dart';
 import 'package:xianren_app/constants/constants.dart';
 import 'package:xianren_app/utils/global_util.dart';
 import 'package:xianren_app/utils/net_util.dart';

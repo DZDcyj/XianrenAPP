@@ -26,13 +26,10 @@ class CommentItem extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(4.0)),
         border: Border.all(color: Colors.grey),
       ),
-      child: Column(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _name(),
-          SizedBox(height: 1.0, child: Container(color: Colors.grey)),
-          _title(),
+          Expanded(child: _title()),
           _date(),
         ],
       ),
@@ -41,29 +38,17 @@ class CommentItem extends StatelessWidget {
 
   /// 标题部分
   Widget _title() {
-    return Container(
-      alignment: Alignment.centerLeft,
-      constraints: BoxConstraints(minHeight: 50.0),
-      child: Text(
-        body,
-        style: TextStyle(fontSize: 24.0),
-      ),
+    return Text(
+      '$anonymousName: $body',
+      style: TextStyle(fontSize: 16.0),
     );
   }
 
   /// 日期部分
   Widget _date() {
-    return Container(
-      alignment: Alignment.bottomRight,
-      child: Text(date),
-    );
-  }
-
-  /// 匿名者部分
-  Widget _name() {
-    return Container(
-      alignment: Alignment.bottomLeft,
-      child: Text(anonymousName),
+    return Text(
+      date,
+      style: TextStyle(fontSize: 16.0),
     );
   }
 }

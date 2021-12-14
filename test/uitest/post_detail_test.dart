@@ -81,7 +81,7 @@ void main() {
           HttpResponseEntity<MapEntity>.fromJson(
             json.decode(successResponse),
           ),
-        ), 
+        ),
       ),
     );
 
