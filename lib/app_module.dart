@@ -7,6 +7,7 @@ import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dartin/dartin.dart';
 import 'package:flutter/cupertino.dart' as flutter;
 import 'package:xianren_app/page/homepage/view_model/homepage_provider.dart';
+import 'package:xianren_app/page/homepage/view_model/personal_information/my_post_page_provider.dart';
 import 'package:xianren_app/page/homepage/view_model/personal_information/personal_information_modify_page_provider.dart';
 import 'package:xianren_app/page/homepage/view_model/personal_information/personal_information_page_provider.dart';
 import 'package:xianren_app/page/homepage/view_model/tree_hole/new_post_page_provider.dart';
@@ -50,6 +51,9 @@ final viewModelModule = Module([
   ),
   factory<PostDetailProvider>(
     ({params}) => PostDetailProvider(params.get(0)),
+  ),
+  factory<MyPostPageProvider>(
+    ({params}) => MyPostPageProvider(),
   ),
 ]);
 

@@ -31,8 +31,10 @@ const String modifyPersonalBasicInformationApi = 'changeubi'; // 修改基本信
 const String publishNewPostApi = 'newarticle'; // 发表新的帖子
 const String getTreeHoleArticlesApi = 'simplearticles'; // 获取所有帖子
 const String postNewCommentApi = 'newcomments'; // 发表评论
-const String getCommentsApi = 'getcomments';
+const String getCommentsApi = 'getcomments'; // 获取评论
 const String getPostDetailApi = 'articledetails'; // 获取单个帖子详细信息
+const String getUserPostsApi = 'simplearticlesbelongs'; // 获取单个用户发的帖子
+const String deletePostApi = 'deletearticle'; // 删除某条树洞
 
 /// SharedPreferences Key
 String usernameKey = 'username';

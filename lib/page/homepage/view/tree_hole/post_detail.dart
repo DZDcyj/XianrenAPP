@@ -80,6 +80,7 @@ class _PostDetailContentState extends BasePageContentViewState<PostDetailProvide
     );
   }
 
+  /// 处理刷新
   Future<void> _refreshHandler() async {
     mProvider.getComments(
       refresh: true,
@@ -232,7 +233,7 @@ class _PostDetailContentState extends BasePageContentViewState<PostDetailProvide
             ),
           ),
           ElevatedButton(
-            onPressed: () => _publishComment(),
+            onPressed: _publishComment,
             child: Text('发布'),
           ),
         ],

@@ -87,6 +87,7 @@ void main() {
 
     await showWidget(tester, PostDetail(8));
 
+    await tap(tester, find.text('发布'));
     await tester.enterText(find.byType(TextField), 'asd');
     await tap(tester, find.text('发布'));
   });

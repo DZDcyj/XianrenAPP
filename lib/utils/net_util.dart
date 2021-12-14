@@ -77,6 +77,29 @@ class NetUtil {
     }
   }
 
+  Stream<HttpResponseEntity<T>> delete<T extends ToJson>(
+    String api, {
+    Map<String, dynamic> queryParameters,
+    Map<String, dynamic> data,
+  }) {
+    return _delete<T>(constructUrl(api), queryParameters: queryParameters, data: data).asStream().asBroadcastStream();
+  }
+
+  Future<HttpResponseEntity<T>> _delete<T extends ToJson>(
+    String url, {
+    Map<String, dynamic> queryParameters,
+    Map<String, dynamic> data,
+  }) async {
+    try {
+      var response = await dio.delete(url, data: data, queryParameters: queryParameters);
+      debugPrint('Post to $url, get response ${response.data}');
+      return HttpResponseEntity<T>.fromJson(response.data);
+    } catch (error) {
+      debugPrint('Error Caught:${error.error}');
+      return HttpResponseEntity<T>.fromJson(json.decode(networkFailedResponse));
+    }
+  }
+
   Stream<HttpResponseEntity<MapEntity>> login(String phoneNumber, String password) {
     return post(
       loginApi,
@@ -150,6 +173,24 @@ class NetUtil {
       queryParameters: {
         'mid': postId,
         'cpageindex': commentPageIndex,
+      },
+    );
+  }
+
+  Stream<HttpResponseEntity<PostListEntity>> getUserPosts(int pageIndex) {
+    return get(
+      getUserPostsApi,
+      queryParameters: {
+        'pageindex': pageIndex,
+      },
+    );
+  }
+
+  Stream<HttpResponseEntity<MapEntity>> deletePost(int postId) {
+    return get(
+      deletePostApi,
+      queryParameters: {
+        'mid': postId,
       },
     );
   }
