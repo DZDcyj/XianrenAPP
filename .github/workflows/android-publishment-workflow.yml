@@ -27,6 +27,15 @@ jobs:
         run: flutter pub get
       - name: Run Flutter test
         run: flutter test
+      - name: Setup Key Properties File
+        run: |
+          echo 'storePassword=${{ secrets.KEY_STORE_PASSWORD }}' >> android/key.properties
+          echo 'keyPassword=${{ secrets.KEY_PASSWORD }}' >> android/key.properties
+          echo 'keyAlias=key' >> android/key.properties
+          echo 'storeFile=key.jks' >> android/key.properties
+      - name: Decode KeyStore
+        run: |
+          echo ${{ secrets.SIGN_KEYSTORE }} | base64 -di > android/app/key.jks
       - name: Build Release apk
         run: flutter build apk
         id: build

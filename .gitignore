@@ -48,3 +48,6 @@ app.*.map.json
 # Coverage Files
 /coverage
 genhtml.perl
+
+# Sign Keys
+*.jks
