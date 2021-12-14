@@ -153,6 +153,15 @@ class NetUtil {
       },
     );
   }
+
+  Stream<HttpResponseEntity<PostListEntity>> getUserPosts(int pageIndex) {
+    return get(
+      getUserPostsApi,
+      queryParameters: {
+        'pageindex': pageIndex,
+      },
+    );
+  }
 }
 
 String constructUrl(

@@ -5,6 +5,7 @@
 ///
 import 'package:flutter/cupertino.dart';
 import 'package:xianren_app/page/homepage/view/homepage.dart';
+import 'package:xianren_app/page/homepage/view/personal_information/my_post_page.dart';
 import 'package:xianren_app/page/homepage/view/personal_information/personal_information_modify_page.dart';
 import 'package:xianren_app/page/homepage/view/personal_information/personal_information_page.dart';
 import 'package:xianren_app/page/homepage/view/tree_hole/new_post_page.dart';
@@ -19,6 +20,7 @@ const String routerNamePersonalInformationPage = 'personalinformationpage';
 const String routerNamePersonalInformationModifyPage = 'personalinformationmodifypage';
 const String routerNameNewPostPage = 'newpostpage';
 const String routerNamePostDetail = 'postdetail';
+const String routerNameMyPostPage = 'mypostpage';
 
 final Map<String, Widget Function({List<dynamic> params})> routerMap = {
   routerNameHomePage: ({params}) => HomePage(),
@@ -36,4 +38,5 @@ final Map<String, Widget Function({List<dynamic> params})> routerMap = {
   },
   routerNameNewPostPage: ({params}) => NewPostPage(params[0]),
   routerNamePostDetail: ({params}) => PostDetail(params[0]),
+  routerNameMyPostPage: ({params}) => MyPostPage(),
 };

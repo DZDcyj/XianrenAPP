@@ -149,7 +149,7 @@ class _PersonalInformationPageContentState extends BasePageContentViewState<Pers
     return Column(
       children: [
         _buildButton(label: '我的小纸条'),
-        _buildButton(label: '我的树洞'),
+        _buildButton(label: '我的树洞', onTap: _jump2MyPostPage),
         _buildButton(label: '修改个人信息', onTap: _jump2ModifyPersonalInformation),
         SizedBox(height: 30.0),
         Selector<PersonalInformationPageProvider, String>(
@@ -187,6 +187,11 @@ class _PersonalInformationPageContentState extends BasePageContentViewState<Pers
         _modifyResultHandler,
       ],
     );
+  }
+
+  /// 跳转到我的树洞
+  void _jump2MyPostPage() {
+    RouteWrapper.pushNamed(context, routerNameMyPostPage);
   }
 
   /// 处理修改内容回调

@@ -89,9 +89,9 @@ class _TreeHolePageContentState extends BasePageContentViewState<TreeHolePagePro
                 if (index == posts.length) {
                   return Selector<TreeHolePageProvider, Tuple2<bool, bool>>(
                     selector: (_, provider) => Tuple2(provider.hasMore, provider.loadingMore),
-                    builder: (context, tuple, child) {
-                      var hasMore = tuple.item1;
-                      var loadingMore = tuple.item2;
+                    builder: (context, tuple2, child) {
+                      var hasMore = tuple2.item1;
+                      var loadingMore = tuple2.item2;
                       if (loadingMore) {
                         return Center(
                           child: SizedBox(
