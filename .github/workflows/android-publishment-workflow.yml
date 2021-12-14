@@ -51,11 +51,11 @@ jobs:
           # Optional (recommended) mail server password:
           password: ${{secrets.MAIL_PASSWORD}}
           # Required mail subject:
-          subject: Github
+          subject: Github 构建结果提醒
           # Required recipients' addresses:
           to: ${{secrets.MAIL_RECEIVER}}
           # Required sender full name (address can be skipped):
-          from: Github 构建结果提醒
+          from: Rinrinko
           # Optional whether this connection use TLS (default is true if server_port is 465)
           secure: true
           # Optional plain body:

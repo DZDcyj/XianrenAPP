@@ -1,5 +1,3 @@
-import 'package:xianren_app/bean/post_entity.dart';
-
 ///
 /// entity_factory
 ///
