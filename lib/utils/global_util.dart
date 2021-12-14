@@ -8,6 +8,8 @@ import 'package:xianren_app/bean/bean.dart';
 class Global {
   Global._internal();
 
+  static String phoneNumber;
+
   static UserInformationEntity userInformationEntity;
 }
 

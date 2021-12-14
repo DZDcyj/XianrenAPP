@@ -4,6 +4,7 @@
 /// created by DZDcyj at 2021/12/7
 ///
 import 'package:dartin/dartin.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:xianren_app/base/view_model/base_page_view_provider.dart';
 import 'package:xianren_app/constants/constants.dart';
 import 'package:xianren_app/utils/global_util.dart';
@@ -67,9 +68,9 @@ class PersonalInformationModifyPageProvider extends BasePageProvider {
 
   /// 更新基础信息
   Future<void> modifyPersonalBasicInformation({
-    void Function() onStart,
-    void Function(dynamic data) onSuccess,
-    void Function(dynamic data) onFailed,
+    VoidCallback onStart,
+    DataCallback onSuccess,
+    DataCallback onFailed,
   }) async {
     onStart?.call();
     asyncRequest(

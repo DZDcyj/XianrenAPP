@@ -111,6 +111,48 @@ class NetUtil {
       data: data,
     );
   }
+
+  Stream<HttpResponseEntity<MapEntity>> publishNewPost(Map<String, dynamic> data) {
+    return post(
+      publishNewPostApi,
+      data: data,
+    );
+  }
+
+  Stream<HttpResponseEntity<PostListEntity>> getPosts(int pageIndex) {
+    return get(
+      getTreeHoleArticlesApi,
+      queryParameters: {
+        'pageindex': pageIndex,
+      },
+    );
+  }
+
+  Stream<HttpResponseEntity<PostDetailEntity>> getPostDetail(int postId) {
+    return get(
+      getPostDetailApi,
+      queryParameters: {
+        'mid': postId,
+      },
+    );
+  }
+
+  Stream<HttpResponseEntity<MapEntity>> postNewComment(Map<String, dynamic> data) {
+    return post(
+      postNewCommentApi,
+      data: data,
+    );
+  }
+
+  Stream<HttpResponseEntity<CommentListEntity>> getComments(int postId, int commentPageIndex) {
+    return get(
+      getCommentsApi,
+      queryParameters: {
+        'mid': postId,
+        'cpageindex': commentPageIndex,
+      },
+    );
+  }
 }
 
 String constructUrl(

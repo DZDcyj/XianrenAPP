@@ -7,6 +7,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:xianren_app/constants/constants.dart';
 
 abstract class BasePageProvider extends ChangeNotifier {
   bool isDisposed = false;
@@ -33,9 +34,9 @@ abstract class BasePageProvider extends ChangeNotifier {
   void asyncRequest(
     Stream<dynamic> request, {
     bool cancelOnError,
-    void Function(dynamic) onData,
+    DataCallback onData,
     void Function(Error) handleError,
-    void Function() onDone,
+    VoidCallback onDone,
   }) {
     if (request == null || _compositeSubscription.isDisposed) {
       return;

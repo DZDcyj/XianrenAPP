@@ -46,7 +46,7 @@ void main() {
   /// 修改匿名 Mock
   void mockModifyAnonymousResponse() {
     when(netUtil.modifyAnonymous({
-      'phonenumber': '13666279971',
+      'phonenumber': '12345678910',
       'anonymname': 'asd',
     })).thenAnswer(
       (realInvocation) => Stream.fromFuture(
@@ -59,7 +59,7 @@ void main() {
     );
 
     when(netUtil.modifyAnonymous({
-      'phonenumber': '13666279971',
+      'phonenumber': '12345678910',
       'anonymname': 'cde',
     })).thenAnswer(
       (realInvocation) => Stream.fromFuture(
@@ -72,7 +72,7 @@ void main() {
     );
 
     when(netUtil.modifyAnonymous({
-      'phonenumber': '13666279971',
+      'phonenumber': '12345678910',
       'anonymname': 'ghi',
     })).thenAnswer(
       (realInvocation) => Stream.fromFuture(
@@ -188,7 +188,7 @@ void main() {
   /// 模拟修改后请求数据
   void mockModifiedResponse() {
     when(netUtil.modifyPersonalInformation({
-      'phonenumber': '13666279971',
+      'phonenumber': '12345678910',
       'gender': '男',
       'birthday': '2005-11-14',
       'boolhidebirthday': 1,
@@ -203,7 +203,7 @@ void main() {
     );
 
     when(netUtil.modifyPersonalInformation({
-      'phonenumber': '13666279971',
+      'phonenumber': '12345678910',
       'gender': '男',
       'birthday': '2005-11-14',
       'boolhidebirthday': 0,
@@ -218,7 +218,7 @@ void main() {
     );
 
     when(netUtil.modifyPersonalInformation({
-      'phonenumber': '13666279971',
+      'phonenumber': '12345678910',
       'gender': '男',
       'nickname': 'asd',
       'birthday': '2005-11-14',

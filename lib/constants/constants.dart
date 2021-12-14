@@ -28,6 +28,11 @@ const String loginApi = 'login'; // 登录
 const String getAllInfoApi = 'getallinfo'; // 获取所有信息
 const String modifyAnonymousApi = 'changeua'; // 更改匿名
 const String modifyPersonalBasicInformationApi = 'changeubi'; // 修改基本信息
+const String publishNewPostApi = 'newarticle'; // 发表新的帖子
+const String getTreeHoleArticlesApi = 'simplearticles'; // 获取所有帖子
+const String postNewCommentApi = 'newcomments'; // 发表评论
+const String getCommentsApi = 'getcomments';
+const String getPostDetailApi = 'articledetails'; // 获取单个帖子详细信息
 
 /// SharedPreferences Key
 String usernameKey = 'username';
@@ -37,3 +42,6 @@ String autoLoginKey = 'autoLogin';
 
 /// 一些常量
 const int maxRefreshCoolDownMilliseconds = 3000; // 刷新间隔（毫秒）
+
+/// 类型变量
+typedef DataCallback = void Function(dynamic data); // 数据回调
