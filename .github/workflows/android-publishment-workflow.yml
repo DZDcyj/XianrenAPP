@@ -53,7 +53,7 @@ jobs:
         with:
           dropbox_access_token: ${{ secrets.DROPBOX_ACCESS_TOKEN }}
           src: build/app/outputs/flutter-apk/app-release.apk
-          dest: /Xianren
+          dest: /应用/Xianren
           mode: overwrite
       - name: "Send Email Notification"
         if: ${{ steps.build.outcome == 'success' }}
