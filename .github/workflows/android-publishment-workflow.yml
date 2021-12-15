@@ -47,6 +47,14 @@ jobs:
           name: release-artifacts
           path:
             build/app/outputs/flutter-apk/app-release.apk
+      - name: "Upload to Dropbox"
+        if: ${{ steps.build.outcome == 'success' }}
+        uses: deka0106/upload-to-dropbox@v2.0.0
+        with:
+          dropbox_access_token: ${{ secrets.DROPBOX_ACCESS_TOKEN }}
+          src: build/app/outputs/flutter-apk/app-release.apk
+          dest: /Xianren
+          mode: overwrite
       - name: "Send Email Notification"
         if: ${{ steps.build.outcome == 'success' }}
         uses: dawidd6/action-send-mail@v3
