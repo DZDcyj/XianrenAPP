@@ -1,12 +1,16 @@
 name: iOS-Publishment-build
 on:
   push:
+    branches:
+      - master
     tags:
       - '*'
+  pull_request:
+    branches:
+      - master
 
 jobs:
   build-release-ipa:
-    if: github.event.pull_request.merged == true
     runs-on: macos-latest
     steps:
       - name: Checkout Branch
