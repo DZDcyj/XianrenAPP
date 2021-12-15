@@ -2,7 +2,7 @@ name: Android-Publishment-build
 on:
   push:
     branches:
-      - '*'
+      - master
     tags:
       - '*'
   pull_request:
