@@ -5,6 +5,7 @@
 ///
 library bean;
 
+export 'draft_bottle_entity.dart';
 export 'entity_factory.dart';
 export 'http_response_entity.dart';
 export 'map_entity.dart';

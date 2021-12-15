@@ -35,6 +35,9 @@ const String getCommentsApi = 'getcomments'; // 获取评论
 const String getPostDetailApi = 'articledetails'; // 获取单个帖子详细信息
 const String getUserPostsApi = 'simplearticlesbelongs'; // 获取单个用户发的帖子
 const String deletePostApi = 'deletearticle'; // 删除某条树洞
+const String scoopBottleApi = 'driftBottle/scoop'; // 捞一个瓶子
+const String collectedBottlesApi = 'driftBottle/collectedBottle'; // 获取用户所有的瓶子
+const String driftBottleApi = 'driftBottle/driftBottle'; // 获取漂流瓶详细信息
 
 /// SharedPreferences Key
 String usernameKey = 'username';

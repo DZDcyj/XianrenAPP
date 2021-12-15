@@ -92,7 +92,7 @@ class NetUtil {
   }) async {
     try {
       var response = await dio.delete(url, data: data, queryParameters: queryParameters);
-      debugPrint('Post to $url, get response ${response.data}');
+      debugPrint('Send delete request to $url, get response ${response.data}');
       return HttpResponseEntity<T>.fromJson(response.data);
     } catch (error) {
       debugPrint('Error Caught:${error.error}');
@@ -187,10 +187,27 @@ class NetUtil {
   }
 
   Stream<HttpResponseEntity<MapEntity>> deletePost(int postId) {
-    return get(
+    return delete(
       deletePostApi,
       queryParameters: {
         'mid': postId,
+      },
+    );
+  }
+
+  Stream<HttpResponseEntity<DraftBottleEntity>> scoopBottles() {
+    return get(scoopBottleApi);
+  }
+
+  Stream<HttpResponseEntity<DraftBottleListEntity>> getUserBottles() {
+    return get(collectedBottlesApi);
+  }
+
+  Stream<HttpResponseEntity<DraftBottleEntity>> getBottleDetail(int bottleId) {
+    return get(
+      driftBottleApi,
+      queryParameters: {
+        'id': bottleId,
       },
     );
   }

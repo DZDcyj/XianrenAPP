@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:xianren_app/base/view/base_page_view.dart';
+import 'package:xianren_app/page/homepage/view/draft_bottle/draft_bottle_page.dart';
 import 'package:xianren_app/page/homepage/view/personal_information/personal_information_page.dart';
 import 'package:xianren_app/page/homepage/view/tree_hole/tree_hole_page.dart';
 import 'package:xianren_app/page/homepage/view_model/homepage_provider.dart';
@@ -41,9 +42,7 @@ class _MyHomePageContentState extends BasePageContentViewState<HomePageProvider>
             builder: (context, index, child) {
               switch (index) {
                 case 0:
-                  return Text(
-                    'You are now at page $index',
-                  );
+                  return DraftBottlePage();
                 case 1:
                   return TreeHolePage();
                 default:
@@ -58,8 +57,8 @@ class _MyHomePageContentState extends BasePageContentViewState<HomePageProvider>
         builder: (context, index, child) => BottomNavigationBar(
           items: [
             BottomNavigationBarItem(
-              icon: _icon('label', index == 0),
-              label: '小纸条',
+              icon: _icon('beach', index == 0),
+              label: '漂流瓶',
             ),
             BottomNavigationBarItem(
               icon: _icon('forum', index == 1),
