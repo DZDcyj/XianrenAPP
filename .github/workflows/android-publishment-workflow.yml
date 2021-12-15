@@ -80,6 +80,7 @@ jobs:
           # Using Markdown
           html_body: |
             ## ${{github.actor}} 触发流水线 APK 构建完毕，请及时查看测试验证
+            Dropbox APK 地址：https://www.dropbox.com/home/%E5%BA%94%E7%94%A8/Xianren/%E5%BA%94%E7%94%A8
           # Optional unsigned/invalid certificates allowance:
           ignore_cert: true
           # Optional converting Markdown to HTML (set content_type to text/html too):
