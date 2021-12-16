@@ -4,6 +4,7 @@
 /// created by DZDcyj at 2021/12/16
 ///
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:xianren_app/base/view/base_page_view.dart';
 import 'package:xianren_app/page/draft_bottle/view_model/draft_bottle_detail_provider.dart';
 
@@ -23,4 +24,9 @@ class _DraftBottleDetailContent extends BasePageContentView<DraftBottleDetailPro
   _DraftBottleDetailContentState createState() => _DraftBottleDetailContentState();
 }
 
-class _DraftBottleDetailContentState extends BasePageContentViewState<DraftBottleDetailProvider> {}
+class _DraftBottleDetailContentState extends BasePageContentViewState<DraftBottleDetailProvider> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold();
+  }
+}
