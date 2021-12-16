@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:xianren_app/bean/bean.dart';
+import 'package:xianren_app/page/homepage/view/draft_bottle/draft_bottle_page.dart';
 import 'package:xianren_app/page/homepage/view/homepage.dart';
 import 'package:xianren_app/page/homepage/view/personal_information/personal_information_page.dart';
 import 'package:xianren_app/page/homepage/view/tree_hole/tree_hole_page.dart';
@@ -37,7 +38,7 @@ void main() {
       ),
     );
     await showWidget(tester, HomePage());
-    expect(find.text('You are now at page 0'), findsOneWidget);
+    expect(find.byType(DraftBottlePage), findsOneWidget);
 
     await tap(tester, find.text('树洞'));
     expect(find.byType(TreeHolePage), findsOneWidget);
