@@ -4,7 +4,7 @@
 /// created by DZDcyj at 2021/12/14
 ///
 import 'package:flutter_test/flutter_test.dart';
-import 'package:xianren_app/page/homepage/view_model/tree_hole/new_post_page_provider.dart';
+import 'package:xianren_app/page/tree_hole/view_model/new_post_page_provider.dart';
 
 import '../base/app_module.dart';
 

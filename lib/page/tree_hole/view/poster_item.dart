@@ -7,8 +7,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:xianren_app/bean/bean.dart';
 
-class PostItem extends StatelessWidget {
-  PostItem({
+class PosterItem extends StatelessWidget {
+  PosterItem({
     @required this.entity,
   });
 

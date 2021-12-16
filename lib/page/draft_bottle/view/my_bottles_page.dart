@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 import 'package:xianren_app/base/view/base_page_view.dart';
 import 'package:xianren_app/bean/bean.dart';
-import 'package:xianren_app/page/homepage/view_model/draft_bottle/my_bottles_page_provider.dart';
+import 'package:xianren_app/page/draft_bottle/view_model/my_bottles_page_provider.dart';
 import 'package:xianren_app/router/router.dart';
 
 import 'draft_bottle_item.dart';

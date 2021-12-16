@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:xianren_app/base/view/base_page_view.dart';
 import 'package:xianren_app/constants/constants.dart';
-import 'package:xianren_app/page/homepage/view_model/draft_bottle/draft_bottle_page_provider.dart';
+import 'package:xianren_app/page/draft_bottle/view_model/draft_bottle_page_provider.dart';
 import 'package:xianren_app/router/router.dart';
 import 'package:xianren_app/router/router_constant.dart';
 

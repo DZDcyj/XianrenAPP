@@ -10,10 +10,11 @@ import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 import 'package:xianren_app/base/view/base_page_view.dart';
 import 'package:xianren_app/bean/bean.dart';
-import 'package:xianren_app/page/homepage/view/tree_hole/comment_item.dart';
-import 'package:xianren_app/page/homepage/view/tree_hole/poster_item.dart';
-import 'package:xianren_app/page/homepage/view_model/tree_hole/post_detail_provider.dart';
+import 'package:xianren_app/page/tree_hole/view/poster_item.dart';
+import 'package:xianren_app/page/tree_hole/view_model/post_detail_provider.dart';
 import 'package:xianren_app/router/router.dart';
+
+import 'comment_item.dart';
 
 class PostDetail extends PageNodeProvider<PostDetailProvider> {
   PostDetail(this.id) : super(params: [id]);
@@ -119,7 +120,7 @@ class _PostDetailContentState extends BasePageContentViewState<PostDetailProvide
 
   /// 楼主
   Widget _poster() {
-    return PostItem(
+    return PosterItem(
       entity: mProvider.postDetailEntity,
     );
   }

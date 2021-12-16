@@ -11,10 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:xianren_app/bean/bean.dart';
-import 'package:xianren_app/page/homepage/view/draft_bottle/draft_bottle_page.dart';
+import 'package:xianren_app/page/draft_bottle/view/draft_bottle_page.dart';
 import 'package:xianren_app/page/homepage/view/homepage.dart';
-import 'package:xianren_app/page/homepage/view/personal_information/personal_information_page.dart';
-import 'package:xianren_app/page/homepage/view/tree_hole/tree_hole_page.dart';
+import 'package:xianren_app/page/personal_information/view/personal_information_page.dart';
+import 'package:xianren_app/page/tree_hole/view/tree_hole_page.dart';
 import 'package:xianren_app/utils/net_util.dart';
 
 import '../base/app_module.dart';

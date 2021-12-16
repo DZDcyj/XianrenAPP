@@ -4,16 +4,16 @@
 /// created by DZDcyj at 2021/9/14
 ///
 import 'package:flutter/cupertino.dart';
-import 'package:xianren_app/page/homepage/view/draft_bottle/draft_bottle_detail.dart';
-import 'package:xianren_app/page/homepage/view/draft_bottle/my_bottles_page.dart';
+import 'package:xianren_app/page/draft_bottle/view/draft_bottle_detail.dart';
+import 'package:xianren_app/page/draft_bottle/view/my_bottles_page.dart';
 import 'package:xianren_app/page/homepage/view/homepage.dart';
-import 'package:xianren_app/page/homepage/view/personal_information/my_post_page.dart';
-import 'package:xianren_app/page/homepage/view/personal_information/personal_information_modify_page.dart';
-import 'package:xianren_app/page/homepage/view/personal_information/personal_information_page.dart';
-import 'package:xianren_app/page/homepage/view/tree_hole/new_post_page.dart';
-import 'package:xianren_app/page/homepage/view/tree_hole/post_detail.dart';
 import 'package:xianren_app/page/login_page/view/login_page.dart';
 import 'package:xianren_app/page/login_page/view/register_page.dart';
+import 'package:xianren_app/page/personal_information/view/my_post_page.dart';
+import 'package:xianren_app/page/personal_information/view/personal_information_modify_page.dart';
+import 'package:xianren_app/page/personal_information/view/personal_information_page.dart';
+import 'package:xianren_app/page/tree_hole/view/new_post_page.dart';
+import 'package:xianren_app/page/tree_hole/view/post_detail.dart';
 
 const String routerNameHomePage = 'homepage';
 const String routerNameLoginPage = 'loginpage';

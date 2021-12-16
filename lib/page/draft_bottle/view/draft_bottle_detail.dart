@@ -5,7 +5,7 @@
 ///
 import 'package:flutter/cupertino.dart';
 import 'package:xianren_app/base/view/base_page_view.dart';
-import 'package:xianren_app/page/homepage/view_model/draft_bottle/draft_bottle_detail_provider.dart';
+import 'package:xianren_app/page/draft_bottle/view_model/draft_bottle_detail_provider.dart';
 
 class DraftBottleDetail extends PageNodeProvider<DraftBottleDetailProvider> {
   DraftBottleDetail(this.id) : super(params: [id]);

@@ -9,7 +9,7 @@ import 'package:dartin/dartin.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:xianren_app/bean/bean.dart';
-import 'package:xianren_app/page/homepage/view_model/tree_hole/post_detail_provider.dart';
+import 'package:xianren_app/page/tree_hole/view_model/post_detail_provider.dart';
 import 'package:xianren_app/utils/net_util.dart';
 
 import '../base/app_module.dart';
