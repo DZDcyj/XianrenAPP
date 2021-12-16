@@ -4,6 +4,8 @@
 /// created by DZDcyj at 2021/9/14
 ///
 import 'package:flutter/cupertino.dart';
+import 'package:xianren_app/page/homepage/view/draft_bottle/draft_bottle_detail.dart';
+import 'package:xianren_app/page/homepage/view/draft_bottle/my_bottles_page.dart';
 import 'package:xianren_app/page/homepage/view/homepage.dart';
 import 'package:xianren_app/page/homepage/view/personal_information/my_post_page.dart';
 import 'package:xianren_app/page/homepage/view/personal_information/personal_information_modify_page.dart';
@@ -21,6 +23,8 @@ const String routerNamePersonalInformationModifyPage = 'personalinformationmodif
 const String routerNameNewPostPage = 'newpostpage';
 const String routerNamePostDetail = 'postdetail';
 const String routerNameMyPostPage = 'mypostpage';
+const String routerNameMyBottlesPage = 'mybottlespage';
+const String routerNameBottleDetail = 'bottledetail';
 
 final Map<String, Widget Function({List<dynamic> params})> routerMap = {
   routerNameHomePage: ({params}) => HomePage(),
@@ -39,4 +43,6 @@ final Map<String, Widget Function({List<dynamic> params})> routerMap = {
   routerNameNewPostPage: ({params}) => NewPostPage(params[0]),
   routerNamePostDetail: ({params}) => PostDetail(params[0]),
   routerNameMyPostPage: ({params}) => MyPostPage(),
+  routerNameMyBottlesPage: ({params}) => MyBottlesPage(),
+  routerNameBottleDetail: ({params}) => DraftBottleDetail(params[0]),
 };

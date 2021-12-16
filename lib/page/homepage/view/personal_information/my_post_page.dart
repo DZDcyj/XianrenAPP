@@ -148,6 +148,7 @@ class _MyPostPageContentView extends BasePageContentViewState<MyPostPageProvider
     );
   }
 
+  /// 处理删除帖子
   Future<void> _handleDeletePost(dynamic postId) async {
     var result = await showDialog(
       context: context,

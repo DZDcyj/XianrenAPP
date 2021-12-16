@@ -211,6 +211,25 @@ class NetUtil {
       },
     );
   }
+
+  Stream<HttpResponseEntity<MapEntity>> throwBottle(String content) {
+    return post(
+      throwBottleApi,
+      data: {
+        'content': content,
+      },
+    );
+  }
+
+  Stream<HttpResponseEntity<MapEntity>> commentBottle(int bottleId, String content) {
+    return post(
+      commentBottleApi,
+      data: {
+        'id': bottleId,
+        'content': content,
+      },
+    );
+  }
 }
 
 String constructUrl(

@@ -4,7 +4,6 @@
 /// created by DZDcyj at 2021/12/14
 ///
 import 'package:dartin/dartin.dart';
-import 'package:flutter/material.dart';
 import 'package:xianren_app/base/view_model/base_page_view_provider.dart';
 import 'package:xianren_app/bean/bean.dart';
 import 'package:xianren_app/constants/constants.dart';

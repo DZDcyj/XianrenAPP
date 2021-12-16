@@ -46,7 +46,6 @@ class _PostDetailContentState extends BasePageContentViewState<PostDetailProvide
         onFinished: () => mProvider.loadingComments = false,
         refresh: true,
       );
-
       _scrollController.addListener(_controllerHandler);
     });
   }

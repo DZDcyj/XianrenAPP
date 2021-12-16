@@ -55,6 +55,9 @@ class EntityFactory {
       _Generator<DraftBottleEntity>(
         (json) => DraftBottleEntity.fromJson(json),
       ),
+      _Generator<DraftBottleListEntity>(
+        (json) => DraftBottleListEntity.fromJson(json),
+      ),
     ],
     key: (g) => g.keyName,
     value: (g) => g.generator,
