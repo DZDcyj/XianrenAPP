@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 import 'package:xianren_app/base/view/base_page_view.dart';
 import 'package:xianren_app/constants/constants.dart';
-import 'package:xianren_app/page/homepage/view_model/personal_information/personal_information_page_provider.dart';
+import 'package:xianren_app/page/personal_information/view_model/personal_information_page_provider.dart';
 import 'package:xianren_app/router/router.dart';
 import 'package:xianren_app/router/router_constant.dart';
 import 'package:xianren_app/utils/global_util.dart';
@@ -279,7 +279,7 @@ class _PersonalInformationPageContentState extends BasePageContentViewState<Pers
   /// 退出登录
   void _logout() {
     mProvider.logout().then((value) {
-      RouteWrapper.popAndPushNamed(context, routerNameLoginPage);
+      RouteWrapper.backToLoginPage(context);
     });
   }
 

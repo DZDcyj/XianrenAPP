@@ -92,7 +92,7 @@ class NetUtil {
   }) async {
     try {
       var response = await dio.delete(url, data: data, queryParameters: queryParameters);
-      debugPrint('Post to $url, get response ${response.data}');
+      debugPrint('Send delete request to $url, get response ${response.data}');
       return HttpResponseEntity<T>.fromJson(response.data);
     } catch (error) {
       debugPrint('Error Caught:${error.error}');
@@ -187,10 +187,78 @@ class NetUtil {
   }
 
   Stream<HttpResponseEntity<MapEntity>> deletePost(int postId) {
-    return get(
+    return delete(
       deletePostApi,
       queryParameters: {
         'mid': postId,
+      },
+    );
+  }
+
+  Stream<HttpResponseEntity<DraftBottleEntity>> scoopBottle() {
+    return get(scoopBottleApi);
+  }
+
+  Stream<HttpResponseEntity<DraftBottleListEntity>> getUserBottles(int pageIndex) {
+    return get(
+      collectedBottlesApi,
+      queryParameters: {
+        'pageNum': pageIndex,
+      },
+    );
+  }
+
+  Stream<HttpResponseEntity<DraftBottleEntity>> getBottleDetail(int bottleId) {
+    return get(
+      driftBottleApi,
+      queryParameters: {
+        'id': bottleId,
+      },
+    );
+  }
+
+  Stream<HttpResponseEntity<MapEntity>> throwBottle(String content) {
+    return post(
+      throwBottleApi,
+      data: {
+        'content': content,
+      },
+    );
+  }
+
+  Stream<HttpResponseEntity<MapEntity>> commentBottle(int bottleId, String content) {
+    return post(
+      commentBottleApi,
+      data: {
+        'id': bottleId,
+        'content': content,
+      },
+    );
+  }
+
+  Stream<HttpResponseEntity<MapEntity>> collectBottle(int bottleId) {
+    return post(
+      collectBottleApi,
+      data: {
+        'id': bottleId,
+      },
+    );
+  }
+
+  Stream<HttpResponseEntity<MapEntity>> destroyBottle(int bottleId) {
+    return post(
+      destroyBottleApi,
+      data: {
+        'id': bottleId,
+      },
+    );
+  }
+
+  Stream<HttpResponseEntity<MapEntity>> throwCollectedBottle(int bottleId) {
+    return post(
+      throwCollectedBottleApi,
+      data: {
+        'id': bottleId,
       },
     );
   }

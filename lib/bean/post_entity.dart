@@ -76,6 +76,7 @@ class PostListEntity implements ToJson {
 
   PostListEntity.fromJson(Map<String, dynamic> json) {
     posts ??= [];
+    posts.clear();
     if (json['list']?.isNotEmpty ?? false) {
       for (var post in json['list']) {
         posts.add(PostEntity.fromJson(post));

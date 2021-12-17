@@ -10,8 +10,8 @@ import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 import 'package:xianren_app/base/view/base_page_view.dart';
 import 'package:xianren_app/bean/bean.dart';
-import 'package:xianren_app/page/homepage/view/tree_hole/post_item.dart';
-import 'package:xianren_app/page/homepage/view_model/tree_hole/tree_hole_page_provider.dart';
+import 'package:xianren_app/page/tree_hole/view/post_item.dart';
+import 'package:xianren_app/page/tree_hole/view_model/tree_hole_page_provider.dart';
 
 class TreeHolePage extends PageNodeProvider<TreeHolePageProvider> {
   @override

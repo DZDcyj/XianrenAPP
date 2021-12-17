@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:xianren_app/base/view/base_page_view.dart';
 import 'package:xianren_app/constants/constants.dart';
-import 'package:xianren_app/page/homepage/view_model/tree_hole/new_post_page_provider.dart';
+import 'package:xianren_app/page/tree_hole/view_model/new_post_page_provider.dart';
 import 'package:xianren_app/router/router.dart';
 
 class NewPostPage extends PageNodeProvider<NewPostPageProvider> {

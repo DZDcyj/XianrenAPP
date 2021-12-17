@@ -11,7 +11,7 @@ import 'package:tuple/tuple.dart';
 import 'package:xianren_app/base/view/base_page_view.dart';
 import 'package:xianren_app/bean/bean.dart';
 import 'package:xianren_app/constants/constants.dart';
-import 'package:xianren_app/page/homepage/view_model/personal_information/my_post_page_provider.dart';
+import 'package:xianren_app/page/personal_information/view_model/my_post_page_provider.dart';
 import 'package:xianren_app/router/router.dart';
 
 import 'my_post_item.dart';
@@ -148,6 +148,7 @@ class _MyPostPageContentView extends BasePageContentViewState<MyPostPageProvider
     );
   }
 
+  /// 处理删除帖子
   Future<void> _handleDeletePost(dynamic postId) async {
     var result = await showDialog(
       context: context,

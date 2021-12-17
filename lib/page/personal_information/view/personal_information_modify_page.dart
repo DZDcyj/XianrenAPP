@@ -6,7 +6,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:xianren_app/base/view/base_page_view.dart';
-import 'package:xianren_app/page/homepage/view_model/personal_information/personal_information_modify_page_provider.dart';
+import 'package:xianren_app/page/personal_information/view_model/personal_information_modify_page_provider.dart';
 import 'package:xianren_app/router/router.dart';
 import 'package:xianren_app/utils/global_util.dart';
 import 'package:xianren_app/utils/string_util.dart';

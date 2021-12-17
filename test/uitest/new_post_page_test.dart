@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:xianren_app/bean/bean.dart';
-import 'package:xianren_app/page/homepage/view/tree_hole/new_post_page.dart';
+import 'package:xianren_app/page/tree_hole/view/new_post_page.dart';
 import 'package:xianren_app/utils/net_util.dart';
 
 import '../base/app_module.dart';

@@ -50,4 +50,13 @@ class RouteWrapper {
     navigator?.pop();
     await pushNamed(context, routerName, arguments: arguments);
   }
+
+  /// 回退到登陆界面，统一使用
+  static Future<void> backToLoginPage(BuildContext context) async {
+    var navigator = observer.navigator;
+    navigator ??= Navigator.of(context);
+    // 弹出所有路由
+    navigator.popUntil((route) => false);
+    await pushNamed(context, routerNameLoginPage);
+  }
 }

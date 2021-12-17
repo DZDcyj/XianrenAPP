@@ -1,7 +1,7 @@
 ///
-/// post_detail
+/// draft_bottle_detail
 ///
-/// created by DZDcyj at 2021/12/11
+/// created by DZDcyj at 2021/12/16
 ///
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,53 +9,39 @@ import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 import 'package:xianren_app/base/view/base_page_view.dart';
-import 'package:xianren_app/bean/bean.dart';
-import 'package:xianren_app/page/homepage/view/tree_hole/comment_item.dart';
-import 'package:xianren_app/page/homepage/view/tree_hole/poster_item.dart';
-import 'package:xianren_app/page/homepage/view_model/tree_hole/post_detail_provider.dart';
+import 'package:xianren_app/page/draft_bottle/view/draft_bottle_comment_item.dart';
+import 'package:xianren_app/page/draft_bottle/view/draft_bottle_poster_item.dart';
+import 'package:xianren_app/page/draft_bottle/view_model/draft_bottle_detail_provider.dart';
 import 'package:xianren_app/router/router.dart';
 
-class PostDetail extends PageNodeProvider<PostDetailProvider> {
-  PostDetail(this.id) : super(params: [id]);
+class DraftBottleDetail extends PageNodeProvider<DraftBottleDetailProvider> {
+  DraftBottleDetail(this.id) : super(params: [id]);
+
   final int id;
 
-  Widget buildContent(BuildContext context) => _PostDetailContent(mProvider);
+  @override
+  Widget buildContent(BuildContext context) => _DraftBottleDetailContent(mProvider);
 }
 
-class _PostDetailContent extends BasePageContentView<PostDetailProvider> {
-  _PostDetailContent(PostDetailProvider provider) : super(provider);
+class _DraftBottleDetailContent extends BasePageContentView<DraftBottleDetailProvider> {
+  _DraftBottleDetailContent(DraftBottleDetailProvider provider) : super(provider);
 
   @override
-  _PostDetailContentState createState() => _PostDetailContentState();
+  _DraftBottleDetailContentState createState() => _DraftBottleDetailContentState();
 }
 
-class _PostDetailContentState extends BasePageContentViewState<PostDetailProvider> {
+class _DraftBottleDetailContentState extends BasePageContentViewState<DraftBottleDetailProvider> {
   TextEditingController _textEditingController = TextEditingController();
-  ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      mProvider.getPostContent(
-        onStart: () => mProvider.loadingPoster = true,
-        onFinished: () => mProvider.loadingPoster = false,
+      mProvider.getBottleDetail(
+        onStart: () => mProvider.loading = true,
+        onFinished: () => mProvider.loading = false,
       );
-      mProvider.getComments(
-        onStart: () => mProvider.loadingComments = true,
-        onFinished: () => mProvider.loadingComments = false,
-        refresh: true,
-      );
-
-      _scrollController.addListener(_controllerHandler);
     });
-  }
-
-  /// 滑动监测
-  void _controllerHandler() {
-    if (mProvider.hasMore && _scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
-      _handleLoadMore();
-    }
   }
 
   @override
@@ -63,7 +49,7 @@ class _PostDetailContentState extends BasePageContentViewState<PostDetailProvide
     super.build(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('帖子详情'),
+        title: Text('漂流瓶详情'),
         leading: IconButton(
           icon: Icon(Icons.arrow_back_outlined),
           onPressed: () => RouteWrapper.popSafety(context),
@@ -82,10 +68,9 @@ class _PostDetailContentState extends BasePageContentViewState<PostDetailProvide
 
   /// 处理刷新
   Future<void> _refreshHandler() async {
-    mProvider.getComments(
-      refresh: true,
-      onStart: () => mProvider.loadingComments = true,
-      onFinished: () => mProvider.loadingComments = false,
+    mProvider.getBottleDetail(
+      onStart: () => mProvider.loading = true,
+      onFinished: () => mProvider.loading = false,
     );
   }
 
@@ -93,8 +78,8 @@ class _PostDetailContentState extends BasePageContentViewState<PostDetailProvide
   Widget _content() {
     return RefreshIndicator(
       onRefresh: _refreshHandler,
-      child: Selector<PostDetailProvider, bool>(
-        selector: (_, provider) => provider.loadingPoster,
+      child: Selector<DraftBottleDetailProvider, bool>(
+        selector: (_, provider) => provider.loading,
         builder: (context, loading, child) {
           if (loading) {
             return Center(
@@ -118,21 +103,9 @@ class _PostDetailContentState extends BasePageContentViewState<PostDetailProvide
     );
   }
 
-  /// 楼主
+  /// 瓶主
   Widget _poster() {
-    return PostItem(
-      entity: mProvider.postDetailEntity,
-    );
-  }
-
-  /// 加载更多
-  void _handleLoadMore() {
-    mProvider.getComments(
-      refresh: false,
-      onStart: () => mProvider.loadingMoreComments = true,
-      onFinished: () => mProvider.loadingMoreComments = false,
-      onData: (response) => mProvider.hasMore = response.data.comments.isNotEmpty,
-    );
+    return DraftBottlePosterItem(content: mProvider.bottleContent);
   }
 
   /// 所有可滑动内容，包含主题与回复
@@ -143,8 +116,8 @@ class _PostDetailContentState extends BasePageContentViewState<PostDetailProvide
         SizedBox(height: 10.0),
         SizedBox(height: 1.0, child: Container(color: Colors.grey)),
         SizedBox(height: 10.0),
-        Selector<PostDetailProvider, Tuple2<bool, List<CommentEntity>>>(
-          selector: (_, provider) => Tuple2(provider.loadingComments, provider.comments),
+        Selector<DraftBottleDetailProvider, Tuple2<bool, List<String>>>(
+          selector: (_, provider) => Tuple2(provider.loading, provider.comments),
           builder: (context, tuple, child) {
             var loading = tuple.item1;
             var comments = tuple.item2;
@@ -163,42 +136,21 @@ class _PostDetailContentState extends BasePageContentViewState<PostDetailProvide
               itemCount: comments.length + 1,
               itemBuilder: (context, index) {
                 if (index == comments.length) {
-                  return Selector<PostDetailProvider, Tuple2<bool, bool>>(
-                    selector: (_, provider) => Tuple2(provider.loadingMoreComments, provider.hasMore),
-                    builder: (context, tuple, child) {
-                      var loadingMore = tuple.item1;
-                      var hasMore = tuple.item2;
-                      if (loadingMore) {
-                        return Center(
-                          child: SizedBox(
-                            width: 30.0,
-                            height: 30.0,
-                            child: CircularProgressIndicator(),
-                          ),
-                        );
-                      }
-                      var hint = hasMore ? '加载更多' : '没有更多啦';
-                      return Container(
-                        child: TextButton(
-                          child: Text(
-                            hint,
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          onPressed: hasMore ? _handleLoadMore : null,
+                  return Container(
+                    child: TextButton(
+                      child: Text(
+                        '没有更多啦',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          color: Colors.grey,
                         ),
-                        alignment: Alignment.center,
-                      );
-                    },
+                      ),
+                      onPressed: null,
+                    ),
+                    alignment: Alignment.center,
                   );
                 }
-                return CommentItem(
-                  anonymousName: comments[index].anonymousName,
-                  date: comments[index].date,
-                  body: comments[index].body,
-                );
+                return DraftBottleCommentItem(content: comments[index]);
               },
             );
           },
@@ -246,7 +198,7 @@ class _PostDetailContentState extends BasePageContentViewState<PostDetailProvide
     if (mProvider.validateComment(
       callback: (message) => showToast(msg: message),
     )) {
-      mProvider.postComment(
+      mProvider.commentBottle(
         onStart: startLoading,
         onData: (response) {
           if (response.status) {

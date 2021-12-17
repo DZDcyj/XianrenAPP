@@ -202,3 +202,43 @@ const String postDetailResponse = '''
     "status": true
 }
 ''';
+
+const String bottleResponse = '''
+{
+    "code": 20000,
+    "message": "成功",
+    "data": {
+        "list": [
+            {
+                "id": 4,
+                "content": "sdfas"
+            },
+            {
+                "id": 3,
+                "content": "啦啦啦啦"
+            },
+            {
+                "id": 6,
+                "content": "今天我联盟超级C"
+            }
+        ]
+    },
+    "status": true
+}
+''';
+
+const String bottleDetailResponse = '''
+{
+    "code": 20000,
+    "message": "成功",
+    "data": {
+        "comments": [
+            "what?",
+            "你好菜"
+        ],
+        "id": 6,
+        "content": "今天我联盟超级C"
+    },
+    "status": true
+}
+''';

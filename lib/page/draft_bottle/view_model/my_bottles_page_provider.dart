@@ -1,23 +1,25 @@
 ///
-/// my_post_page_provider
+/// my_bottles_page_provider
 ///
-/// created by DZDcyj at 2021/12/14
+/// created by DZDcyj at 2021/12/16
 ///
 import 'package:dartin/dartin.dart';
-import 'package:flutter/material.dart';
 import 'package:xianren_app/base/view_model/base_page_view_provider.dart';
 import 'package:xianren_app/bean/bean.dart';
 import 'package:xianren_app/constants/constants.dart';
 import 'package:xianren_app/utils/net_util.dart';
 
-class MyPostPageProvider extends BasePageProvider {
-  /// 加载所有
-  bool _isLoading;
+class MyBottlesPageProvider extends BasePageProvider {
+  NetUtil netUtil = inject();
 
-  bool get isLoading => _isLoading ?? false;
+  List<DraftBottleEntity> bottles = [];
 
-  set isLoading(bool value) {
-    _isLoading = value;
+  bool _loading;
+
+  bool get loading => _loading ?? true;
+
+  set loading(bool value) {
+    _loading = value;
     notifyListeners();
   }
 
@@ -31,9 +33,9 @@ class MyPostPageProvider extends BasePageProvider {
     notifyListeners();
   }
 
-  /// 是否有更多
   bool _hasMore;
 
+  /// 是否有更多
   bool get hasMore => _hasMore ?? true;
 
   set hasMore(bool value) {
@@ -41,6 +43,7 @@ class MyPostPageProvider extends BasePageProvider {
     notifyListeners();
   }
 
+  /// 页码
   int _pageIndex;
 
   int get pageIndex => _pageIndex ?? 1;
@@ -50,53 +53,40 @@ class MyPostPageProvider extends BasePageProvider {
     notifyListeners();
   }
 
-  NetUtil netUtil = inject();
-
-  List<PostEntity> _posts;
-
-  List<PostEntity> get posts => _posts ?? [];
-
-  set posts(List<PostEntity> value) {
-    _posts = value;
-    notifyListeners();
-  }
-
-  /// 从服务器获取帖子数据
-  void getUserPostsFromServer({
+  /// 获取所有瓶子
+  void getAllBottles(
+    bool refresh, {
     VoidCallback onStart,
-    DataCallback onData,
     VoidCallback onFinished,
-    bool refresh = true,
+    DataCallback onData,
   }) {
     onStart?.call();
     asyncRequest(
-      netUtil.getUserPosts(refresh ? 1 : pageIndex + 1),
+      netUtil.getUserBottles(refresh ? 1 : pageIndex + 1),
       onData: (response) {
-        if (response.code == responseOK) {
-          updatePosts(response.data, refresh);
-          onData?.call(response);
-        }
+        onData?.call(response);
+        _updateBottles(response.data, refresh);
         onFinished?.call();
       },
     );
   }
 
-  /// 更新帖子
-  void updatePosts(PostListEntity list, bool refresh) {
+  /// 更新信息
+  void _updateBottles(DraftBottleListEntity entity, bool refresh) {
     if (refresh) {
-      posts = list.posts;
+      bottles = entity.bottles;
       pageIndex = 1;
       hasMore = true;
       return;
     }
-    var newList = posts;
     pageIndex++;
-    newList.addAll(list.posts);
-    posts = newList;
+    var newList = bottles;
+    newList.addAll(entity.bottles);
+    bottles = newList;
   }
 
-  /// 删除某条帖子
-  void deletePost(
+  /// 丢瓶子回去
+  void throwBackBottle(
     int id, {
     VoidCallback onStart,
     VoidCallback onFinished,
@@ -104,7 +94,24 @@ class MyPostPageProvider extends BasePageProvider {
   }) {
     onStart?.call();
     asyncRequest(
-      netUtil.deletePost(id),
+      netUtil.throwCollectedBottle(id),
+      onData: (response) {
+        onData?.call(response);
+        onFinished?.call();
+      },
+    );
+  }
+
+  /// 销毁瓶子
+  void destroyBottle(
+    int id, {
+    VoidCallback onStart,
+    VoidCallback onFinished,
+    DataCallback onData,
+  }) {
+    onStart?.call();
+    asyncRequest(
+      netUtil.destroyBottle(id),
       onData: (response) {
         onData?.call(response);
         onFinished?.call();
