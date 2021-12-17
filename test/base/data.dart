@@ -226,3 +226,19 @@ const String bottleResponse = '''
     "status": true
 }
 ''';
+
+const String bottleDetailResponse = '''
+{
+    "code": 20000,
+    "message": "成功",
+    "data": {
+        "comments": [
+            "what?",
+            "你好菜"
+        ],
+        "id": 6,
+        "content": "今天我联盟超级C"
+    },
+    "status": true
+}
+''';

@@ -146,7 +146,7 @@ class _MyBottlesPageContentState extends BasePageContentViewState<MyBottlesPageP
         mProvider.destroyBottle(id, onStart: startLoading, onFinished: () => _handleFinishOption('这个瓶子被销毁了'));
         break;
       case 'throw':
-        mProvider.scoopBackBottle(id, onStart: startLoading, onFinished: () => _handleFinishOption('瓶子又漂回了大海'));
+        mProvider.throwBackBottle(id, onStart: startLoading, onFinished: () => _handleFinishOption('瓶子又漂回了大海'));
         break;
       default:
     }

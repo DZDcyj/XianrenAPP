@@ -6,6 +6,7 @@
 import 'dart:convert';
 
 import 'package:dartin/dartin.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:xianren_app/bean/bean.dart';
@@ -34,6 +35,16 @@ void main() {
         ),
       ),
     );
+
+    when(netUtil.getUserBottles(2)).thenAnswer(
+      (realInvocation) => Stream.fromFuture(
+        Future.value(
+          HttpResponseEntity<DraftBottleListEntity>.fromJson(
+            json.decode(emptyCommentsResponse),
+          ),
+        ),
+      ),
+    );
     await showWidget(tester, MyBottlesPage());
 
     await tap(tester, find.byType(DraftBottleItem).first);
@@ -41,5 +52,53 @@ void main() {
     await tester.drag(find.byType(DraftBottleItem).first, Offset(0.0, 500.0));
     await tester.pump();
     await tester.pump(Duration(seconds: 3));
+  });
+
+  testWidgets('MyBottlesPage', (WidgetTester tester) async {
+    when(netUtil.getUserBottles(1)).thenAnswer(
+      (realInvocation) => Stream.fromFuture(
+        Future.value(
+          HttpResponseEntity<DraftBottleListEntity>.fromJson(
+            json.decode(bottleResponse),
+          ),
+        ),
+      ),
+    );
+
+    when(netUtil.destroyBottle(any)).thenAnswer(
+      (realInvocation) => Stream.fromFuture(
+        Future.value(
+          HttpResponseEntity<MapEntity>.fromJson(
+            json.decode(successResponse),
+          ),
+        ),
+      ),
+    );
+
+    when(netUtil.throwCollectedBottle(any)).thenAnswer(
+      (realInvocation) => Stream.fromFuture(
+        Future.value(
+          HttpResponseEntity<MapEntity>.fromJson(
+            json.decode(successResponse),
+          ),
+        ),
+      ),
+    );
+    await showWidget(tester, MyBottlesPage());
+
+    await tester.longPress(find.byType(DraftBottleItem).first);
+    await tester.pump();
+    await tester.pumpAndSettle();
+    await tap(tester, find.text('销毁'));
+
+    await tester.longPress(find.byType(DraftBottleItem).first);
+    await tester.pump();
+    await tester.pumpAndSettle();
+    await tap(tester, find.text('扔回大海'));
+
+    await tester.longPress(find.byType(DraftBottleItem).first);
+    await tester.pump();
+    await tester.pumpAndSettle();
+    await tap(tester, find.text('什么也不做'));
   });
 }

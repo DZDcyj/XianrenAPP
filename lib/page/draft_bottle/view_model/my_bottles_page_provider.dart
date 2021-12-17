@@ -86,7 +86,7 @@ class MyBottlesPageProvider extends BasePageProvider {
   }
 
   /// 丢瓶子回去
-  void scoopBackBottle(
+  void throwBackBottle(
     int id, {
     VoidCallback onStart,
     VoidCallback onFinished,
