@@ -40,6 +40,9 @@ const String collectedBottlesApi = 'driftBottle/collectedBottle'; // 获取用�
 const String driftBottleApi = 'driftBottle/driftBottle'; // 获取漂流瓶详细信息
 const String throwBottleApi = 'driftBottle/throw/drift'; // 创建漂流瓶并扔出
 const String commentBottleApi = 'driftBottle/comment'; // 创建漂流瓶评论
+const String destroyBottleApi = 'driftBottle/drop'; // 销毁漂流瓶
+const String collectBottleApi = 'driftBottle/collect'; // 持有一个漂流瓶
+const String throwCollectedBottleApi = 'driftBottle/throw/collected'; // 扔掉持有的漂流瓶
 
 /// SharedPreferences Key
 String usernameKey = 'username';
@@ -52,4 +55,5 @@ const int maxRefreshCoolDownMilliseconds = 3000; // 刷新间隔（毫秒）
 
 /// 类型变量
 typedef DataCallback = void Function(dynamic data); // 数据回调
+typedef FutureDataCallBack = Future<void> Function(dynamic data); // 数据回调，带 Future
 typedef VoidCallback = void Function();

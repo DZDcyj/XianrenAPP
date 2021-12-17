@@ -1,20 +1,24 @@
 ///
-/// draft_bottles_item
+/// draft_bottle_item
 ///
 /// created by DZDcyj at 2021/12/16
 ///
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:xianren_app/constants/constants.dart';
+import 'package:xianren_app/router/router.dart';
+import 'package:xianren_app/router/router_constant.dart';
 
 class DraftBottleItem extends StatelessWidget {
   DraftBottleItem({
     @required this.content,
     @required this.id,
+    @required this.onLongPressedCallback,
   });
 
   final String content;
   final int id;
+  final VoidCallback onLongPressedCallback;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +29,8 @@ class DraftBottleItem extends StatelessWidget {
         border: Border.all(color: Colors.grey),
       ),
       child: ElevatedButton(
-        onPressed: () => Fluttertoast.showToast(msg: '这是一个漂流瓶，id 为 $id'),
+        onPressed: () => RouteWrapper.pushNamed(context, routerNameBottleDetail, arguments: [id]),
+        onLongPress: onLongPressedCallback,
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.resolveWith(
             (states) => states.contains(MaterialState.pressed) ? Colors.grey : Colors.white,

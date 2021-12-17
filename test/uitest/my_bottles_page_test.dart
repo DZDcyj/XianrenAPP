@@ -25,7 +25,7 @@ void main() {
   tearDown(() => reset(netUtil));
 
   testWidgets('MyBottlesPage', (WidgetTester tester) async {
-    when(netUtil.getUserBottles()).thenAnswer(
+    when(netUtil.getUserBottles(1)).thenAnswer(
       (realInvocation) => Stream.fromFuture(
         Future.value(
           HttpResponseEntity<DraftBottleListEntity>.fromJson(

@@ -33,8 +33,25 @@ class MyBottlesPageProvider extends BasePageProvider {
     notifyListeners();
   }
 
+  bool _hasMore;
+
   /// 是否有更多
-  bool get hasMore => false;
+  bool get hasMore => _hasMore ?? true;
+
+  set hasMore(bool value) {
+    _hasMore = value;
+    notifyListeners();
+  }
+
+  /// 页码
+  int _pageIndex;
+
+  int get pageIndex => _pageIndex ?? 1;
+
+  set pageIndex(int value) {
+    _pageIndex = value;
+    notifyListeners();
+  }
 
   /// 获取所有瓶子
   void getAllBottles(
@@ -45,7 +62,7 @@ class MyBottlesPageProvider extends BasePageProvider {
   }) {
     onStart?.call();
     asyncRequest(
-      netUtil.getUserBottles(),
+      netUtil.getUserBottles(refresh ? 1 : pageIndex + 1),
       onData: (response) {
         onData?.call(response);
         _updateBottles(response.data, refresh);
@@ -54,13 +71,51 @@ class MyBottlesPageProvider extends BasePageProvider {
     );
   }
 
+  /// 更新信息
   void _updateBottles(DraftBottleListEntity entity, bool refresh) {
     if (refresh) {
       bottles = entity.bottles;
+      pageIndex = 1;
+      hasMore = true;
       return;
     }
+    pageIndex++;
     var newList = bottles;
     newList.addAll(entity.bottles);
     bottles = newList;
+  }
+
+  /// 丢瓶子回去
+  void scoopBackBottle(
+    int id, {
+    VoidCallback onStart,
+    VoidCallback onFinished,
+    DataCallback onData,
+  }) {
+    onStart?.call();
+    asyncRequest(
+      netUtil.throwCollectedBottle(id),
+      onData: (response) {
+        onData?.call(response);
+        onFinished?.call();
+      },
+    );
+  }
+
+  /// 销毁瓶子
+  void destroyBottle(
+    int id, {
+    VoidCallback onStart,
+    VoidCallback onFinished,
+    DataCallback onData,
+  }) {
+    onStart?.call();
+    asyncRequest(
+      netUtil.destroyBottle(id),
+      onData: (response) {
+        onData?.call(response);
+        onFinished?.call();
+      },
+    );
   }
 }

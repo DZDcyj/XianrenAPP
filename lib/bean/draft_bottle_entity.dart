@@ -20,7 +20,7 @@ class DraftBottleEntity implements ToJson {
   }
 
   DraftBottleEntity.fromJson(Map<String, dynamic> json) {
-    comments = json['comments'];
+    comments = List<String>.from(json['comments'] ?? []);
     id = json['id'];
     content = json['content'];
   }
@@ -40,8 +40,8 @@ class DraftBottleListEntity extends ToJson {
     bottles ??= [];
     bottles.clear();
     if (json['list']?.isNotEmpty ?? false) {
-      for (var post in json['list']) {
-        bottles.add(DraftBottleEntity.fromJson(post));
+      for (var bottle in json['list']) {
+        bottles.add(DraftBottleEntity.fromJson(bottle));
       }
     }
   }

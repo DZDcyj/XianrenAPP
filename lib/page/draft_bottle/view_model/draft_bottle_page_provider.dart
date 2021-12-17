@@ -12,17 +12,16 @@ class DraftBottlePageProvider extends BasePageProvider {
   NetUtil netUtil = inject();
 
   /// 捞瓶子
-  void scoopBottles({
+  void scoopBottle({
     VoidCallback onStart,
     VoidCallback onFinished,
-    DataCallback onData,
+    FutureDataCallBack onData,
   }) {
     onStart?.call();
     asyncRequest(
-      netUtil.scoopBottles(),
+      netUtil.scoopBottle(),
       onData: (response) {
-        onData?.call(response);
-        onFinished?.call();
+        onData?.call(response)?.then((value) => onFinished?.call());
       },
     );
   }
@@ -37,6 +36,40 @@ class DraftBottlePageProvider extends BasePageProvider {
     onStart?.call();
     asyncRequest(
       netUtil.throwBottle(content),
+      onData: (response) {
+        onData?.call(response);
+        onFinished?.call();
+      },
+    );
+  }
+
+  /// 收集瓶子
+  void collectBottle(
+    int id, {
+    VoidCallback onStart,
+    VoidCallback onFinished,
+    DataCallback onData,
+  }) {
+    onStart?.call();
+    asyncRequest(
+      netUtil.collectBottle(id),
+      onData: (response) {
+        onData?.call(response);
+        onFinished?.call();
+      },
+    );
+  }
+
+  /// 销毁瓶子
+  void destroyBottle(
+    int id, {
+    VoidCallback onStart,
+    VoidCallback onFinished,
+    DataCallback onData,
+  }) {
+    onStart?.call();
+    asyncRequest(
+      netUtil.destroyBottle(id),
       onData: (response) {
         onData?.call(response);
         onFinished?.call();

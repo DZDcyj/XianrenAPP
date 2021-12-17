@@ -93,7 +93,7 @@ class _MyBottlesPageContentState extends BasePageContentViewState<MyBottlesPageP
                                     color: Colors.grey,
                                   ),
                                 ),
-                                onPressed: null,
+                                onPressed: hasMore ? _handleLoadMore : null,
                               ),
                               alignment: Alignment.center,
                             );
@@ -103,6 +103,7 @@ class _MyBottlesPageContentState extends BasePageContentViewState<MyBottlesPageP
                       return DraftBottleItem(
                         id: bottles[index].id,
                         content: bottles[index].content,
+                        onLongPressedCallback: () => _handleLongPress(bottles[index].id),
                       );
                     },
                   );
@@ -112,6 +113,59 @@ class _MyBottlesPageContentState extends BasePageContentViewState<MyBottlesPageP
           ),
         ),
       ),
+    );
+  }
+
+  /// 长按漂流瓶
+  Future<void> _handleLongPress(int id) async {
+    var result = await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('操作漂流瓶'),
+          content: Text('您想怎么处理这个漂流瓶呢？'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop('throw'),
+              child: Text('扔回大海'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop('destroy'),
+              child: Text('销毁'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop('cancel'),
+              child: Text('什么也不做'),
+            ),
+          ],
+        );
+      },
+    );
+    switch (result) {
+      case 'destroy':
+        mProvider.destroyBottle(id, onStart: startLoading, onFinished: () => _handleFinishOption('这个瓶子被销毁了'));
+        break;
+      case 'throw':
+        mProvider.scoopBackBottle(id, onStart: startLoading, onFinished: () => _handleFinishOption('瓶子又漂回了大海'));
+        break;
+      default:
+    }
+  }
+
+  /// 处理完成操作
+  void _handleFinishOption(String message) {
+    showToast(msg: message);
+    finishLoading();
+    _reloadingBottles();
+  }
+
+  /// 加载更多
+  void _handleLoadMore() {
+    mProvider.getAllBottles(
+      false,
+      onStart: () => mProvider.loadingMore = true,
+      onFinished: () => mProvider.loadingMore = false,
+      onData: (response) => mProvider.hasMore = response.data.bottles.isNotEmpty,
     );
   }
 

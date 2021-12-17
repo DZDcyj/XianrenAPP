@@ -16,9 +16,38 @@ class DraftBottleDetailProvider extends BasePageProvider {
 
   NetUtil netUtil = inject();
 
-  DraftBottleEntity entity;
+  /// 正在加载
+  bool _loading;
 
-  String content;
+  bool get loading => _loading ?? true;
+
+  set loading(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
+
+  /// 瓶子本身的内容
+  String _bottleContent;
+
+  String get bottleContent => _bottleContent ?? '';
+
+  set bottleContent(String value) {
+    _bottleContent = value;
+    notifyListeners();
+  }
+
+  /// 评论列表
+  List<String> _comments;
+
+  List<String> get comments => _comments ?? [];
+
+  set comments(List<String> value) {
+    _comments = value;
+    notifyListeners();
+  }
+
+  /// 新评论内容
+  String comment;
 
   /// 获取瓶子详细信息
   void getBottleDetail({
@@ -31,12 +60,29 @@ class DraftBottleDetailProvider extends BasePageProvider {
       netUtil.getBottleDetail(id),
       onData: (response) {
         onData?.call(response);
-        if (response == responseOK) {
-          entity = response.data;
+        if (response.code == responseOK) {
+          _updateBottleInfo(response.data);
         }
         onFinished?.call();
       },
     );
+  }
+
+  /// 更新瓶子信息
+  void _updateBottleInfo(DraftBottleEntity entity) {
+    bottleContent = entity.content;
+    comments = entity.comments;
+  }
+
+  /// 验证评论是否为空
+  bool validateComment({
+    DataCallback callback,
+  }) {
+    if (comment?.isEmpty ?? true) {
+      callback?.call('评论不能为空');
+      return false;
+    }
+    return true;
   }
 
   /// 添加漂流瓶评论
@@ -47,7 +93,7 @@ class DraftBottleDetailProvider extends BasePageProvider {
   }) {
     onStart?.call();
     asyncRequest(
-      netUtil.commentBottle(id, content),
+      netUtil.commentBottle(id, comment),
       onData: (response) {
         onData?.call(response);
         onFinished?.call();

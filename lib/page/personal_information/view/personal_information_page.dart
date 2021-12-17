@@ -279,7 +279,7 @@ class _PersonalInformationPageContentState extends BasePageContentViewState<Pers
   /// 退出登录
   void _logout() {
     mProvider.logout().then((value) {
-      RouteWrapper.popAndPushNamed(context, routerNameLoginPage);
+      RouteWrapper.backToLoginPage(context);
     });
   }
 

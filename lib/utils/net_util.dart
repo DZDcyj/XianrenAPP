@@ -195,12 +195,17 @@ class NetUtil {
     );
   }
 
-  Stream<HttpResponseEntity<DraftBottleEntity>> scoopBottles() {
+  Stream<HttpResponseEntity<DraftBottleEntity>> scoopBottle() {
     return get(scoopBottleApi);
   }
 
-  Stream<HttpResponseEntity<DraftBottleListEntity>> getUserBottles() {
-    return get(collectedBottlesApi);
+  Stream<HttpResponseEntity<DraftBottleListEntity>> getUserBottles(int pageIndex) {
+    return get(
+      collectedBottlesApi,
+      queryParameters: {
+        'pageNum': pageIndex,
+      },
+    );
   }
 
   Stream<HttpResponseEntity<DraftBottleEntity>> getBottleDetail(int bottleId) {
@@ -227,6 +232,33 @@ class NetUtil {
       data: {
         'id': bottleId,
         'content': content,
+      },
+    );
+  }
+
+  Stream<HttpResponseEntity<MapEntity>> collectBottle(int bottleId) {
+    return post(
+      collectBottleApi,
+      data: {
+        'id': bottleId,
+      },
+    );
+  }
+
+  Stream<HttpResponseEntity<MapEntity>> destroyBottle(int bottleId) {
+    return post(
+      destroyBottleApi,
+      data: {
+        'id': bottleId,
+      },
+    );
+  }
+
+  Stream<HttpResponseEntity<MapEntity>> throwCollectedBottle(int bottleId) {
+    return post(
+      throwCollectedBottleApi,
+      data: {
+        'id': bottleId,
       },
     );
   }
