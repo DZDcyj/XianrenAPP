@@ -1,10 +1,10 @@
-import 'dart:convert';
-
 ///
 /// draft_bottle_detail_test
 ///
 /// created by DZDcyj at 2021/12/16
 ///
+import 'dart:convert';
+
 import 'package:dartin/dartin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

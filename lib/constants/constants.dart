@@ -56,4 +56,4 @@ const int maxRefreshCoolDownMilliseconds = 3000; // 刷新间隔（毫秒）
 /// 类型变量
 typedef DataCallback = void Function(dynamic data); // 数据回调
 typedef FutureDataCallBack = Future<void> Function(dynamic data); // 数据回调，带 Future
-typedef VoidCallback = void Function();
+typedef VoidCallback = void Function(); // 无参数回调函数
