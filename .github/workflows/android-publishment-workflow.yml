@@ -47,14 +47,6 @@ jobs:
           name: release-artifacts
           path:
             build/app/outputs/flutter-apk/app-release.apk
-      - name: "Upload to Dropbox"
-        if: ${{ steps.build.outcome == 'success' }}
-        uses: deka0106/upload-to-dropbox@v2.0.0
-        with:
-          dropbox_access_token: ${{ secrets.DROPBOX_ACCESS_TOKEN }}
-          src: build/app/outputs/flutter-apk/app-release.apk
-          dest: /应用/Xianren
-          mode: overwrite
       - name: "Send Email Notification"
         if: ${{ steps.build.outcome == 'success' }}
         uses: dawidd6/action-send-mail@v3
@@ -64,13 +56,13 @@ jobs:
           # Required mail server port:
           server_port: 465
           # Optional (recommended): mail server username:
-          username: ${{secrets.MAIL_USERNAME}}
+          username: ${{ secrets.MAIL_USERNAME }}
           # Optional (recommended) mail server password:
-          password: ${{secrets.MAIL_PASSWORD}}
+          password: ${{ secrets.MAIL_PASSWORD }}
           # Required mail subject:
           subject: Github 构建结果提醒
           # Required recipients' addresses:
-          to: ${{secrets.MAIL_RECEIVER}}
+          to: ${{ secrets.MAIL_RECEIVER }}
           # Required sender full name (address can be skipped):
           from: Rinrinko
           # Optional whether this connection use TLS (default is true if server_port is 465)
@@ -80,7 +72,6 @@ jobs:
           # Using Markdown
           html_body: |
             ## ${{github.actor}} 触发流水线 APK 构建完毕，请及时查看测试验证
-            [Dropbox APK 地址](https://www.dropbox.com/sh/2ixu7a6fhppvydd/AAD4EdJeVWhnUBoEa5ccPtKAa?dl=0)
           # Optional unsigned/invalid certificates allowance:
           ignore_cert: true
           # Optional converting Markdown to HTML (set content_type to text/html too):
