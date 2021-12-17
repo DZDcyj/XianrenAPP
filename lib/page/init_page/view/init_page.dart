@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:xianren_app/base/view/base_page_view.dart';
+import 'package:xianren_app/constants/constants.dart';
 import 'package:xianren_app/page/init_page/view_model/init_page_provider.dart';
 import 'package:xianren_app/router/router.dart';
 import 'package:xianren_app/router/router_constant.dart';
@@ -62,7 +63,7 @@ class _InitPageContentState extends BasePageContentViewState<InitPageProvider> {
   /// 欢迎文字
   Widget _welcomeText() {
     return Text(
-      'Welcome to Xianren APP!',
+      'Welcome to $appName!',
       style: TextStyle(
         fontSize: 28,
       ),

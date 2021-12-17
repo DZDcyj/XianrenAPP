@@ -86,7 +86,7 @@ class _LoginPageContentState extends BasePageContentViewState<LoginPageProvider>
   /// Xianren 文字
   Widget _title() {
     return Text(
-      'Xianren',
+      appName,
       style: TextStyle(
         fontSize: 64,
       ),

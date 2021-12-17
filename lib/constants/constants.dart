@@ -4,6 +4,9 @@
 /// created by DZDcyj at 2021/11/28
 ///
 
+/// APP 相关
+const String appName = 'Anonymous';
+
 /// HTTP 返回码
 const int httpResponseOK = 200;
 const int httpResponseNotFound = 404;
