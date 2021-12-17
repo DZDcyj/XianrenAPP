@@ -18,7 +18,7 @@ void main() {
 
   testWidgets('InitPage', (WidgetTester tester) async {
     await showWidget(tester, MyApp());
-    expect(find.text('Welcome to Xianren APP!'), findsOneWidget);
+    expect(find.text('Welcome to Anonymous!'), findsOneWidget);
 
     // Stop the timer
     await tester.pumpAndSettle(Duration(seconds: 1));

@@ -62,7 +62,7 @@ void main() {
     mockResponses();
 
     // 检查元素数量
-    expect(find.text('Xianren'), findsOneWidget);
+    expect(find.text('Anonymous'), findsOneWidget);
     expect(find.byType(TextField), findsNWidgets(2));
     expect(find.byType(CheckboxListTile), findsNWidgets(2));
     expect(find.byType(Image), findsOneWidget);
